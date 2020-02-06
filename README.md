@@ -34,7 +34,7 @@ cp back/config/config.sample.json back/config/config.json
 
 # Create and run the backend environment
 cd vagrant && vagrant up && vagrant ssh
-npm run back-start-vagrant
+cd /tohr && npm run back-start-vagrant
 
 # Go back to previous terminal and run
 npm start
