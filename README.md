@@ -28,25 +28,15 @@ transmission-daemon installed in order to test communication between backend and
 
 ### Installation 
 ```bash
-# Create a dedicate directory for repositories.
-mkdir tohr && cd tohr
-git clone git@github.com:cyril-colin/tohr-getting-started.git
-git clone git@github.com:cyril-colin/tohr-back.git
-git clone git@github.com:cyril-colin/tohr-front.git
-
-# Download all dependencies of back and front
-(cd tohr-back && npm install)
-(cd tohr-back && cp config/config.sample.json config/config.json)
-(cd tohr-front && npm install)
+git clone git@github.com:cyril-colin/tohr.git
+npm install
+cp back/config/config.sample.json back/config/config.json
 
 # Create and run the backend environment
-cd tohr-getting-started
-vagrant up
-vagrant ssh
-cd /tohr && node_modules/.bin/ts-node-dev server.ts --config './config/config.json'
+cd vagrant && vagrant up && vagrant ssh
+npm run back-start-vagrant
 
-# In an other terminal, run the front end.
-cd tohr-front
+# Go back to previous terminal and run
 npm start
 
 # Now, dev application should be available at http://localhost:4200
