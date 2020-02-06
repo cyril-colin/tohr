@@ -1,0 +1,21 @@
+@import '../../../colors.scss';
+
+:host {
+  .panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .icon i {
+      font-size: 60px;
+        color: $drawPrimary;
+    }
+  }
+
+
+
+  .delete-button {
+    color: $drawDanger;
+  }
+}

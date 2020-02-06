@@ -1,0 +1,52 @@
+{
+  "bind": "0.0.0.0",
+  "serverPort": 4201,
+  "distPath": "../dist-front/",
+  "transmissionDaemonLogin" : "test",
+  "transmissionDaemonPassword" : "test",
+  "transmissionDaemonUrl" : "http://localhost:9091/transmission/rpc",
+  "jwtSecret" : "changeMe !",
+  "users": [
+    {
+      "login": "test",
+      "password": "test"
+    }
+  ],
+  "monitoring": {
+    "diskToWatch": ["/dev/sda1", "project"],
+    "destinations": [
+      {
+        "name": "Films",
+        "path": "/home/vagrant/films",
+        "description": "les films",
+        "icon": "movie",
+        "default": false
+      },
+      {
+        "name": "Musics",
+        "path": "/home/vagrant/musics",
+        "description": "les musiques",
+        "icon": "music_note",
+        "default": false
+      },
+      {
+        "name": "Series",
+        "path": "/home/vagrant/series",
+        "description": "les séries",
+        "icon": "fast_forward",
+        "default": false
+      },
+      {
+        "name": "I don't know",
+        "path": "/home/vagrant/other",
+        "description": "un autre répertoire",
+        "icon": "help",
+        "default": true
+      }
+    ]
+  },
+  "externalLinks": [
+    {"name": "Jamendo", "link": "https://www.jamendo.com/", "icon": "assets/external-links/jamendo.png", "type": "TORRENT"},
+    {"name": "Plex", "link": "https://app.plex.tv/desktop", "icon": "assets/external-links/plex.png", "type": "OTHER"}
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "login": {
+    "mainTitle": "Login",
+    "inputLogin": "Username",
+    "inputPassword": "Password",
+    "buttonLogin": "Login"
+  },
+
+  "monitoring": {
+    "mainTitle": "Monitoring"
+  },
+
+  "currentProcessInfo": {
+    "cpu": "CPU",
+    "memory": "Memory",
+    "user": "User"
+  },
+
+  "torrentDashboard": {
+    "mainTitle": "Torrent list",
+    "loading": "Loading...",
+    "empty": "Torrent list empty",
+    "errors": {
+      "prefix": "Cannot load the list",
+      "500": "Server error occured.",
+      "504": "The server is not responding"
+    }
+  },
+
+  "torrentDetail": {
+    "mainTitle": "A torrent",
+    "loading": "Loading",
+    "completeName": "Complete name",
+    "destination": "Destination",
+    "errors": {
+      "prefix": "Cannot load the torrent.",
+      "default": "Cannot load the torrent.",
+      "NaN": "Incorrect request"
+    }
+  },
+  "uploadForm": {
+    "mainTitle": "New torrent",
+    "selectTorrent": "Add files",
+    "fileNumber": "file(s)",
+    "buttonUpload": "Run !",
+    "buttonBack": "Back",
+    "errors": {
+      "selectTorrent": "Please add at least one torrent.",
+      "500": "Server error occured."
+    }
+  },
+
+  "deleteConfirmDialog": {
+    "mainTitle": "Several choices possible...",
+    "buttonCancel": "Cancel",
+    "buttonWithData": "Delete with data",
+    "buttonWithout": "Delete only from list"
+  },
+
+  "moveDialog": {
+    "mainTitle": "Put files in...",
+    "loading": "Loading...",
+    "buttonCancel": "Cancel",
+    "buttonMove": "Move !",
+    "errors": {
+      "prefix": "Cannot load the list :",
+      "cannotMove": "Cannot move."
+    }
+  },
+
+  "sideMenu": {
+    "backLink": "Back",
+    "torrentLink": "Torrent list",
+    "monitoringLink": "Monitoring",
+    "logout": "Logout"
+  }
+
+}

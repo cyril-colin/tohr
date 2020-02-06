@@ -1,0 +1,74 @@
+@import "../../../colors.scss";
+
+:host {
+  .progress-bar {
+    width: 100%;
+    height: 30px;
+    background-color: $drawBg;
+    color:  $textPrimary;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+
+    .torrent-error {
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      color: $textError;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+      background-color: $bgPrimary;
+      border: solid 1px $borderError
+    }
+
+    .items {
+      width: 100%;
+      height: 100%;
+      padding-left: 10px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      font-size: small;
+      margin-top: -30px;
+
+      .rate {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .item-start {
+        width: 100px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 12px;
+        justify-content: space-between;
+        color:  $textPrimary;
+      }
+
+      .item-end {
+        width: 100px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 12px;
+        justify-content: flex-end;
+        justify-content: space-between;
+        color:  $textPrimary;
+        margin-right: 15px;
+      }
+    }
+
+    .progress-bar-load {
+      height: 100%;
+      background-color: $drawPrimary;
+      border-radius: 5px;
+    }
+
+  }
+}

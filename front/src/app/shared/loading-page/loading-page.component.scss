@@ -1,0 +1,22 @@
+:host {
+  .loading-zone {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .loader {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  .error-zone {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}

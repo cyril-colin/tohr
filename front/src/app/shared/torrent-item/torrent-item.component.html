@@ -1,0 +1,14 @@
+<div class="card torrent-item" (click)="goTorrent(torrent)">
+  <div class="panel data">
+    <i class="material-icons destination">{{ torrent.destination.icon}}</i>
+  </div>
+
+  <div class="panel info">
+    <div class="title">{{ torrent.name }}</div>
+    <div class="bar">
+      <app-progress-bar [torrent]=torrent></app-progress-bar>
+    </div>
+  </div>
+
+
+</div>

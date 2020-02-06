@@ -1,0 +1,19 @@
+mat-card {
+  margin-top: 30px;
+  margin:0 auto;
+  min-width: 150px;
+  max-width: 500px;
+  width: 70%;
+}
+
+mat-card button {
+  width: 100%;
+}
+
+mat-card mat-form-field {
+  width: 100%;
+}
+
+::ng-deep .error-area {
+  margin-bottom: 10px;
+}

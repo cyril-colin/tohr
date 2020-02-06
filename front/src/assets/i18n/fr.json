@@ -1,0 +1,78 @@
+{
+  "login": {
+    "mainTitle": "Connexion",
+    "inputLogin": "Nom d'utilisateur",
+    "inputPassword": "Mot de passe",
+    "buttonLogin": "Connexion"
+  },
+
+  "monitoring": {
+    "mainTitle": "Monitoring"
+  },
+
+  "currentProcessInfo": {
+    "cpu": "CPU",
+    "memory": "Mémoire",
+    "user": "Utilisateur"
+  },
+
+  "torrentDashboard": {
+    "mainTitle": "Les torrents",
+    "loading": "Chargement en cours...",
+    "empty": "La liste des torrents est vide.",
+    "errors": {
+      "prefix": "Impossible de charger la liste :",
+      "500": "Le serveur rencontre une erreur. Le client torrent est-il démarré ?",
+      "504": "Le serveur ne répond pas."
+    }
+  },
+
+  "torrentDetail": {
+    "mainTitle": "Un torrent",
+    "loading": "Chargement en cours...",
+    "completeName": "Nom complet",
+    "destination": "Destination",
+    "errors": {
+      "prefix": "Impossible de charger le torrent.",
+      "default": "Impossible de charger le torrent.",
+      "NaN": "Requête incorrecte."
+    }
+  },
+  "uploadForm": {
+    "mainTitle": "Nouveau torrent",
+    "selectTorrent": "Ajouter des fichiers",
+    "fileNumber": "fichier(s)",
+    "buttonUpload": "Lancer !",
+    "buttonBack": "Retour",
+    "errors": {
+      "selectTorrent": "Merci d'ajouter au moins un torrent.",
+      "500": "Le serveur rencontre une erreur. Le client torrent est-il démarré ?"
+    }
+  },
+
+  "deleteConfirmDialog": {
+    "mainTitle": "Plusieurs choix sont possibles...",
+    "buttonCancel": "Annuler",
+    "buttonWithData": "Supprimer toutes les données",
+    "buttonWithout": "Supprimer de la liste"
+  },
+
+  "moveDialog": {
+    "mainTitle": "Déposer ces fichiers dans...",
+    "loading": "Chargement en cours...",
+    "buttonCancel": "Annuler",
+    "buttonMove": "Déplacer",
+    "errors": {
+      "prefix": "Impossible de charger la liste :",
+      "cannotMove": "Déplacement impossible."
+    }
+  },
+
+  "sideMenu": {
+    "backLink": "Retour",
+    "torrentLink": "Les torrents",
+    "monitoringLink": "Monitoring",
+    "logout": "Déconnexion"
+  }
+
+}

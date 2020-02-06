@@ -1,0 +1,12 @@
+<div *ngIf="errors && errors.length === 0" class="loading-zone">
+  <div class="loader">
+    <div class="lds-dual-ring"></div>
+  </div>
+  <p>{{ loadingMessage }}</p>
+</div>
+<div *ngIf="errors && errors.length > 0" class="error-zone">
+  {{ errorMessage }}
+  <ul>
+    <li *ngFor="let e of errors">{{ e }}</li>
+  </ul>
+</div>

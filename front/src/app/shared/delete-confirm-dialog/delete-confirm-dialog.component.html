@@ -1,0 +1,11 @@
+<div class="dialog">
+  <div class="dialog-title">
+    {{ 'deleteConfirmDialog.mainTitle' | translate }}
+  </div>
+
+  <div class="actions">
+    <button class="btn-secondary" (click)="close()">{{ 'deleteConfirmDialog.buttonCancel' | translate }}</button>
+    <button class="btn-primary" (click)="deleteWithData()">{{ 'deleteConfirmDialog.buttonWithData' | translate }}</button>
+    <button class="btn-primary" (click)="deleteWithoutData()">{{ 'deleteConfirmDialog.buttonWithout' | translate }}</button>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="destination-icon">
+  <i class="material-icons">{{ torrentDestination.icon }}</i>
+  <span class="icon">{{ torrentDestination.icon }}</span>
+</div>
+
+
+<div class="info">
+  <div>
+    <span class="name">{{ torrentDestination.name }}</span>
+    <span class="path">{{ torrentDestination.path }}</span>
+    <i *ngIf="!torrentDestination.default" class="material-icons">star_border</i>
+    <i *ngIf="torrentDestination.default" class="material-icons">star</i>
+  </div>
+  <span class="access">{{ torrentDestination.rights }}</span>
+  <span class="description">{{ torrentDestination.description }}</span>
+</div>

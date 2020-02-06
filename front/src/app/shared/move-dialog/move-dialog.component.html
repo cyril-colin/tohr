@@ -1,0 +1,22 @@
+<div class="dialog">
+  <div class="dialog-title">
+    {{ 'moveDialog.mainTitle' | translate }}
+  </div>
+  <div *ngIf="destinations$ | async as destinations; else loadError">
+    <app-destination-list [destinations]=destinations [selected]=destination (selectEvent)=selectDestination($event)>
+    </app-destination-list>
+
+    <app-error-area [errors]="errors"></app-error-area>
+
+    <div class="actions">
+      <button class="btn-secondary" (click)="close()">{{ 'moveDialog.buttonCancel' | translate }}</button>
+      <button class="btn-primary" (click)="doMove()">{{ 'moveDialog.buttonMove' | translate }}</button>
+    </div>
+  </div>
+
+  <ng-template #loadError>
+    <app-loading-page [errors]="errors" [errorMessage]="'moveDialog.errors.prefix' | translate"
+      [loadingMessage]="'moveDialog.loading' | translate"></app-loading-page>
+  </ng-template>
+
+</div>

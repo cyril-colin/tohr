@@ -1,0 +1,25 @@
+<div class="dashboard">
+  <ng-container *ngIf="(torrents$ | async) as torrents; else listError">
+    <ng-container *ngIf="torrents.length > 0; else listEmpty">
+      <app-torrent-item *ngFor="let torrent of torrents" [torrent]=torrent>
+      </app-torrent-item>
+    </ng-container>
+
+    <ng-template #listEmpty>
+      La liste des torrents est vide.
+      {{ 'torrentDashboard.empty' | translate }}
+    </ng-template>
+  </ng-container>
+
+
+
+  <ng-template #listError>
+    <app-loading-page [errors]="errors" [errorMessage]="'torrentDashboard.errors.prefix' | translate"
+      [loadingMessage]="'torrentDashboard.loading' | translate"></app-loading-page>
+  </ng-template>
+
+  <button id="add-button" class="btn-primary btn-round" (click)="openUploadForm()">
+    <i class="material-icons">add</i>
+  </button>
+</div>
+

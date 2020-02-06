@@ -1,0 +1,27 @@
+@import "../../../colors.scss";
+
+:host {
+  .dialog {
+    background-color: $bgSecondary;
+    padding: 20px;
+    .dialog-title {
+      font-size: 20px;
+      padding-bottom: 10px;
+      border-bottom: solid 1px $textSecondary
+    }
+
+    .actions {
+      border-top: solid 1px $textSecondary;
+      padding-top: 20px;
+      margin-top: 10px;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      button {
+        width: 45%;
+      }
+    }
+  }
+}

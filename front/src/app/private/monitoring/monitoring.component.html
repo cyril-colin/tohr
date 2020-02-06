@@ -1,0 +1,20 @@
+<div class="monitoring">
+    <div *ngIf="currentProcessInfo$ | async as info" class="card info">
+      <app-current-process-info [currentProcessInfo]=info></app-current-process-info>
+    </div>
+
+
+    <div *ngIf="diskStatus$ | async as diskStatus" class="card disk-status-list">
+      <app-disk-status *ngFor="let ds of diskStatus" [diskStatus]=ds></app-disk-status>
+    </div>
+
+    <div *ngIf="torrentTypes$ | async as torrentTypes" class="card types">
+      <div class="type" *ngFor="let torrentType of torrentTypes">
+        <app-torrent-destination [torrentDestination]=torrentType></app-torrent-destination>
+      </div>
+
+    </div>
+
+
+</div>
+

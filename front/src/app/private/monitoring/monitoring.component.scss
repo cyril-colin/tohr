@@ -1,0 +1,22 @@
+
+.monitoring {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .info {
+
+  }
+  .disk-status-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .card {
+    margin-bottom: 10px;
+  }
+}
+
+
+

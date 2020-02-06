@@ -1,0 +1,42 @@
+@import "../../../colors.scss";
+
+:host {
+  .torrent-item {
+    overflow-wrap: break-word;
+    word-break: break-all;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    cursor: pointer;
+
+    .panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .data {
+      color: $drawPrimary;
+    }
+    .info {
+        width: 80%;
+    }
+
+    .title {
+      margin-bottom: 7px;
+      font-size: 16px;
+      width: 95%;
+    }
+
+    .destination {
+      font-size: 50px;
+    }
+
+
+    .bar {
+      width: 100%;
+    }
+  }
+}

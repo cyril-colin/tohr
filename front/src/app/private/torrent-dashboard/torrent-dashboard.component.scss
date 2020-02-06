@@ -1,0 +1,19 @@
+.dashboard {
+  padding: 5px;
+}
+.space-bottom {
+  margin-bottom: 5%;
+}
+
+#add-button{
+  right: 20px;
+  bottom: 10px;
+  left: auto;
+  position: fixed;
+  width: 50px;
+  height: 50px;
+
+  i {
+    line-height: 34px;
+  }
+}

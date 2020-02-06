@@ -1,0 +1,31 @@
+<div *ngIf="(torrent$ | async) as torrent; else loading" class="card torrent">
+    <div class="actions">
+      <i class="material-icons btn-action" (click)="openMoveDialog(torrent)">forward</i>
+      <i class="material-icons btn-action" (click)="openDialog(torrent)">delete_forever</i>
+      <i class="material-icons btn-action">cloud_download</i>
+    </div>
+
+
+    <div class="divider"></div>
+
+    <div class="panel">
+      <div class="icon">
+        <i class="material-icons">{{ torrent.destination.icon }}</i>
+      </div>
+      <div class="infos">
+        <div>{{ 'torrentDetail.completeName' | translate }} : <b>{{ torrent.name }}</b> </div>
+        <div>{{ 'torrentDetail.destination' | translate }} : <b>{{ torrent.destination.path}}</b> </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <app-progress-bar [torrent]=torrent></app-progress-bar>
+</div>
+
+
+
+<ng-template #loading>
+  <app-loading-page [errors]="errors" [errorMessage]="'torrentDetail.errors.prefix' | translate"
+    [loadingMessage]="'torrentDetail.loading' | translate"></app-loading-page>
+</ng-template>

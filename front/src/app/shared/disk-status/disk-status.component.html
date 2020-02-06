@@ -1,0 +1,9 @@
+  <div>{{ diskStatus.fileSystem }}</div>
+  <div class="progress-bar">
+    {{ diskStatus.available | filesize}}
+    <div class="progress-bar-load" [ngStyle]="{'height': diskStatus.use}">
+        <div>{{diskStatus.used | filesize}}</div>
+      <div>{{ diskStatus.use }}</div>
+    </div>
+  </div>
+  <span class="size">{{ diskStatus.size | filesize }}</span>

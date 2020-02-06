@@ -1,0 +1,6 @@
+<div *ngFor="let e of errors" class="error">
+    <span>{{ e.message }}</span>
+    <div class="icon" (click)="deleteError(e)">
+        <i class="material-icons">done</i>
+    </div>
+</div>

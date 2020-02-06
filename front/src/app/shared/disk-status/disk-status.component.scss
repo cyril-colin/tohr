@@ -1,0 +1,28 @@
+@import "../../../colors.scss";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+  .progress-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $drawBg;
+    height: 175px;
+    width: 150px;
+
+    .progress-bar-load {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: $drawPrimary;
+      color: $textInverted;
+      width: 100%;
+    }
+  }
+}
