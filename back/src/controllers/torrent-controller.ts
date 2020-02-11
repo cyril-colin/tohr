@@ -75,7 +75,7 @@ export class TorrentController {
       return this.throwError400('Missing deleteLocalData.', response, request.query, request.params);
     }
 
-    const tdRequest = this.transmissionDaemonService.remove(request.query.id, request.query.deleteLocalData);
+    const tdRequest = this.transmissionDaemonService.remove(request.params.id, request.query.deleteLocalData);
     tdRequest.then(data => response.send(data));
     tdRequest.catch(err => this.throwError500(response, err));
     return tdRequest;
