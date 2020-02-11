@@ -77,13 +77,13 @@ export class TransmissionDaemonService {
         if (error.response && error.response.status === 409) {
           this.logger.info('Session not set or expired. Attempt number ' + attempt);
           if (attempt >= TransmissionDaemonService.MAX_SESSION_ATTEMPT) {
-            return error;
+            throw error;
           }
 
           this.catchTransmissionSessionError(error.response);
           return this.sendRequest(params, attempt++);
         } else {
-          return error;
+          throw error;
         }
       });
   }
