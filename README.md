@@ -27,7 +27,6 @@ transmission-daemon installed in order to test communication between backend and
 ```bash
 git clone git@github.com:cyril-colin/tohr.git
 npm install
-cp back/config/config.sample.json back/config/config.json
 
 # Create and run the backend environment
 cd vagrant && vagrant up && vagrant ssh

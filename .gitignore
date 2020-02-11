@@ -48,7 +48,6 @@ Thumbs.db
 
 dist-front
 dist-back
-back/config/config.json
 back/config/config.production.json
 
 vagrant/ubuntu-bionic-18.04-cloudimg-console.log
