@@ -6,9 +6,6 @@ friendly.
 It is also a way for me to improve my Angular and Node skills : feel free to give me some
 advices, fork this project or post issues.
 
-The current repository is only for the frontend. Please, checks these repositories too :
-- The backend : https://github.com/cyril-colin/tohr-back
-- The getting started project : https://github.com/cyril-colin/tohr-getting-started
 
 ## Features
 
