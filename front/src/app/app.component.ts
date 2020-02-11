@@ -12,8 +12,10 @@ export class AppComponent {
     private sideMenuService: SideMenuService,
     private translate: TranslateService,
     ) {
-      this.translate.setDefaultLang('fr');
-      translate.use('fr');
+      const supportedLanguages = [ 'en', 'fr'];
+      const browserLanguage = supportedLanguages.find(l => l === navigator.language) ? navigator.language : 'en';
+      this.translate.setDefaultLang(browserLanguage);
+      translate.use(browserLanguage);
     }
 
   openSideMenu() {
