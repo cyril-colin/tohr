@@ -1,12 +1,11 @@
 {
   "name": "tohr",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An attempt to be a more mobile friendly UI for transmission-daemon",
   "author": "Cyril COLIN",
   "scripts": {
     "back-build": "node_modules/.bin/tsc --build tsconfig-back.json",
     "back-start": "./node_modules/.bin/ts-node-dev --project tsconfig-back.json back/server.ts --config config.sample.json",
-    "back-start-vagrant": "cd /tohr && npm run back-start",
     "back-start-vagrant-prod": "cd /tohr && node /tohr/dist-back/server.js --config config.sample.json",
     "ng": "cd front && ng && cd ..",
     "start": "cd front && ng serve --proxy-config proxy.conf.json --host 0.0.0.0 && cd ..",
