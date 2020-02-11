@@ -1,5 +1,5 @@
 #!/bin/bash
-BUILD_NAME='Tohr-1.0.0.tgz'
+BUILD_NAME='Tohr-1.0.1.tgz'
 rm -rf dist-*
 
 npm run back-build
