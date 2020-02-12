@@ -33,7 +33,7 @@ npm install
 
 # Create and run the backend environment
 cd vagrant && vagrant up && vagrant ssh
-cd /tohr && npm run back-start-vagrant
+cd /tohr && npm run back-start
 
 # Go back to previous terminal and run
 npm start
