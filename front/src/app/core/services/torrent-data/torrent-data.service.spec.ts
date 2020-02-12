@@ -10,7 +10,7 @@ describe('TorrentDataService', () => {
   }));
 
   it('should be created', () => {
-    const service: TorrentDataService = TestBed.get(TorrentDataService);
+    const service: TorrentDataService = TestBed.inject(TorrentDataService);
     expect(service).toBeTruthy();
   });
 });
