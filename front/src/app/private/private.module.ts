@@ -22,10 +22,6 @@ import { MoveDialogComponent } from '../shared/move-dialog/move-dialog.component
     CommonModule,
     PrivateRoutingModule,
     SharedModule,
-  ],
-  entryComponents: [
-    DeleteConfirmDialogComponent,
-    MoveDialogComponent,
   ]
 })
 export class PrivateModule { }

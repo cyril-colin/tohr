@@ -44,9 +44,6 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
       }
   })
   ],
-  entryComponents: [
-    SideMenuComponent,
-  ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthentInterceptor, multi: true },
     SideMenuService,
