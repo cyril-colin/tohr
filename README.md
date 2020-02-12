@@ -8,12 +8,14 @@ advices, fork this project or post issues.
 
 
 ## Features
-
 - List all torrents of transmission-daemon
 - Upload a *.torrent file with optionnal path destination
 - See details of a torrent
 - Move and delete a torrent and its data
 - Monitoring page : see CPU, memory and disk usage
+
+![](demo-tohr.gif)
+
 
 ## Getting started
 ### requirements
@@ -23,7 +25,6 @@ advices, fork this project or post issues.
 - Vagrant : https://www.vagrantup.com/downloads.html : Vagrant is used to virtualize the backend, with a
 transmission-daemon installed in order to test communication between backend and transmission-daemon.
 
-![](demo-tohr.gif)
 
 ### Installation 
 ```bash
