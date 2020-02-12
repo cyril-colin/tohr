@@ -31,7 +31,7 @@ export class TorrentDataService {
     const requests = [];
     torrents.forEach(t => requests.push(this.proxyTorrentService.addTorrents(t)));
 
-    return forkJoin(requests);
+    return forkJoin<Torrent>(requests);
   }
 
   deleteTorrent(torrentToDelete: number, withData: boolean): Observable<Torrent[]> {
