@@ -23,11 +23,13 @@ advices, fork this project or post issues.
 - Vagrant : https://www.vagrantup.com/downloads.html : Vagrant is used to virtualize the backend, with a
 transmission-daemon installed in order to test communication between backend and transmission-daemon.
 
+![](demo-tohr.gif)
+
 ### Installation 
 ```bash
 git clone git@github.com:cyril-colin/tohr.git
 npm install
-![](demo-tohr.gif)
+
 # Create and run the backend environment
 cd vagrant && vagrant up && vagrant ssh
 cd /tohr && npm run back-start-vagrant
