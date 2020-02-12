@@ -17,7 +17,7 @@ describe('ProxyTorrentService', () => {
   }));
 
   it('should be created', () => {
-    const service: ProxyTorrentService = TestBed.get(ProxyTorrentService);
+    const service: ProxyTorrentService = TestBed.inject(ProxyTorrentService);
     expect(service).toBeTruthy();
   });
 

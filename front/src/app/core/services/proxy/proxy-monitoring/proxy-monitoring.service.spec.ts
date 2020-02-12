@@ -11,7 +11,7 @@ describe('ProxyMonitoringService', () => {
   }));
 
   it('should be created', () => {
-    const service: ProxyMonitoringService = TestBed.get(ProxyMonitoringService);
+    const service: ProxyMonitoringService = TestBed.inject(ProxyMonitoringService);
     expect(service).toBeTruthy();
   });
 });

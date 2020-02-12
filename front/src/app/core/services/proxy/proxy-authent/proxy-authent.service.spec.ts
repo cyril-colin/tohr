@@ -11,7 +11,7 @@ describe('ProxyAuthentService', () => {
   }));
 
   it('should be created', () => {
-    const service: ProxyAuthentService = TestBed.get(ProxyAuthentService);
+    const service: ProxyAuthentService = TestBed.inject(ProxyAuthentService);
     expect(service).toBeTruthy();
   });
 });
