@@ -1,7 +1,8 @@
 #!/bin/bash
-BUILD_NAME='Tohr-1.0.2.tgz'
+BUILD_NAME='Tohr-1.0.2-dev.tgz'
 rm -rf dist-*
 
+mkdir -p dist-back dist-front
 npm run back-build
 cp back/prod-package.json dist-back/package.json
 (cd dist-back && npm install --only=production)
