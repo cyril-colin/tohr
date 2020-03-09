@@ -32,7 +32,6 @@
     "@types/express-jwt": "0.0.42",
     "@types/jsonwebtoken": "^8.3.7",
     "@types/node": "^13.7.1",
-    "@types/torrent-search-api": "^2.0.0",
     "axios": "^0.19.2",
     "commander": "^4.1.1",
     "express": "^4.17.1",
@@ -40,7 +39,6 @@
     "ngx-filesize": "^2.0.2",
     "node-cache": "^5.1.0",
     "rxjs": "~6.5.4",
-    "torrent-search-api": "^2.0.10",
     "tslib": "^1.9.0",
     "zone.js": "~0.10.2"
   },

@@ -8,6 +8,8 @@
     "commander": "^3.0.2",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
-    "node-cache": "^4.2.1"
+    "node-cache": "^4.2.1",
+    "torrent-search-api": "^2.0.10",
+    "@types/torrent-search-api": "^2.0.0"
   }
 }
