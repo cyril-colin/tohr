@@ -27,6 +27,18 @@
     }
   },
 
+  "browser": {
+    "mainTitle": "Recherche",
+    "placeholderSearch": "Votre recherche...",
+    "loading": "Loading...",
+    "empty": "Aucun résultat",
+    "errors": {
+      "prefix": "Impossible de charger la liste.",
+      "500": "Le serveur rencontre une erreur. Le client torrent est-il démarré ?",
+      "504": "Le serveur ne répond pas."
+    }
+  },
+
   "torrentDetail": {
     "mainTitle": "Un torrent",
     "loading": "Chargement en cours...",
@@ -72,6 +84,7 @@
     "backLink": "Retour",
     "torrentLink": "Les torrents",
     "monitoringLink": "Monitoring",
+    "browserLink": "Recherche",
     "logout": "Déconnexion"
   }
 

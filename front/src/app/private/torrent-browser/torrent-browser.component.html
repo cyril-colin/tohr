@@ -1,0 +1,17 @@
+<div class="dashboard">
+<form [formGroup]=form>
+  <input type="text" [formControl]="form.get('search')" placeholder="{{ 'browser.placeholderSearch' | translate }}">
+  <app-destination-list [destinations]="torrentDestinations$ | async" (selectEvent)=selectDestination($event) [selected]=defaultDestination></app-destination-list>
+  <i class="material-icons search-btn" (click)="search()">search</i>
+</form>
+
+<div class="results">
+  <div *ngFor="let torrent of searchResult" class="card torrent">
+    <div>{{torrent.title}}</div>
+    <div>{{torrent.size}} - {{ torrent.seeds }}</div>
+
+    <i class="material-icons btn-action" (click)="add(torrent)">add</i>
+    <app-error-area []></app-error-area>
+  </div>
+</div>
+</div>

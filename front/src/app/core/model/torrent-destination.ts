@@ -4,5 +4,6 @@ export interface TorrentDestination {
   description: string;
   icon: string;
   default: boolean;
+  category: string;
   rights: string;
 }

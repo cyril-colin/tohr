@@ -27,6 +27,18 @@
     }
   },
 
+  "browser": {
+    "mainTitle": "Torrent Browser",
+    "placeholderSearch": "Search...",
+    "loading": "Loading...",
+    "empty": "Torrent list empty",
+    "errors": {
+      "prefix": "Cannot load the list",
+      "500": "Server error occured.",
+      "504": "The server is not responding"
+    }
+  },
+
   "torrentDetail": {
     "mainTitle": "A torrent",
     "loading": "Loading",
@@ -72,6 +84,7 @@
     "backLink": "Back",
     "torrentLink": "Torrent list",
     "monitoringLink": "Monitoring",
+    "browserLink": "Torrent browser",
     "logout": "Logout"
   }
 

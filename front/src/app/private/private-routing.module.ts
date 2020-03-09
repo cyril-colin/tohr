@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { UploadFormComponent } from './upload-form/upload-form.component';
 import { MonitoringComponent } from './monitoring/monitoring.component';
 import { TorrentDetailComponent } from './torrent-detail/torrent-detail.component';
+import { TorrentBrowserComponent } from './torrent-browser/torrent-browser.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'torrents/:id', component: TorrentDetailComponent },
   { path: 'add-torrents', component: UploadFormComponent },
   { path: 'monitoring', component: MonitoringComponent },
+  { path: 'browser', component: TorrentBrowserComponent },
 ];
 
 @NgModule({

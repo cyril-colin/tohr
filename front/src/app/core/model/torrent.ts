@@ -22,6 +22,18 @@ export interface TorrentPost {
   metainfo: string;
 }
 
+export interface BrowserTorrent {
+  title: string;
+  time: Date;
+  seeds: number;
+  peers: number;
+  size: string;
+  desc: string;
+  id: string;
+  provider: string;
+  link: string;
+}
+
 
 export const mockTorrents: Torrent[] = [
   { downloadDir: '/media/NFS/music', error: 0, errorString: null, id: 1, name: 'Ubuntu', percentDone: 0.5, rateDownload: 20, rateUpload: 20, totalSize: 90000 },
