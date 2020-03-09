@@ -45,6 +45,19 @@ export class TransmissionDaemonService {
     return this.sendRequest(requestBody);
   }
 
+  public addTorrentFile(filename: string, downloadDir: string): Promise<any> {
+    const requestBody: TransmissionRequest = {
+      method: 'torrent-add',
+      arguments: {
+        'download-dir': downloadDir,
+        filename,
+      }
+    };
+
+    this.logger.debug('request : ', requestBody);
+    return this.sendRequest(requestBody);
+  }
+
   public remove(id: string, deleteLocalData: boolean): Promise<any> {
     const requestBody: TransmissionRequest = {
       method: 'torrent-remove',

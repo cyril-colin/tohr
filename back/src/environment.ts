@@ -12,4 +12,12 @@ export interface Environment {
     users: { login: string, password: string, }[];
     monitoring: {diskToWatch: string[], destinations: TorrentDestination[]};
     externalLinks: ExternalLink[];
+    torrentProviders: TorrentProvider[];
+}
+
+export interface TorrentProvider {
+  name: 'YggTorrent';
+  baseUrl: string;
+  username: string;
+  password: string;
 }
