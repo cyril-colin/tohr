@@ -46,7 +46,6 @@ export class TorrentBrowserComponent implements OnInit {
 
   search(): void {
     const search = this.form.getRawValue();
-    search.search = search.search || '';
     this.proxyBrowserService.search(search).subscribe({
       next: (res) => this.searchResult = res,
       error: (err) => {
@@ -69,7 +68,6 @@ export class TorrentBrowserComponent implements OnInit {
   }
 
   selectDestination(destination: TorrentDestination): void {
-    console.log(destination);
     this.form.controls.destination.setValue(destination);
   }
 
