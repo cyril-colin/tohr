@@ -38,6 +38,7 @@
       "search": "Error on search.",
       "searchNotValid": "Form not valid",
       "prefix": "Cannot load the list",
+      "adding": "Error on add. Retry ?",
       "500": "Server error occured.",
       "504": "The server is not responding"
     }

@@ -38,6 +38,7 @@
       "search": "Erreur lors de la recherche.",
       "searchNotValid": "Formulaire de recherche invalide",
       "prefix": "Impossible de charger la liste.",
+      "adding": "Erreur d'ajout. Retenter peut suffire...",
       "500": "Le serveur rencontre une erreur. Le client torrent est-il démarré ?",
       "504": "Le serveur ne répond pas."
     }

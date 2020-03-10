@@ -28,12 +28,7 @@
         [loadingMessage]="'browser.loading' | translate"></app-loading-page>
 
       <ng-container *ngIf="!searching && searchErrors.length === 0  && searchResult.length > 0">
-        <div *ngFor="let torrent of searchResult" class="card torrent">
-          <div>{{torrent.title}}</div>
-          <div>{{torrent.size}} - {{ torrent.seeds }}</div>
-
-          <i class="material-icons btn-action" (click)="add(torrent)">add</i>
-        </div>
+        <app-torrent-browser-item *ngFor="let torrent of searchResult" [torrent]="torrent" [currentDest]="form.getRawValue().destination"></app-torrent-browser-item>
       </ng-container>
 
       <div *ngIf="!searching && searchErrors.length === 0 && searchResult.length == 0">
