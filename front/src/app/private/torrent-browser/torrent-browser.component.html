@@ -1,16 +1,53 @@
 <div class="dashboard">
-<form [formGroup]=form>
-  <input type="text" [formControl]="form.get('search')" placeholder="{{ 'browser.placeholderSearch' | translate }}">
-  <app-destination-list [destinations]="torrentDestinations$ | async" (selectEvent)=selectDestination($event) [selected]=defaultDestination></app-destination-list>
-  <i class="material-icons search-btn" (click)="search()">search</i>
-</form>
+  <ng-container *ngIf="(torrentDestinations$ | async) as destinations">
+    <ng-container *ngIf="destinations.length > 0; else distEmpty">
+      <form [formGroup]=form>
+        <input class="input-text" type="text" [formControl]="form.get('search')"
+          placeholder="{{ 'browser.placeholderSearch' | translate }}">
 
-<div class="results">
-  <div *ngFor="let torrent of searchResult" class="card torrent">
-    <div>{{torrent.title}}</div>
-    <div>{{torrent.size}} - {{ torrent.seeds }}</div>
+          <div class="selector">
+            <app-destination-list [destinations]=destinations [selected]=defaultDestination (selectEvent)=selectDestination($event)></app-destination-list>
+          </div>
 
-    <i class="material-icons btn-action" (click)="add(torrent)">add</i>
-  </div>
-</div>
+        <button class="btn-primary" (click)="search()">
+          <i class="material-icons">search</i>{{ 'browser.searchBtn' | translate }}
+        </button>
+      </form>
+    </ng-container>
+
+    <ng-template #distEmpty>
+      {{ 'browser.emptyFilters' | translate }}
+    </ng-template>
+
+
+
+
+    <div class="results">
+
+      <app-loading-page *ngIf="searching || searchErrors.length > 0" [errors]="searchErrors" [errorMessage]="'browser.errors.prefix' | translate"
+        [loadingMessage]="'browser.loading' | translate"></app-loading-page>
+
+      <ng-container *ngIf="!searching && searchErrors.length === 0  && searchResult.length > 0">
+        <div *ngFor="let torrent of searchResult" class="card torrent">
+          <div>{{torrent.title}}</div>
+          <div>{{torrent.size}} - {{ torrent.seeds }}</div>
+
+          <i class="material-icons btn-action" (click)="add(torrent)">add</i>
+        </div>
+      </ng-container>
+
+      <div *ngIf="!searching && searchErrors.length === 0 && searchResult.length == 0">
+        {{ 'browser.searchEmpty' | translate }}
+      </div>
+
+    </div>
+
+  </ng-container>
+
+
+
+
+
+
+
 </div>
