@@ -52,7 +52,7 @@ export class TorrentBrowserController {
     const torrentPath = '/tmp/' + Math.random().toString(36).substring(7)+'.torrent';
     return this.ts.downloadTorrent(params, torrentPath)
           .then(buffer => {
-            this.transmissionDaemonService.addTorrentFile(torrentPath, '/home/vagrant/films').then(upload => {
+            this.transmissionDaemonService.addTorrentFile(torrentPath, params.destination.path).then(upload => {
               return response.send(upload);
             }).catch(err => this.httpErrorService.error500(response, err));
           }).catch(err => {
