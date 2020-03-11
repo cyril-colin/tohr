@@ -90,6 +90,7 @@
     "torrentLink": "Les torrents",
     "monitoringLink": "Monitoring",
     "browserLink": "Recherche",
+    "addFormLink": "Ajouter un .torrent",
     "logout": "Déconnexion"
   }
 

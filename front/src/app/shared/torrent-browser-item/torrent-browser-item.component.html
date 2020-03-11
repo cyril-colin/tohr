@@ -6,13 +6,12 @@
     </div>
 
     <div class="actions">
-      <ng-container *ngIf="added">
-        <i class="material-icons done" >done</i>
-        Torrent ajouté
-      </ng-container>
+      <div *ngIf="isAdding" class="loading-button">
+        <div class="lds-dual-ring"></div>
+      </div>
 
-      <ng-container *ngIf="!added">
-        <i class="material-icons btn-action" (click)="add(torrent, currentDest)">add</i>
+      <ng-container *ngIf="!added && !isAdding">
+        <i class="material-icons btn-action" (click)="add(torrent, currentDest)">add_circle</i>
       </ng-container>
     </div>
   </div>
@@ -20,6 +19,10 @@
   <div class="error">
     <app-error-area [errors]=errors></app-error-area>
   </div>
+  <ng-container *ngIf="added">
+    <i class="material-icons done" >done</i>
+    Torrent ajouté
+  </ng-container>
 
 
 

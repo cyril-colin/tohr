@@ -1,14 +1,34 @@
+@import "../../../colors.scss";
+
 :host {
+
   display: flex;
   flex-direction: column;
+  margin-bottom: 10px;
   .main {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
 
-    .done {
-      color: green;
-    }
+
+  }
+
+  .actions {
+    width: 20%;
+  }
+
+  .btn-action {
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+  }
+
+  .loading-button {
+    width: 30px;
+    height: 30px;
+  }
+  .done {
+    color: $textSuccess;
   }
 }

@@ -15,6 +15,7 @@ export class TorrentBrowserItemComponent implements OnInit {
   @Input() torrent: BrowserTorrent;
   @Input() currentDest: TorrentDestination;
   added = false;
+  isAdding = false;
   errors: ErrorAreaItem[] = [];
   constructor(
     private proxyBrowserService: ProxyBrowserService,
@@ -25,9 +26,11 @@ export class TorrentBrowserItemComponent implements OnInit {
   }
 
   add(torrent: BrowserTorrent, destination: TorrentDestination): void {
+    this.isAdding = true;
     this.errors = [];
     this.proxyBrowserService.add(torrent, destination).subscribe({
       next: (res) => {
+        this.isAdding = false;
         if (res.result === 'success') {
           this.added = true;
         } else {
@@ -37,6 +40,7 @@ export class TorrentBrowserItemComponent implements OnInit {
         }
       },
       error: (err) => {
+        this.isAdding = false;
         this.errors.push({id: 0, message: this.translate.instant('browser.errors.500')});
         console.error(err)
       },

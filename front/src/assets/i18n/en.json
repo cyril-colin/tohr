@@ -90,6 +90,7 @@
     "torrentLink": "Torrent list",
     "monitoringLink": "Monitoring",
     "browserLink": "Torrent browser",
+    "addFormLink": "Upload a torrent",
     "logout": "Logout"
   }
 
