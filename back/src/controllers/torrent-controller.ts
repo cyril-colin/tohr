@@ -4,15 +4,17 @@ import { TorrentDestination } from '../core/monitoring/torrent-destination.model
 import { TransmissionDaemonService } from '../services/transmission-daemon.service';
 import { Environment } from '../environment';
 import { HttpErrorService } from '../services/http-error.service';
+import { LoggerService } from '../services/logger.service';
 
 export class TorrentController {
   constructor(
     private transmissionDaemonService: TransmissionDaemonService,
     private env: Environment,
     private httpErrorService: HttpErrorService,
+    private logger: LoggerService,
   ) { }
 
-  getAll(request: express.Request, response: express.Response): Promise<any> {
+  getAll(request: any, response: express.Response): Promise<any> {
     const tdRequest = this.transmissionDaemonService.get();
     tdRequest.then(data => {
       const destinationsList: TorrentDestination[] = this.env.monitoring.destinations;
