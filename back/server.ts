@@ -20,6 +20,7 @@ import { CurrentUserService } from './src/services/current-user.service';
 program.option('-c, --config <config>', 'The configuration file', 'config.production.json');
 program.parse(process.argv);
 
+const config: Environment = require(__dirname + '/config/'+ program.config);
 const logger = createLogger({
   format: format.combine(
     format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
@@ -27,7 +28,7 @@ const logger = createLogger({
   ),
   transports: [
     new transports.File({
-      filename: './logs/all-logs.log',
+      filename: config.logFile,
       maxsize: 5242880,
       maxFiles: 5,
     }),
@@ -38,8 +39,6 @@ const logger = createLogger({
 const app = express();
 
 
-// Handle POST requests that come in formatted as JSON
-const config: Environment = require(__dirname + '/config/'+ program.config);
 const loggerService = new LoggerService(logger);
 const cache = new NodeCache();
 const tdService = new TransmissionDaemonService(cache, config, loggerService);

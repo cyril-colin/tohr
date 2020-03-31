@@ -2,6 +2,7 @@
   "bind": "0.0.0.0",
   "serverPort": 4201,
   "distPath": "../dist-front/",
+  "logFile": "'./logs/all-logs.log'",
   "transmissionDaemonLogin" : "test",
   "transmissionDaemonPassword" : "test",
   "transmissionDaemonUrl" : "http://localhost:9091/transmission/rpc",

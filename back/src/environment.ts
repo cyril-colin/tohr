@@ -5,6 +5,7 @@ export interface Environment {
     serverPort: number;
     bind: string;
     distPath: string;
+    logFile: string;
     transmissionDaemonLogin: string;
     transmissionDaemonPassword: string;
     transmissionDaemonUrl: string;
