@@ -4,6 +4,11 @@ import { Observable } from 'rxjs';
 import { BrowserTorrent } from 'src/app/core/model/torrent';
 import { TorrentDestination } from 'src/app/core/model/torrent-destination';
 
+export interface SearchData {
+  searchValue: string;
+  destination: TorrentDestination;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,10 +18,10 @@ export class ProxyBrowserService {
   constructor(private http: HttpClient) { }
 
 
-  search(data: {search: string; destination: TorrentDestination}): Observable<BrowserTorrent[]> {
+  search(data: SearchData): Observable<BrowserTorrent[]> {
     const params = new HttpParams({
       fromObject: {
-        search: encodeURI(data.search),
+        search: encodeURI(data.searchValue),
         category: data.destination.category,
       }
     });

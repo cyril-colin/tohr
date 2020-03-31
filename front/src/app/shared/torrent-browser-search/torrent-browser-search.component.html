@@ -1,0 +1,17 @@
+<form (submit)="search()">
+  <app-destination-list [destinations]=destinations [selected]=selected (selectEvent)=selectDestination($event)></app-destination-list>
+
+  <div class="search-input">
+    <input class="input-text" type="text" [formControl]="form.get('searchValue')"
+          placeholder="{{ 'browser.placeholderSearch' | translate }}">
+
+    <button class="btn-search" type="submit">
+      <i class="material-icons">send</i>
+    </button>
+  </div>
+
+</form>
+
+
+
+

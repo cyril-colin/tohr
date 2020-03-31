@@ -1,19 +1,7 @@
 <div class="dashboard">
   <ng-container *ngIf="(torrentDestinations$ | async) as destinations">
-    <ng-container *ngIf="destinations.length > 0; else distEmpty">
-      <form [formGroup]=form>
-        <input class="input-text" type="text" [formControl]="form.get('search')"
-          placeholder="{{ 'browser.placeholderSearch' | translate }}">
 
-          <div class="selector">
-            <app-destination-list [destinations]=destinations [selected]=defaultDestination (selectEvent)=selectDestination($event)></app-destination-list>
-          </div>
-
-        <button class="btn-primary" (click)="search()">
-          <i class="material-icons">search</i>{{ 'browser.searchBtn' | translate }}
-        </button>
-      </form>
-    </ng-container>
+    <app-torrent-browser-search [destinations]=destinations [selected]=defaultDestination (searchEvent)=search($event)></app-torrent-browser-search>
 
     <ng-template #distEmpty>
       {{ 'browser.emptyFilters' | translate }}

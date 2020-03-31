@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BrowserTorrent } from 'src/app/core/model/torrent';
 import { Observable } from 'rxjs';
-import { ProxyBrowserService } from 'src/app/core/services/proxy/proxy-browser/proxy-browser.service';
+import { ProxyBrowserService, SearchData } from 'src/app/core/services/proxy/proxy-browser/proxy-browser.service';
 import { ProxyMonitoringService } from 'src/app/core/services/proxy/proxy-monitoring/proxy-monitoring.service';
 import { MainToolbarService } from 'src/app/shared/main-toolbar/main-toolbar.service';
 import { TorrentDestination } from 'src/app/core/model/torrent-destination';
@@ -48,28 +48,22 @@ export class TorrentBrowserComponent implements OnInit {
   }
 
 
-  search(): void {
+  search(search: SearchData): void {
     this.searching = true;
-    this.searchErrors = [];
-    if (this.form.valid) {
-      const search = this.form.getRawValue();
-      this.proxyBrowserService.search(search).subscribe({
-        next: (res) => {
-          this.searching = false;
-          this.searchResult = res;
-        },
-        error: (err) => {
-          this.searching = false
-          this.searchErrors.push(this.translate.instant('browser.errors.search'));
-          console.error(err);
-        }
-      });
-    } else {
-      console.log(this.form);
-      this.searching = false;
-      this.searchErrors.push(this.translate.instant('browser.errors.searchNotValid'));
-    }
-
+    this.proxyBrowserService.search(search).subscribe({
+      next: (res) => {
+        this.searching = false;
+        this.searchResult = res;
+      },
+      error: (err) => {
+        this.searching = false
+        this.searchErrors.push(this.translate.instant('browser.errors.search'));
+        console.error(err);
+      },
+      complete: () => {
+        this.searching = false;
+      }
+    });
   }
 
   add(torrent: BrowserTorrent): void {
@@ -88,5 +82,4 @@ export class TorrentBrowserComponent implements OnInit {
   selectDestination(destination: TorrentDestination): void {
     this.form.controls.destination.setValue(destination);
   }
-
 }

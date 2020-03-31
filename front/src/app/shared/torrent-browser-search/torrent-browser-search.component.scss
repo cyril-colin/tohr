@@ -1,0 +1,18 @@
+@import "../../../colors.scss";
+
+:host {
+  .search-input {
+    display: flex;
+    flex-direction: row;
+
+    .btn-search {
+      width: 70px;
+      height: 54px;
+      background-color: $drawPrimary;
+      border: solid 2px $drawPrimary;
+      font-size: 1.2em;
+      color: $textInverted;
+      cursor: pointer;
+    }
+  }
+}
