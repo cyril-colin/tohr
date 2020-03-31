@@ -1,6 +1,8 @@
 <div class="destination-list">
   <div  *ngFor="let des of destinations" class="destination" [class.selected]="selected && selected.name == des.name" (click)="selectDestination(des)">
-    <i class="material-icons">{{des.icon}}</i>
-    <div class="destination-description">{{des.description}}</div>
+    <div class="content">
+      <i class="material-icons">{{des.icon}}</i>
+      <div class="destination-description">{{des.description}}</div>
+    </div>
   </div>
 </div>

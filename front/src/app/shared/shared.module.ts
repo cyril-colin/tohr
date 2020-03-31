@@ -15,6 +15,7 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { DestinationListComponent } from './destination-list/destination-list.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TorrentBrowserItemComponent } from './torrent-browser-item/torrent-browser-item.component';
+import { TorrentBrowserSearchComponent } from './torrent-browser-search/torrent-browser-search.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { TorrentBrowserItemComponent } from './torrent-browser-item/torrent-brow
     MoveDialogComponent,
     ProgressBarComponent,
     DestinationListComponent,
+    TorrentBrowserSearchComponent,
   ],
   imports: [
     CommonModule,
@@ -56,6 +58,7 @@ import { TorrentBrowserItemComponent } from './torrent-browser-item/torrent-brow
     DestinationListComponent,
     TranslateModule,
     TorrentBrowserItemComponent,
+    TorrentBrowserSearchComponent,
   ]
 })
 export class SharedModule { }

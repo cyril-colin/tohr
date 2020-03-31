@@ -9,20 +9,35 @@
     justify-content: center;
     width: 100%;
 
-
     .destination {
       width: 150px;
-      height: 150px;
+      height: 50px;
+      margin: 5px;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      border-radius: 5px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+
+
+      .content {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+
+        div {
+          margin-left: 5px;
+        }
+      }
     }
 
     .selected {
-      border: 4px solid $drawPrimary;
+      background-color: $drawPrimary;
+      color: $textInverted;
     }
   }
 
