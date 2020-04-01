@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       const loginData = this.form.getRawValue() as LoginData;
       this.proxyAuthentService.login(loginData).subscribe(
         () => {
-          this.router.navigate(['..', 'private', 'dashboard'], {relativeTo: this.route});
+          this.router.navigate(['..', 'private', 'browser'], {relativeTo: this.route});
           this.isLoading = false;
         } ,
         err => {
