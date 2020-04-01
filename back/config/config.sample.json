@@ -19,7 +19,7 @@
       {
         "name": "Films",
         "path": "/home/vagrant/films",
-        "description": "les films",
+        "description": "Films",
         "icon": "movie",
         "category": "Movies",
         "default": false
@@ -27,7 +27,7 @@
       {
         "name": "Musics",
         "path": "/home/vagrant/musics",
-        "description": "les musiques",
+        "description": "Musiques",
         "icon": "music_note",
         "category": "Music",
         "default": false
@@ -35,7 +35,7 @@
       {
         "name": "Series",
         "path": "/home/vagrant/series",
-        "description": "les séries",
+        "description": "Séries",
         "icon": "fast_forward",
         "category": "TV",
         "default": false
@@ -43,7 +43,7 @@
       {
         "name": "I don't know",
         "path": "/home/vagrant/other",
-        "description": "un autre répertoire",
+        "description": "Tout",
         "icon": "help",
         "category": "All",
         "default": true
@@ -54,5 +54,8 @@
     {"name": "Jamendo", "link": "https://www.jamendo.com/", "icon": "assets/external-links/jamendo.png", "type": "TORRENT"},
     {"name": "Archive.org", "link": "https://archive.org/", "icon": "assets/external-links/archive.jpg", "type": "TORRENT"},
     {"name": "Plex", "link": "https://app.plex.tv/desktop", "icon": "assets/external-links/plex.png", "type": "OTHER"}
+  ],
+  "torrentProviders": [
+      { "name": "YggTorrent", "username": "Ratatinator", "password": "Patate56", "baseUrl": "https://www2.yggtorrent.se" }
   ]
 }

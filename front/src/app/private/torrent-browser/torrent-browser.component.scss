@@ -1,8 +1,6 @@
 @import '../../../colors.scss';
 :host {
-  form {
-    input, .selector, button {
-      margin-bottom: 10px;
-    }
+  .search-wrapper {
+    margin-bottom: 15px;
   }
 }

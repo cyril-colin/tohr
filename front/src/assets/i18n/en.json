@@ -85,6 +85,10 @@
     }
   },
 
+  "browserSearch": {
+    "title": "Search"
+  },
+
   "sideMenu": {
     "backLink": "Back",
     "torrentLink": "Torrent list",

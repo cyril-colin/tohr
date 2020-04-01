@@ -1,7 +1,9 @@
 <div class="dashboard">
   <ng-container *ngIf="(torrentDestinations$ | async) as destinations">
 
-    <app-torrent-browser-search [destinations]=destinations [selected]=defaultDestination (searchEvent)=search($event)></app-torrent-browser-search>
+    <div class="search-wrapper">
+      <app-torrent-browser-search [destinations]=destinations [selected]=defaultDestination (searchEvent)=search($event)></app-torrent-browser-search>
+    </div>
 
     <ng-template #distEmpty>
       {{ 'browser.emptyFilters' | translate }}
