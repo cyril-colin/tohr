@@ -5,11 +5,27 @@ import { ProxyBrowserService } from 'src/app/core/services/proxy/proxy-browser/p
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorAreaItem } from '../error-area/error-area.component';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-torrent-browser-item',
   templateUrl: './torrent-browser-item.component.html',
-  styleUrls: ['./torrent-browser-item.component.scss']
+  styleUrls: ['./torrent-browser-item.component.scss'],
+  animations: [
+    trigger('slideInOut', [
+      state('in', style({
+        overflow: 'hidden',
+        height: '*',
+      })),
+      state('out', style({
+        opacity: '0',
+        overflow: 'hidden',
+        height: '0px',
+      })),
+      transition('in => out', animate('200ms ease-in-out')),
+      transition('out => in', animate('200ms ease-in-out'))
+    ])
+  ]
 })
 export class TorrentBrowserItemComponent implements OnInit {
   @Input() torrent: BrowserTorrent;
@@ -17,12 +33,14 @@ export class TorrentBrowserItemComponent implements OnInit {
   added = false;
   isAdding = false;
   errors: ErrorAreaItem[] = [];
+  collapseAnimation: string;
   constructor(
     private proxyBrowserService: ProxyBrowserService,
     private translate: TranslateService,
   ) { }
 
   ngOnInit(): void {
+    this.collapseAnimation = 'out';
   }
 
   add(torrent: BrowserTorrent, destination: TorrentDestination): void {
@@ -45,6 +63,10 @@ export class TorrentBrowserItemComponent implements OnInit {
         console.error(err)
       },
     });
+  }
+
+  collapse(): void {
+    this.collapseAnimation = this.collapseAnimation === 'out' ? 'in' : 'out';
   }
 
 }
