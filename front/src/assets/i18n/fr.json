@@ -29,8 +29,6 @@
 
   "browser": {
     "mainTitle": "Recherche",
-    "placeholderSearch": "Votre recherche...",
-    "searchBtn": "Rechercher",
     "searchEmpty": "Aucun resultat",
     "loading": "Loading...",
     "emptyFilters": "Impossible de récupérer les filtres, aucune recherche ne peut être faite.",
@@ -85,8 +83,9 @@
     }
   },
 
-  "browserSearch": {
-    "title": "Rechercher"
+  "torrentBrowserSearch": {
+    "title": "Chercher dans ",
+    "placeholder": "Chercher dans "
   },
 
   "sideMenu": {

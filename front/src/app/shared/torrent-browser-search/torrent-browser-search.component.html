@@ -1,6 +1,6 @@
 <div class="card search">
   <div class="search-title"  (click)="toggleForm()">
-    <div>{{ 'browserSearch.title' | translate }}</div>
+    <div>{{ 'torrentBrowserSearch.title' | translate }} {{ selected.description }}</div>
     <div><i class="material-icons">keyboard_arrow_down</i></div>
   </div>
 
@@ -9,7 +9,7 @@
 
     <div class="search-input">
       <input class="input-text" type="text" [formControl]="form.get('searchValue')"
-            placeholder="{{ 'browser.placeholderSearch' | translate }}">
+            placeholder="{{ 'torrentBrowserSearch.placeholder' | translate }}{{ selected.description }}">
 
       <button class="btn-search" type="submit">
         <i class="material-icons">send</i>

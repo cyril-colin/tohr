@@ -29,8 +29,6 @@
 
   "browser": {
     "mainTitle": "Torrent Browser",
-    "placeholderSearch": "Search...",
-    "searchBtn": "Rechercher",
     "searchEmpty": "No result.",
     "loading": "Loading...",
     "emptyFilters": "We cannot get filters, so search feature is not available.",
@@ -86,7 +84,8 @@
   },
 
   "browserSearch": {
-    "title": "Search"
+    "title": "Search in ",
+    "placeholder": "Search in "
   },
 
   "sideMenu": {
