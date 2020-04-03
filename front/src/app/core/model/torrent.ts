@@ -32,6 +32,18 @@ export interface BrowserTorrent {
   id: string;
   provider: string;
   link: string;
+  computedData: BrowserComputedData;
+  destination?: any
+}
+
+export interface BrowserComputedData {
+  title: string;
+  tags: BrowserTag[];
+};
+
+export interface BrowserTag {
+  name: string,
+  color: string
 }
 
 

@@ -2,8 +2,8 @@ import * as express from 'express';
 import { TorrentBrowserService, BrowserSearch } from '../services/torrent-browser.service';
 import { TransmissionDaemonService } from '../services/transmission-daemon.service';
 import { Environment } from '../environment';
-import { TorrentDestination } from '../core/monitoring/torrent-destination.model';
 import { HttpErrorService } from '../services/http-error.service';
+import { BrowserTorrent } from '../core/torrent.model';
 
 
 export class TorrentBrowserController {
@@ -34,7 +34,7 @@ export class TorrentBrowserController {
   }
 
   add(request: express.Request, response: express.Response): Promise<void | express.Response> {
-    const params: {provider: string; link: string; destination: TorrentDestination} = request.body;
+    const params: BrowserTorrent = request.body;
     if (!params) {
       return this.httpErrorService.error400('No given torrent.', response);
     }
@@ -51,11 +51,11 @@ export class TorrentBrowserController {
 
     const torrentPath = '/tmp/' + Math.random().toString(36).substring(7)+'.torrent';
     return this.ts.downloadTorrent(params, torrentPath)
-          .then(buffer => {
+          .then((buffer: any) => {
             this.transmissionDaemonService.addTorrentFile(torrentPath, params.destination.path).then(upload => {
               return response.send(upload);
             }).catch(err => this.httpErrorService.error500(response, err));
-          }).catch(err => {
+          }).catch((err: any) => {
             console.error(err);
             return this.httpErrorService.error500(response, err);
           });

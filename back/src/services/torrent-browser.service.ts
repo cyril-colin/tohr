@@ -41,14 +41,14 @@ export class TorrentBrowserService {
 
   search(s: BrowserSearch): Promise<BrowserTorrent[]> {
     return this.ts.search(s.search, s.category, s.limit)
-      .then(results => Promise.resolve(results.map(r => this.computeData(r))));
+      .then((results: BrowserTorrent[]) => Promise.resolve(results.map((r: BrowserTorrent) => this.computeData(r))));
   }
 
   downloadTorrent(torrent: BrowserTorrent, path?: string): Promise<any> {
     if (path) {
       this.ts.downloadTorrent(torrent, path);
     }
-    return this.ts.downloadTorrent(torrent);
+    return this.ts.downloadTorrent(torrent as any);
   }
 
   computeData(torrent: BrowserTorrent): BrowserTorrent {
