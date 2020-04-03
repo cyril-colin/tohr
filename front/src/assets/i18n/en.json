@@ -88,6 +88,10 @@
     "placeholder": "Search in "
   },
 
+  "mainToolBar": {
+    "available": "Space left"
+  },
+
   "sideMenu": {
     "backLink": "Back",
     "torrentLink": "Torrent list",

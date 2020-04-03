@@ -88,6 +88,10 @@
     "placeholder": "Chercher dans "
   },
 
+  "mainToolBar": {
+    "available": "Espace disponible"
+  },
+
   "sideMenu": {
     "backLink": "Retour",
     "torrentLink": "Les torrents",
