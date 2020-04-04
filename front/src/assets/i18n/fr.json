@@ -83,6 +83,10 @@
     }
   },
 
+  "torrentBrowserItem": {
+    "more": "Détails"
+  },
+
   "torrentBrowserSearch": {
     "title": "Chercher dans ",
     "placeholder": "Chercher dans "

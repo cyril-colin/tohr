@@ -1,10 +1,11 @@
 <div class="card">
   <div class="main">
     <div class="infos" (click)="collapse()">
-      <div class="title-compact">{{torrent.computedData.title}}</div>
       <div class="tags">
         <span *ngFor="let t of torrent.computedData.tags" class="tag" [ngStyle]="{'background-color': t.color }">{{ t.name }}</span>
       </div>
+      <div class="title-compact">{{torrent.computedData.title}}</div>
+
 
       <div [@slideInOut]="collapseAnimation" class="collapse">
         <div class="title-full">
@@ -12,7 +13,11 @@
         </div>
       </div>
 
-      <div class="stats"><span class="size">{{torrent.size}}</span>  <span [class.seeds-no]="torrent.seeds === 0" [class.seeds]="torrent.seeds > 0">{{ torrent.seeds }} seeds</span></div>
+      <div class="stats">
+        <span class="size">{{torrent.size}}</span>
+        <div class="more"><span>{{ 'torrentBrowserItem.more' | translate }}</span></div>
+        <span [class.seeds-no]="torrent.seeds === 0" [class.seeds]="torrent.seeds > 0">{{ torrent.seeds }} seeds</span>
+      </div>
 
 
     </div>
@@ -28,8 +33,6 @@
       </ng-container>
     </div>
   </div>
-
-  <div (click)="collapse()" class="more"><span>more</span></div>
 
   <div class="error">
     <app-error-area [errors]=errors></app-error-area>

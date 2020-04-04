@@ -21,6 +21,7 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        font-size: 20px;
       }
 
       .title-full {
@@ -48,11 +49,12 @@
       }
 
       .stats {
-        margin-top: 20px;
+        margin-top: 10px;
         display: flex;
         display: row;
         align-items: center;
         justify-content: space-between;
+        font-size: 14px;
 
         .size {
           color: $textSecondary;
