@@ -46,6 +46,7 @@ export class TorrentBrowserSearchComponent implements OnInit {
 
   selectDestination(des: TorrentDestination): void {
     this.selected = des;
+    this.form.get('destination').setValue(this.selected);
   }
 
   search(): void {
