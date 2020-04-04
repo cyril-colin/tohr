@@ -69,11 +69,13 @@ export class TorrentController {
       return this.httpErrorService.error400('Missing id.', response, request.query, request.params);
     }
 
-    if (!request.query.deleteLocalData) {
+    const deleteDataPresent = request.query.deleteLocalData && (request.query.deleteLocalData === 'true'|| request.query.deleteLocalData === 'false' );
+    if (!deleteDataPresent) {
       return this.httpErrorService.error400('Missing deleteLocalData.', response, request.query, request.params);
     }
 
-    const tdRequest = this.transmissionDaemonService.remove(request.params.id, request.query.deleteLocalData);
+    const deleteDataBoolean = request.query.deleteLocalData === 'true';
+    const tdRequest = this.transmissionDaemonService.remove(request.params.id, deleteDataBoolean);
     tdRequest.then(data => response.send(data));
     tdRequest.catch(err => this.httpErrorService.error500(response, err));
     return tdRequest;

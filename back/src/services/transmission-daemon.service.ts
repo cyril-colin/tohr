@@ -61,7 +61,7 @@ export class TransmissionDaemonService {
   public remove(id: string, deleteLocalData: boolean): Promise<any> {
     const requestBody: TransmissionRequest = {
       method: 'torrent-remove',
-      arguments: { id : +id, deleteLocalData}
+      arguments: { ids : [+id], 'delete-local-data': deleteLocalData}
     };
 
     this.logger.debug('request : ', requestBody);

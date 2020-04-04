@@ -1,5 +1,5 @@
 #!/bin/bash
-BUILD_NAME='Tohr-1.0.2-dev14.tgz'
+BUILD_NAME='Tohr-1.0.2-dev15.tgz'
 rm -rf dist-*
 
 mkdir -p dist-back dist-front

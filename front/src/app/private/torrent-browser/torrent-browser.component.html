@@ -2,7 +2,7 @@
   <ng-container *ngIf="(torrentDestinations$ | async) as destinations">
 
     <div class="search-wrapper">
-      <app-torrent-browser-search [destinations]=destinations [selected]=defaultDestination (searchEvent)=search($event)></app-torrent-browser-search>
+      <app-torrent-browser-search [destinations]=destinations [selected]=selectedDestination (searchEvent)=search($event)></app-torrent-browser-search>
     </div>
 
     <ng-template #distEmpty>
@@ -18,7 +18,7 @@
         [loadingMessage]="'browser.loading' | translate"></app-loading-page>
 
       <ng-container *ngIf="!searching && searchErrors.length === 0  && searchResult.length > 0">
-        <app-torrent-browser-item *ngFor="let torrent of searchResult" [torrent]="torrent" [currentDest]="form.getRawValue().destination"></app-torrent-browser-item>
+        <app-torrent-browser-item *ngFor="let torrent of searchResult" [torrent]="torrent" [currentDest]="selectedDestination"></app-torrent-browser-item>
       </ng-container>
 
       <div *ngIf="!searching && searchErrors.length === 0 && searchResult.length == 0">

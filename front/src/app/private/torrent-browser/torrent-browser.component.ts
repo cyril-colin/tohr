@@ -19,10 +19,9 @@ export class TorrentBrowserComponent implements OnInit {
 
   torrents$: Observable<BrowserTorrent[]>;
   torrentDestinations$: Observable<TorrentDestination[]>;
-  form: FormGroup;
 
   searchResult: BrowserTorrent[] = [];
-  defaultDestination: TorrentDestination;
+  selectedDestination: TorrentDestination;
   searching = false;
   searchErrors: string[] = [];
   constructor(
@@ -37,19 +36,14 @@ export class TorrentBrowserComponent implements OnInit {
   ngOnInit(): void {
       this.mainToolbarService.setMainTitle('browser.mainTitle');
       this.torrentDestinations$ = this.proxyMonitoringService.getTorrentDestinations().pipe(
-        tap(res => this.defaultDestination = res.find(r => r.default)),
-        tap(_ => {
-          this.form = this.fb.group({
-            search: this.fb.control(null, Validators.required),
-            destination: this.fb.control(this.defaultDestination, Validators.required),
-          });
-        })
+        tap(res => this.selectedDestination = res.find(r => r.default)),
       );
   }
 
 
   search(search: SearchData): void {
     this.searching = true;
+    this.selectedDestination = search.destination;
     this.proxyBrowserService.search(search).subscribe({
       next: (res) => {
         this.searching = false;
@@ -64,22 +58,5 @@ export class TorrentBrowserComponent implements OnInit {
         this.searching = false;
       }
     });
-  }
-
-  add(torrent: BrowserTorrent): void {
-    this.proxyBrowserService.add(torrent, this.form.getRawValue().destination).subscribe({
-      next: (res) => {
-        if (res.result === 'success') {
-          this.router.navigate(['private', 'dashboard']);
-        } else {
-          console.error(res);
-        }
-      },
-      error: (err) => console.error(err),
-    });
-  }
-
-  selectDestination(destination: TorrentDestination): void {
-    this.form.controls.destination.setValue(destination);
   }
 }
