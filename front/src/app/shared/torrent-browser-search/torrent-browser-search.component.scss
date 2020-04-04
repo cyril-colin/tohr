@@ -33,4 +33,9 @@
       cursor: pointer;
     }
   }
+
+  .warning {
+    word-break: break-word;
+    color: $textWarning;
+  }
 }
