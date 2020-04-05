@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TorrentDestination } from 'src/app/core/model/torrent-destination';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SearchData } from 'src/app/core/services/proxy/proxy-browser/proxy-browser.service';
 import { state, style, transition, animate, trigger } from '@angular/animations';
 
@@ -39,7 +39,7 @@ export class TorrentBrowserSearchComponent implements OnInit {
   ngOnInit(): void {
     this.formAnimation = 'in'
     this.form = this.fb.group({
-      searchValue: this.fb.control(null),
+      searchValue: this.fb.control(null, [Validators.required]),
       destination: this.fb.control(this.selected),
     });
   }
@@ -51,7 +51,6 @@ export class TorrentBrowserSearchComponent implements OnInit {
 
   search(): void {
     const searchData = this.form.getRawValue() as SearchData;
-    this.toggleForm();
     this.searchEvent.emit(searchData);
   }
 

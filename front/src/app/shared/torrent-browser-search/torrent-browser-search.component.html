@@ -11,7 +11,7 @@
       <input class="input-text" type="text" [formControl]="form.get('searchValue')"
             placeholder="{{ 'torrentBrowserSearch.placeholder' | translate }}{{ selected.description }}">
 
-      <button class="btn-search" type="submit">
+      <button class="btn-search" type="submit" [disabled]="form.get('searchValue').errors">
         <i class="material-icons">send</i>
       </button>
     </div>

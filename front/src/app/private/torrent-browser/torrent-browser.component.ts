@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BrowserTorrent } from 'src/app/core/model/torrent';
 import { Observable } from 'rxjs';
 import { ProxyBrowserService, SearchData } from 'src/app/core/services/proxy/proxy-browser/proxy-browser.service';
@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import { TorrentBrowserSearchComponent } from 'src/app/shared/torrent-browser-search/torrent-browser-search.component';
 
 @Component({
   selector: 'app-torrent-browser',
@@ -16,7 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./torrent-browser.component.scss']
 })
 export class TorrentBrowserComponent implements OnInit {
-
+  @ViewChild(TorrentBrowserSearchComponent) searchCompoenent: TorrentBrowserSearchComponent;
   torrents$: Observable<BrowserTorrent[]>;
   torrentDestinations$: Observable<TorrentDestination[]>;
 
@@ -47,6 +48,9 @@ export class TorrentBrowserComponent implements OnInit {
     this.proxyBrowserService.search(search).subscribe({
       next: (res) => {
         this.searching = false;
+        if (res.length > 0) {
+          this.searchCompoenent.toggleForm();
+        }
         this.searchResult = res;
       },
       error: (err) => {

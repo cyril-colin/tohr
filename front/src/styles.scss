@@ -79,6 +79,10 @@ body {
   opacity: 0.5;
 }
 
+button:disabled {
+  opacity: 0.2;
+}
+
 .card {
   overflow-wrap: break-word;
   word-break: break-all;
