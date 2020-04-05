@@ -1,10 +1,13 @@
 
-<div>
-  <form [formGroup]="form">
-      <input formControlName=login placeholder="{{ 'login.inputLogin' | translate }}" type="text" required >
-      <input type="password" formControlName=password placeholder="{{ 'login.inputPassword' | translate }}" required >
-    <app-error-area [errors]="errors"></app-error-area>
-    <button (click)="login()">{{ 'login.buttonLogin' | translate }}</button>
+<div class="card">
+  <form [formGroup]="form" (submit)="login()">
+      <input class="input-text" formControlName=login placeholder="{{ 'login.inputLogin' | translate }}" type="text" required >
+      <input class="input-text" type="password" formControlName=password placeholder="{{ 'login.inputPassword' | translate }}" required >
+      <div class="error-zone">
+        <app-error-area [errors]="errors"></app-error-area>
+      </div>
+
+      <button type="submit" class="btn-primary">{{ 'login.buttonLogin' | translate }}</button>
   </form>
 </div>
 
