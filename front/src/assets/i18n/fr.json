@@ -84,7 +84,9 @@
   },
 
   "torrentBrowserItem": {
-    "more": "Détails"
+    "more": "Détails",
+    "alreadyAdded": "Torrent déjà ajouté",
+    "addred": "Torrent ajouté"
   },
 
   "torrentBrowserSearch": {

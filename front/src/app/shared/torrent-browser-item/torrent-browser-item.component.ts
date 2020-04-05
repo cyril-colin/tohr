@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { BrowserTorrent } from 'src/app/core/model/torrent';
 import { TorrentDestination } from 'src/app/core/model/torrent-destination';
 import { ProxyBrowserService } from 'src/app/core/services/proxy/proxy-browser/proxy-browser.service';
-import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorAreaItem } from '../error-area/error-area.component';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -31,6 +30,7 @@ export class TorrentBrowserItemComponent implements OnInit {
   @Input() torrent: BrowserTorrent;
   @Input() currentDest: TorrentDestination;
   added = false;
+  alreadyAdded = false;
   isAdding = false;
   errors: ErrorAreaItem[] = [];
   collapseAnimation: string;
@@ -49,10 +49,13 @@ export class TorrentBrowserItemComponent implements OnInit {
     this.proxyBrowserService.add(torrent, destination).subscribe({
       next: (res) => {
         this.isAdding = false;
-        if (res.result === 'success') {
+        if (res.result === 'success' && res.arguments['torrent-duplicate']) {
+          this.alreadyAdded = true;
+        }
+        if (res.result === 'success' && !res.arguments['torrent-duplicate']) {
           this.added = true;
-        } else {
-          console.log(res)
+        }
+        if (res.result !== 'success') {
           this.errors.push({id: 0, message: this.translate.instant('browser.errors.adding')});
           console.error(res);
         }
