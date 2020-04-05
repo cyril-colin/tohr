@@ -17,7 +17,7 @@ import TS from 'torrent-search-api';
 import { HttpErrorService } from './src/services/http-error.service';
 import { CurrentUserService } from './src/services/current-user.service';
 
-program.option('-c, --config <config>', 'The configuration file', 'config.dev.json');
+program.option('-c, --config <config>', 'The configuration file', 'config.production.json');
 program.parse(process.argv);
 
 const config: Environment = require(__dirname + '/config/'+ program.config);
@@ -74,10 +74,9 @@ app.post(API_PREFIX + '/browser/add', (req: any, res: any) => torrentBrowserCont
 app.get(API_PREFIX + '/browser/search', (req: any, res: any) => torrentBrowserController.search(req, res));
 
 app.get('*', (req: any, res: any) => {
-  const allowedExt = ['.js', '.ico', '.css', '.png', '.jpg', '.woff2', '.woff', '.ttf', '.svg', ];
-  loggerService.info(req.url);
+  const allowedExt = ['.js', '.ico', '.css', '.png', '.jpg', '.woff2', '.woff', '.ttf', '.svg','.json', '.webmanifest' ];
   if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
-    res.sendFile(path.resolve(`${__dirname}/${config.distPath}/${req.url}`));
+    res.sendFile(path.resolve(`${__dirname}/${config.distPath}/${req.url.split('?')[0]}`));
   } else {
     res.sendFile(path.resolve(`${__dirname}/${config.distPath}/index.html`));
   }
