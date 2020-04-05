@@ -11,6 +11,28 @@ body {
   color: $textPrimary;
 }
 
+.input-text {
+  width: 100%;
+  background-color: $drawBgSecondary;
+  height: 38px;
+  font-size: 19px;
+  border: solid 2px $drawPrimary;
+  color: $drawPrimary;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.select {
+  width: 100%;
+  background-color: $drawBgSecondary;
+  height: 38px;
+  font-size: 19px;
+  border: solid 2px $drawPrimary;
+  color: $drawPrimary;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
 .btn-secondary {
   width: 100%;
   height: 100%;
@@ -50,14 +72,20 @@ body {
 
 .btn-action {
   cursor: pointer;
-  color: $drawSecondary;
+  color: $drawPrimary;
 }
 
 .btn-action:hover {
   opacity: 0.5;
 }
 
+button:disabled {
+  opacity: 0.2;
+}
+
 .card {
+  overflow-wrap: break-word;
+  word-break: break-all;
   box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
   border-radius: 5px;
   padding: 10px;

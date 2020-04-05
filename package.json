@@ -5,8 +5,8 @@
   "author": "Cyril COLIN",
   "scripts": {
     "back-build": "node_modules/.bin/tsc --build tsconfig-back.json",
-    "back-start": "./node_modules/.bin/ts-node-dev --project tsconfig-back.json back/server.ts --config config.sample.json",
-    "back-start-prod": "cd /tohr && node /tohr/dist-back/server.js --config config.sample.json",
+    "back-start": "./node_modules/.bin/ts-node-dev --project tsconfig-back.json back/server.ts --config config.dev.json",
+    "back-start-prod": "cd /tohr && node /tohr/dist-back/server.js --config config.dev.json",
     "ng": "cd front && ng && cd ..",
     "start": "cd front && ng serve --proxy-config proxy.conf.json --host 0.0.0.0 && cd ..",
     "build": "ng build",
@@ -32,6 +32,7 @@
     "@types/express-jwt": "0.0.42",
     "@types/jsonwebtoken": "^8.3.7",
     "@types/node": "^13.7.1",
+    "@types/torrent-search-api": "^2.0.0",
     "axios": "^0.19.2",
     "commander": "^4.1.1",
     "express": "^4.17.1",
@@ -39,7 +40,9 @@
     "ngx-filesize": "^2.0.2",
     "node-cache": "^5.1.0",
     "rxjs": "~6.5.4",
+    "torrent-search-api": "^2.1.0",
     "tslib": "^1.9.0",
+    "winston": "^3.2.1",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

@@ -27,6 +27,21 @@
     }
   },
 
+  "browser": {
+    "mainTitle": "Recherche",
+    "searchEmpty": "Aucun resultat",
+    "loading": "Loading...",
+    "emptyFilters": "Impossible de récupérer les filtres, aucune recherche ne peut être faite.",
+    "errors": {
+      "search": "Erreur lors de la recherche.",
+      "searchNotValid": "Formulaire de recherche invalide",
+      "prefix": "Impossible de charger la liste.",
+      "adding": "Erreur d'ajout. Retenter peut suffire...",
+      "500": "Le serveur rencontre une erreur. Le client torrent est-il démarré ?",
+      "504": "Le serveur ne répond pas."
+    }
+  },
+
   "torrentDetail": {
     "mainTitle": "Un torrent",
     "loading": "Chargement en cours...",
@@ -68,10 +83,27 @@
     }
   },
 
+  "torrentBrowserItem": {
+    "more": "Détails",
+    "alreadyAdded": "Torrent déjà ajouté",
+    "addred": "Torrent ajouté"
+  },
+
+  "torrentBrowserSearch": {
+    "title": "Chercher dans ",
+    "placeholder": "Chercher dans "
+  },
+
+  "mainToolBar": {
+    "available": "Espace disponible"
+  },
+
   "sideMenu": {
     "backLink": "Retour",
     "torrentLink": "Les torrents",
     "monitoringLink": "Monitoring",
+    "browserLink": "Recherche",
+    "addFormLink": "Ajouter un .torrent",
     "logout": "Déconnexion"
   }
 

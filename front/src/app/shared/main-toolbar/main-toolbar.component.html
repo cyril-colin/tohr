@@ -9,8 +9,14 @@
     {{title | async}}
   </h1>
 
-  <div class="search">
+  <div *ngIf="isLogged()" class="diskStatus" (click)="goToMonitoring()">
+      <div class="available">{{ 'mainToolBar.available' | translate }}</div>
+      <div *ngIf="(diskStatus$ | async) as disks">
+        <ng-container *ngFor="let d of disks">
+          {{ d.available | filesize }}
+        </ng-container>
 
+      </div>
   </div>
 </div>
 

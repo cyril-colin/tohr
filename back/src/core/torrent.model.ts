@@ -12,3 +12,27 @@ export interface Torrent {
   totalSize: number;
   destination?: TorrentDestination;
 }
+
+export interface BrowserTorrent {
+  title: string;
+  time: Date;
+  seeds: number;
+  peers: number;
+  size: string;
+  desc: string;
+  id: string;
+  provider: string;
+  link: string;
+  computedData: BrowserComputedData;
+  destination?: any
+}
+
+export interface BrowserComputedData {
+  title: string;
+  tags: BrowserTag[];
+};
+
+export interface BrowserTag {
+  name: string,
+  color: string
+}

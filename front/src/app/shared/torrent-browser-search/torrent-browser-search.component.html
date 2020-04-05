@@ -1,0 +1,28 @@
+<div class="card search">
+  <div class="search-title"  (click)="toggleForm()">
+    <div>{{ 'torrentBrowserSearch.title' | translate }} {{ selected.description }}</div>
+    <div><i class="material-icons">keyboard_arrow_down</i></div>
+  </div>
+
+  <form [@slideInOut]="formAnimation" (submit)="search()">
+    <app-destination-list [destinations]=destinations [selected]=selected (selectEvent)=selectDestination($event)></app-destination-list>
+
+    <div class="search-input">
+      <input class="input-text" type="text" [formControl]="form.get('searchValue')"
+            placeholder="{{ 'torrentBrowserSearch.placeholder' | translate }}{{ selected.description }}">
+
+      <button class="btn-search" type="submit" [disabled]="form.get('searchValue').errors">
+        <i class="material-icons">send</i>
+      </button>
+    </div>
+
+  </form>
+  <div *ngIf="selected.warning" class="warning">
+    {{ selected.warning }}
+  </div>
+</div>
+
+
+
+
+

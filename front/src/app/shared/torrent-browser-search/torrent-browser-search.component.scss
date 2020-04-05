@@ -1,0 +1,41 @@
+@import "../../../colors.scss";
+
+:host {
+
+  form {
+    border-top: 1px solid $drawBg;
+  }
+  .search {
+    .search-title {
+      display: flex;
+      height: 35px;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px;
+
+      div i {
+        font-size: 40px;
+      }
+    }
+  }
+  .search-input {
+    display: flex;
+    flex-direction: row;
+
+    .btn-search {
+      width: 70px;
+      height: 54px;
+      background-color: $drawPrimary;
+      border: solid 2px $drawPrimary;
+      font-size: 1.2em;
+      color: $textInverted;
+      cursor: pointer;
+    }
+  }
+
+  .warning {
+    word-break: break-word;
+    color: $textWarning;
+  }
+}

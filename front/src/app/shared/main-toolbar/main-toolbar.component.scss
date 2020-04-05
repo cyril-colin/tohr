@@ -27,5 +27,13 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+
+    .diskStatus {
+      width: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 12px;
+    }
   }
 }

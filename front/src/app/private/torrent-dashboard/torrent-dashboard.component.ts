@@ -47,6 +47,6 @@ export class TorrentDashboardComponent implements OnInit {
   }
 
   openUploadForm() {
-    this.router.navigate(['..', 'add-torrents'], {relativeTo: this.route});
+    this.router.navigate(['..', 'browser'], {relativeTo: this.route});
   }
 }

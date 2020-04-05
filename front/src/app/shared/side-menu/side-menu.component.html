@@ -1,6 +1,8 @@
 <a (click)="close()"><i class="material-icons">keyboard_arrow_left</i><span>{{ 'sideMenu.backLink' | translate }}</span></a>
 <a (click)="close()" [routerLink]="['/private/dashboard']"><i class="material-icons">list</i><span>{{ 'sideMenu.torrentLink' | translate }}</span></a>
 <a (click)="close()" [routerLink]="['/private/monitoring']"><i class="material-icons">tune</i><span>{{ 'sideMenu.monitoringLink' | translate }}</span></a>
+<a (click)="close()" [routerLink]="['/private/browser']"><i class="material-icons">search</i><span>{{ 'sideMenu.browserLink' | translate }}</span></a>
+<a (click)="close()" [routerLink]="['/private/add-torrents']"><i class="material-icons">note_add</i><span>{{ 'sideMenu.addFormLink' | translate }}</span></a>
 
 <div class="divider"></div>
 <ng-container *ngIf="externalLinks$ | async as links">

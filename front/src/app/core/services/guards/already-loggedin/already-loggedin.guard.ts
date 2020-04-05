@@ -16,7 +16,7 @@ export class AlreadyLoggedinGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       if (this.isLogginPage && this.currentUserService.isLogged) {
-        this.router.navigate(['private', 'dashboard']);
+        this.router.navigate(['private', 'browser']);
       }
       return true;
   }

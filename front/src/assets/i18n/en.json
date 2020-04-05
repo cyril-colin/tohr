@@ -27,6 +27,21 @@
     }
   },
 
+  "browser": {
+    "mainTitle": "Torrent Browser",
+    "searchEmpty": "No result.",
+    "loading": "Loading...",
+    "emptyFilters": "We cannot get filters, so search feature is not available.",
+    "errors": {
+      "search": "Error on search.",
+      "searchNotValid": "Form not valid",
+      "prefix": "Cannot load the list",
+      "adding": "Error on add. Retry ?",
+      "500": "Server error occured.",
+      "504": "The server is not responding"
+    }
+  },
+
   "torrentDetail": {
     "mainTitle": "A torrent",
     "loading": "Loading",
@@ -68,10 +83,27 @@
     }
   },
 
+  "torrentBrowserItem": {
+    "more": "More",
+    "alreadyAdded": "Torrent already added",
+    "addred": "Torrent added"
+  },
+
+  "browserSearch": {
+    "title": "Search in ",
+    "placeholder": "Search in "
+  },
+
+  "mainToolBar": {
+    "available": "Space left"
+  },
+
   "sideMenu": {
     "backLink": "Back",
     "torrentLink": "Torrent list",
     "monitoringLink": "Monitoring",
+    "browserLink": "Torrent browser",
+    "addFormLink": "Upload a torrent",
     "logout": "Logout"
   }
 

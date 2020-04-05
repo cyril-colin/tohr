@@ -1,0 +1,106 @@
+@import "../../../colors.scss";
+
+:host {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  .main {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .infos {
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+
+      .title-compact {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 20px;
+      }
+
+      .title-full {
+        padding: 5px;
+        font-size: 12px;
+      }
+
+      .tags {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: flex-start;
+        .tag {
+          padding: 3px;
+          border-radius: 3px;
+          color: $textInverted;
+          margin-bottom: 4px;
+          font-size: 10px;
+        }
+
+        .tag:not(:last-child)  {
+          margin-right: 5px;
+        }
+      }
+
+      .stats {
+        margin-top: 10px;
+        display: flex;
+        display: row;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 14px;
+
+        .size {
+          color: $textSecondary;
+        }
+
+        .seeds {
+          color: $textSuccess;
+        }
+        .seeds-no {
+          color: $textError;
+        }
+      }
+
+
+    }
+
+
+    .actions {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .btn-action {
+        width: 30px;
+        height: 30px;
+        font-size: 30px;
+      }
+
+      .loading-button {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+
+  .more {
+    display: flex;
+    display: row;
+    align-items: center;
+    justify-content: center;
+    color: $drawSecondary;
+  }
+
+
+  .done {
+    color: $textSuccess;
+  }
+}

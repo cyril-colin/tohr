@@ -8,6 +8,7 @@ import { DeleteConfirmDialogComponent } from '../shared/delete-confirm-dialog/de
 import { MonitoringComponent } from './monitoring/monitoring.component';
 import { TorrentDetailComponent } from './torrent-detail/torrent-detail.component';
 import { MoveDialogComponent } from '../shared/move-dialog/move-dialog.component';
+import { TorrentBrowserComponent } from './torrent-browser/torrent-browser.component';
 
 
 
@@ -17,6 +18,7 @@ import { MoveDialogComponent } from '../shared/move-dialog/move-dialog.component
     TorrentDetailComponent,
     UploadFormComponent,
     MonitoringComponent,
+    TorrentBrowserComponent,
   ],
   imports: [
     CommonModule,

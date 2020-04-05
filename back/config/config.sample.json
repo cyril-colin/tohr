@@ -2,6 +2,7 @@
   "bind": "0.0.0.0",
   "serverPort": 4201,
   "distPath": "../dist-front/",
+  "logFile": "'./logs/all-logs.log'",
   "transmissionDaemonLogin" : "test",
   "transmissionDaemonPassword" : "test",
   "transmissionDaemonUrl" : "http://localhost:9091/transmission/rpc",
@@ -18,30 +19,38 @@
       {
         "name": "Films",
         "path": "/home/vagrant/films",
-        "description": "les films",
+        "description": "Films",
+        "warning": null,
         "icon": "movie",
-        "default": false
+        "category": "Movies",
+        "default": true
       },
       {
         "name": "Musics",
         "path": "/home/vagrant/musics",
-        "description": "les musiques",
+        "description": "Musiques",
+        "warning": null,
         "icon": "music_note",
+        "category": "Music",
         "default": false
       },
       {
         "name": "Series",
         "path": "/home/vagrant/series",
-        "description": "les séries",
+        "description": "Séries",
+        "warning": null,
         "icon": "fast_forward",
+        "category": "TV",
         "default": false
       },
       {
-        "name": "I don't know",
+        "name": "Autre",
         "path": "/home/vagrant/other",
-        "description": "un autre répertoire",
+        "description": "Autre",
+        "warning": "Les fichiers de cette catégorie ne seront pas disponibles dans Plex.",
         "icon": "help",
-        "default": true
+        "category": "All",
+        "default": false
       }
     ]
   },
@@ -49,5 +58,6 @@
     {"name": "Jamendo", "link": "https://www.jamendo.com/", "icon": "assets/external-links/jamendo.png", "type": "TORRENT"},
     {"name": "Archive.org", "link": "https://archive.org/", "icon": "assets/external-links/archive.jpg", "type": "TORRENT"},
     {"name": "Plex", "link": "https://app.plex.tv/desktop", "icon": "assets/external-links/plex.png", "type": "OTHER"}
-  ]
+  ],
+  "torrentProviders": []
 }
