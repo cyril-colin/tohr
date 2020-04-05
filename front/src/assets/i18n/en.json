@@ -89,7 +89,7 @@
     "addred": "Torrent added"
   },
 
-  "browserSearch": {
+  "torrentBrowserSearch": {
     "title": "Search in ",
     "placeholder": "Search in "
   },

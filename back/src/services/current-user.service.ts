@@ -11,7 +11,7 @@ export class CurrentUserService {
       return null;
     }
     const jwt = auth.replace('Bearer ', '');
-    if (!jwt) {
+    if (!jwt || jwt === 'null') {
       return null
     }
 
