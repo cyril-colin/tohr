@@ -17,7 +17,7 @@ import TS from 'torrent-search-api';
 import { HttpErrorService } from './src/services/http-error.service';
 import { CurrentUserService } from './src/services/current-user.service';
 
-program.option('-c, --config <config>', 'The configuration file', 'config.production.json');
+program.option('-c, --config <config>', 'The configuration file', 'config.dev.json');
 program.parse(process.argv);
 
 const config: Environment = require(__dirname + '/config/'+ program.config);
