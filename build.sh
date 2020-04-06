@@ -6,6 +6,12 @@ BIN_DIR="bin"
 BUILD_DIR="${BIN_DIR}/$BUILD_NAME"
 MODE=${1}
 
+if [ ${MODE} = "--prod" ]
+then
+  git diff --exit-code || { echo "Some files are not commited !";  exit 1; }
+fi
+
+
 # Clear and prepare directories
 rm -rf dist-*
 rm -f ${BUILD_DIR}
