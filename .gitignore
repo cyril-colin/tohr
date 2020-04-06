@@ -55,3 +55,4 @@ vagrant/ubuntu-bionic-18.04-cloudimg-console.log
 vagrant/.vagrant/
 bin
 logs
+github-token.txt
