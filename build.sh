@@ -35,7 +35,6 @@ tar zcf bin/${BUILD_NAME} dist-back dist-front || { echo "Tar failed";  exit 1; 
 if [ ${MODE} = "--prod" ]
 then
   GH_TAGS="https://api.github.com/repos/cyril-colin/tohr/releases/tags/${PACKAGE_VERSION}"
-  GH_ASSET="https://uploads.github.com/repos/cyril-colin/tohr/releases/${id}/assets?name=${BUILD_NAME}"
   TOKEN=$(cat github-token.txt) || { echo "TOKEN file not found";  exit 1; }
   AUTH="Authorization: ${TOKEN}"
   curl -H "Authorization: token ${TOKEN}" "https://api.github.com/repos/cyril-colin/tohr" || { echo "Error: Invalid repo, token or network issue!";  exit 1; }
@@ -50,8 +49,8 @@ then
   eval $(echo "$response" | grep -m 1 "id.:" | grep -w id | tr : = | tr -cd '[[:alnum:]]=')
   [ "$id" ] || { echo "Error: Failed to get release id for tag: ${PACKAGE_VERSION}"; echo "$response" | awk 'length($0)<100' >&2; exit 1; }
 
-
-  curl --data-binary @"${BUILD_DIR}" -H "Authorization: token ${TOKEN}" -H "Content-Type: application/octet-stream" $GH_ASSET
+  GH_ASSET="https://uploads.github.com/repos/cyril-colin/tohr/releases/${id}/assets?name=${BUILD_NAME}"
+  curl -v --data-binary @"${BUILD_DIR}" -H "Authorization: token ${TOKEN}" -H "Content-Type: application/octet-stream" $GH_ASSET
 fi
 
 set +e
