@@ -74,7 +74,7 @@ app.post(API_PREFIX + '/browser/add', (req: any, res: any) => torrentBrowserCont
 app.get(API_PREFIX + '/browser/search', (req: any, res: any) => torrentBrowserController.search(req, res));
 
 app.get('*', (req: any, res: any) => {
-  const allowedExt = ['.js', '.ico', '.css', '.png', '.jpg', '.woff2', '.woff', '.ttf', '.svg','.json', '.webmanifest' ];
+  const allowedExt = ['.js', '.ico', '.css', '.png', '.jpg', '.woff2', '.woff', '.ttf', '.svg','.json', '.webmanifest', '.txt' ];
   if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
     res.sendFile(path.resolve(`${__dirname}/${config.distPath}/${req.url.split('?')[0]}`));
   } else {

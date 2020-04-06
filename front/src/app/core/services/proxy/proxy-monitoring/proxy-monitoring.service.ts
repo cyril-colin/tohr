@@ -21,6 +21,10 @@ export class ProxyMonitoringService {
     return this.http.get<TorrentDestination[]>(this.endpoint + '/monitoring/torrent-destinations');
   }
 
+  getVersion(): Observable<any> {
+    return this.http.get('/assets/version.txt', {responseType: 'text'}).pipe(map(res=> ({version: res})));
+  }
+
   getDiskUsage(): Observable<DiskStatus[]> {
     const request = this.http.get<DiskStatus[]>(this.endpoint + '/monitoring/disk-usage');
     // const request = of(mockDiskStatus);
