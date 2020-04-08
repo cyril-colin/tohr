@@ -11,6 +11,10 @@ export class SystemInformationService {
     return os.userInfo().username;
   }
 
+  public getRootDir(): string {
+    return __dirname + '/../../../';
+  }
+
   public async getCpuUsage(): Promise<string> {
     return this.exec('/bin/grep \'cpu \' /proc/stat | awk \'{usage=($2+$4)*100/($2+$4+$5)} END {print usage ""}\'');
   }

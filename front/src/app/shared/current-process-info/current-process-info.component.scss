@@ -1,7 +1,14 @@
+@import "../../../colors.scss";
+
 :host {
   .infos {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+  }
+
+  .link {
+    text-decoration: underline;
+    color: $drawPrimary;
   }
 }

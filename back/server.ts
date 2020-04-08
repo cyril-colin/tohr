@@ -69,12 +69,13 @@ app.get(API_PREFIX + '/monitoring/disk-usage', (req: any, res: any) => monitorin
 app.get(API_PREFIX + '/monitoring/process-informations', (req: any, res: any) => monitoringController.getProcessInformations(req, res));
 app.get(API_PREFIX + '/monitoring/torrent-destinations', (req: any, res: any) => monitoringController.getTorrentDestinations(req, res));
 app.get(API_PREFIX + '/monitoring/external-links', (req: any, res: any) => monitoringController.getExternalLinks(req, res));
+app.get(API_PREFIX + '/monitoring/logs', (req: any, res: any) => monitoringController.getLogs(req, res));
 
 app.post(API_PREFIX + '/browser/add', (req: any, res: any) => torrentBrowserController.add(req, res));
 app.get(API_PREFIX + '/browser/search', (req: any, res: any) => torrentBrowserController.search(req, res));
 
 app.get('*', (req: any, res: any) => {
-  const allowedExt = ['.js', '.ico', '.css', '.png', '.jpg', '.woff2', '.woff', '.ttf', '.svg','.json', '.webmanifest' ];
+  const allowedExt = ['.js', '.ico', '.css', '.png', '.jpg', '.woff2', '.woff', '.ttf', '.svg','.json', '.webmanifest', '.txt' ];
   if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
     res.sendFile(path.resolve(`${__dirname}/${config.distPath}/${req.url.split('?')[0]}`));
   } else {

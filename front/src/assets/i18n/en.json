@@ -13,6 +13,7 @@
   "currentProcessInfo": {
     "cpu": "CPU",
     "memory": "Memory",
+    "downloadLink": "Télécharger les logs",
     "user": "User"
   },
 
@@ -86,7 +87,7 @@
   "torrentBrowserItem": {
     "more": "More",
     "alreadyAdded": "Torrent already added",
-    "addred": "Torrent added"
+    "added": "Torrent added"
   },
 
   "torrentBrowserSearch": {
