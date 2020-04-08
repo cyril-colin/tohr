@@ -1,6 +1,6 @@
 {
   "name": "tohr",
-  "version": "1.0.3-SNAPSHOT-1",
+  "version": "1.0.3-SNAPSHOT-2",
   "description": "An attempt to be a more mobile friendly UI for transmission-daemon",
   "author": "Cyril COLIN",
   "scripts": {
@@ -37,6 +37,7 @@
     "commander": "^4.1.1",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
+    "file-saver": "^2.0.2",
     "ngx-filesize": "^2.0.13",
     "node-cache": "^5.1.0",
     "rxjs": "^6.5.5",

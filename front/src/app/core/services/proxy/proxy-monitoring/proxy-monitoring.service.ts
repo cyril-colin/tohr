@@ -47,4 +47,8 @@ export class ProxyMonitoringService {
     const request = this.http.get<ExternalLink[]>(this.endpoint + '/monitoring/external-links').pipe(share(), take(1));
     return request;
   }
+
+  downloadLogs(): Observable<any> {
+    return this.http.get(this.endpoint + '/monitoring/logs', { responseType: 'blob' });
+  }
 }

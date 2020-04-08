@@ -56,3 +56,4 @@ vagrant/.vagrant/
 bin
 logs
 github-token.txt
+front/src/assets/version.txt

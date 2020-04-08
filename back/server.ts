@@ -69,6 +69,7 @@ app.get(API_PREFIX + '/monitoring/disk-usage', (req: any, res: any) => monitorin
 app.get(API_PREFIX + '/monitoring/process-informations', (req: any, res: any) => monitoringController.getProcessInformations(req, res));
 app.get(API_PREFIX + '/monitoring/torrent-destinations', (req: any, res: any) => monitoringController.getTorrentDestinations(req, res));
 app.get(API_PREFIX + '/monitoring/external-links', (req: any, res: any) => monitoringController.getExternalLinks(req, res));
+app.get(API_PREFIX + '/monitoring/logs', (req: any, res: any) => monitoringController.getLogs(req, res));
 
 app.post(API_PREFIX + '/browser/add', (req: any, res: any) => torrentBrowserController.add(req, res));
 app.get(API_PREFIX + '/browser/search', (req: any, res: any) => torrentBrowserController.search(req, res));
