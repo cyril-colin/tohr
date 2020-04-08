@@ -90,6 +90,7 @@ export class MonitoringController {
 
   getLogs(request: express.Request, response: express.Response): void {
     const file = this.env.logFile;
-    response.download(this.systemInformationService.getRootDir() + file);
+    const path = file.startsWith('/') ? file : this.systemInformationService.getRootDir() + file;
+    response.download(path);
   }
 }
