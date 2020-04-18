@@ -3,14 +3,14 @@
   "serverPort": 4201,
   "distPath": "../dist-front/",
   "logFile": "./logs/all-logs.log",
-  "transmissionDaemonLogin" : "test",
-  "transmissionDaemonPassword" : "test",
-  "transmissionDaemonUrl" : "http://localhost:9091/transmission/rpc",
+  "transmissionDaemonLogin" : "tohr-dev",
+  "transmissionDaemonPassword" : "tohr",
+  "transmissionDaemonUrl" : "http://transmission-alias:9091/transmission/rpc",
   "jwtSecret" : "changeMe !",
   "users": [
     {
-      "login": "test",
-      "password": "test"
+      "login": "tohr",
+      "password": "tohr"
     }
   ],
   "monitoring": {
@@ -18,7 +18,7 @@
     "destinations": [
       {
         "name": "Films",
-        "path": "/home/vagrant/films",
+        "path": "/data/films",
         "description": "Films",
         "warning": null,
         "icon": "movie",
@@ -27,7 +27,7 @@
       },
       {
         "name": "Musics",
-        "path": "/home/vagrant/musics",
+        "path": "/data/musics",
         "description": "Musiques",
         "warning": null,
         "icon": "music_note",
@@ -36,7 +36,7 @@
       },
       {
         "name": "Series",
-        "path": "/home/vagrant/series",
+        "path": "/data/series",
         "description": "Séries",
         "warning": null,
         "icon": "fast_forward",
@@ -45,7 +45,7 @@
       },
       {
         "name": "Autre",
-        "path": "/home/vagrant/other",
+        "path": "/data/other",
         "description": "Autre",
         "warning": "Les fichiers de cette catégorie ne seront pas disponibles dans Plex.",
         "icon": "help",

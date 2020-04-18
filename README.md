@@ -3,7 +3,7 @@
 Thor is an attempt to be a prettier interface for transmission-daemon, more mobile
 friendly.
 
-It is also a way for me to improve my Angular and Node skills : feel free to give me some
+It is also a way for me to improve my Angular, Node and Docker skills : feel free to give me some
 advices, fork this project or post issues.
 
 
@@ -21,56 +21,28 @@ advices, fork this project or post issues.
 ### requirements
 - Node : https://nodejs.org/en/download/ : all the project is based on JavaScript and TypeScript
 - Angular cli : https://cli.angular.io/ : in order to have commands to build and run front-end
-- Virtualbox : https://www.virtualbox.org/ : I use virtualbox with vagrant.
-- Vagrant : https://www.vagrantup.com/downloads.html : Vagrant is used to virtualize the backend, with a
-transmission-daemon installed in order to test communication between backend and transmission-daemon.
+- Docker : https://www.docker.com/ : used to run dev and production environment automaticaly
 
 
 ### Installation 
+
 ```bash
+# getting sources and dependencies
 git clone git@github.com:cyril-colin/tohr.git
+cd tohr
 npm install
+# Transmission configuration
+mkdir -p transmission-data/config transmission-data/data/films transmission-data/data/musics transmission-data/data/series transmission-data/data/other
+cp back/config/transmission-settings.json transmission-data/config/settings.json
 
-# Create and run the backend environment
-cd vagrant && vagrant up && vagrant ssh
-cd /tohr && npm run back-start
+# Tohr configuration
+cp back/config/config.sample.json back/config/config.dev.json
+nano back/config/config.dev.json # Set users and transmission login settings.
 
-# Go back to previous terminal and run
-npm start
-
-# Now, dev application should be available at http://localhost:4200
-# Use "test" for login and password.
-```
-
-```bash
-cd back/
-docker build . -t tohr-dev
-docker network create -d bridge tohr-network
-docker volume create shared-tmp
-docker run -t \
-  --name=transmission \
-  -e TZ=Europe/Paris \
-  -p 9091:9091 \
-  -p 51413:51413 \
-  -p 51413:51413/udp \
-  -v "C:\Users\cyril\Desktop\tohr2\tohr-build\td-config":/config \
-  -v "C:\Users\cyril\Desktop\tohr2\tohr-build\td-downloads":/downloads \
-  -v "C:\Users\cyril\Desktop\tohr2\tohr-build\data":/data \
-  -v shared-tmp:/tmp \
-  --network tohr-network --network-alias transmission-alias \
-  --rm linuxserver/transmission
-
-
-docker stop $(docker ps -a -q)
-
-
-docker run -t \
-  --name tohr-dev \
-  -v "C:\Users\cyril\Desktop\tohr2\tohr":/tohr \
-  -v shared-tmp:/tmp \
-  --network tohr-network \
-  -p 4201:4201  --rm coyotetuba/ts-node-dev \
-  bash -c "ts-node-dev --project \"/tohr/tsconfig-back.json\"  \"/tohr/back/server.ts\" --config \"config.dev.json\""
+# Run
+docker-compose up -d # start the backend with a connected transmission
+npm start # start the front
+docker-compose logs -f tohr-dev
   
 ```
 
