@@ -42,5 +42,37 @@ npm start
 # Use "test" for login and password.
 ```
 
+```bash
+cd back/
+docker build . -t tohr-dev
+docker network create -d bridge tohr-network
+docker volume create shared-tmp
+docker run -t \
+  --name=transmission \
+  -e TZ=Europe/Paris \
+  -p 9091:9091 \
+  -p 51413:51413 \
+  -p 51413:51413/udp \
+  -v "C:\Users\cyril\Desktop\tohr2\tohr-build\td-config":/config \
+  -v "C:\Users\cyril\Desktop\tohr2\tohr-build\td-downloads":/downloads \
+  -v "C:\Users\cyril\Desktop\tohr2\tohr-build\data":/data \
+  -v shared-tmp:/tmp \
+  --network tohr-network --network-alias transmission-alias \
+  --rm linuxserver/transmission
+
+
+docker stop $(docker ps -a -q)
+
+
+docker run -t \
+  --name tohr-dev \
+  -v "C:\Users\cyril\Desktop\tohr2\tohr":/tohr \
+  -v shared-tmp:/tmp \
+  --network tohr-network \
+  -p 4201:4201  --rm coyotetuba/ts-node-dev \
+  bash -c "ts-node-dev --project \"/tohr/tsconfig-back.json\"  \"/tohr/back/server.ts\" --config \"config.dev.json\""
+  
+```
+
 
 

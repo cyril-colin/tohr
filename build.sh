@@ -29,7 +29,15 @@ ng build --prod || { echo "Front build failed.";  exit 1; }
 
 # Create the package
 echo "${PACKAGE_VERSION}" > dist-front/assets/version.txt
+# zip to publish
 tar zcf bin/${BUILD_NAME} dist-back dist-front || { echo "Tar failed";  exit 1; }
+# Publish docker
+if [ ${MODE} = "--prod" ]
+then
+  docker build . -t coyotetuba/tohr:${PACKAGE_VERSION} || { echo "Cannot build docker image";  exit 1; }
+  docker push coyotetuba/tohr:${PACKAGE_VERSION} || { echo "Cannot push docker image";  exit 1; }
+fi
+
 
 
 if [ ${MODE} = "--prod" ]

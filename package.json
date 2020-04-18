@@ -1,6 +1,6 @@
 {
   "name": "tohr",
-  "version": "1.0.3-SNAPSHOT-2",
+  "version": "1.0.3-SNAPSHOT-3",
   "description": "An attempt to be a more mobile friendly UI for transmission-daemon",
   "author": "Cyril COLIN",
   "scripts": {
