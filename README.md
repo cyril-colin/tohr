@@ -51,8 +51,8 @@ docker-compose logs -f tohr-dev
 ```bash
 mkdir tohr && cd tohr
 
-
-SOURCE="https://raw.githubusercontent.com/cyril-colin/tohr/28-docker"
+VERSION="1.0.3-SNAPSHOT-4"
+SOURCE="https://github.com/cyril-colin/tohr/tree/${VERSION}"
 # Tohr config
 curl -o docker-compose.yml ${SOURCE}/docker-compose-prod.yml
 vi docker-compose.yml # Update config to your needs

@@ -12,23 +12,25 @@ then
 fi
 
 
-# Clear and prepare directories
+echo "==> Remove and create directories..."
 rm -rf dist-*
 rm -f ${BUILD_DIR}
 mkdir -p dist-back dist-front
 mkdir -p ${BIN_DIR}
 
-# Build back-end
+echo "==> Build the backend..."
 ./node_modules/.bin/tsc --build tsconfig-back.json || { echo "Back build failed.";  exit 1; }
 cp back/prod-package.json dist-back/package.json
 (cd dist-back && npm install --only=production)
 echo -e '#!/usr/bin/env node\n'$(cat dist-back/server.js) > dist-back/server.js
 
-# Build front-end
+echo "==> Build the frontend..."
 ng build --prod || { echo "Front build failed.";  exit 1; }
 
-# Create the package
+echo "==> Set version ${PACKAGE_VERSION}..."
 echo "${PACKAGE_VERSION}" > dist-front/assets/version.txt
+
+echo "==> Create zip..."
 # zip to publish
 tar zcf bin/${BUILD_NAME} dist-back dist-front || { echo "Tar failed";  exit 1; }
 

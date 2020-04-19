@@ -1,6 +1,6 @@
 version: '3'
 services:
-  tohr-dev:
+  tohr:
     image: coyotetuba/tohr:1.0.3-SNAPSHOT-3
     ports:
       - "4201:4201"
@@ -10,9 +10,6 @@ services:
       - shared-tmp:/tmp
     networks:
       tohr-network:
-        aliases:
-          - tohr-dev-alias
-
 
   tohr-transmission:
     image: "linuxserver/transmission"
