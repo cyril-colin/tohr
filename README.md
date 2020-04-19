@@ -46,5 +46,27 @@ docker-compose logs -f tohr-dev
   
 ```
 
+#### Production mode
+
+```bash
+mkdir tohr && cd tohr
+
+
+SOURCE="https://raw.githubusercontent.com/cyril-colin/tohr/28-docker"
+# Tohr config
+curl -o docker-compose.yml ${SOURCE}/docker-compose-prod.yml
+vi docker-compose.yml # Update config to your needs
+curl -o config.production.json ${SOURCE}/back/config/config.sample.json
+vi config.production.json # Update config to your needs
+
+# Transmission config
+mkdir -p transmission-data/config transmission-data/data/films transmission-data/data/musics transmission-data/data/series transmission-data/data/other
+curl -o transmission-data/config/settings.json ${SOURCE}/back/config/transmission-settings.json
+vi transmission-data/config/settings.json # Change user password
+
+# Run
+docker-compose up -d
+```
+
 
 
