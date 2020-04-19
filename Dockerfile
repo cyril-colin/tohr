@@ -8,7 +8,6 @@ RUN npm install
 RUN tsc --build tsconfig-back.json
 RUN cp back/prod-package.json dist-back/package.json
 RUN (cd dist-back && npm install --only=production)
-RUN echo -e '#!/usr/bin/env node\n'$(cat dist-back/server.js) > dist-back/server.js
 
 # Build the frontend
 RUN /tohr/node_modules/@angular/cli/bin/ng build --prod

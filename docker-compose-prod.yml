@@ -1,7 +1,7 @@
 version: '3'
 services:
   tohr:
-    image: coyotetuba/tohr:1.0.3-SNAPSHOT-3
+    image: coyotetuba/tohr:1.0.3-SNAPSHOT-6
     ports:
       - "4201:4201"
     volumes:

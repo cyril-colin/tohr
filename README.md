@@ -71,7 +71,7 @@ docker-compose up -d
 #### Build the production
 ```bash
 vi package.json # Update manually version
-git tag -a $(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
+VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]') && git tag -a ${VERSION} -m ${VERSION}
 git push --tags
 ```
 
