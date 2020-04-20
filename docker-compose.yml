@@ -1,0 +1,41 @@
+version: '3'
+services:
+  tohr-dev:
+    image: coyotetuba/ts-node-dev
+    ports:
+      - "4201:4201"
+    volumes:
+      - .:/tohr
+      - shared-tmp:/tmp
+    networks:
+      tohr-network:
+        aliases:
+          - tohr-dev-alias
+    command: bash -c "ts-node-dev --project \"/tohr/tsconfig-back.json\"  \"/tohr/back/server.ts\" --config \"config.dev.json\""
+
+
+  tohr-transmission:
+    image: "linuxserver/transmission"
+    environment:
+      - TZ=Europe/Paris
+    ports:
+      - "9091:9091"
+      - "51413:51413"
+      - "51413:51413/udp"
+    volumes:
+      - "./transmission-data/config:/config"
+      - "./transmission-data/data/films:/data/films"
+      - "./transmission-data/data/musics:/data/musics"
+      - "./transmission-data/data/series:/data/series"
+      - "./transmission-data/data/other:/data/other"
+      - "shared-tmp:/tmp"
+    networks:
+      tohr-network:
+        aliases:
+          - transmission-alias
+
+volumes:
+  shared-tmp:
+
+networks:
+  tohr-network:
