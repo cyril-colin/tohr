@@ -1,19 +1,21 @@
 version: '3'
 services:
   tohr:
-    image: coyotetuba/tohr:1.0.3-SNAPSHOT-6
+    image: coyotetuba/tohr:latest
     ports:
       - "4201:4201"
     volumes:
       - "./config.production.json:/tohr/dist-back/config/config.production.json"
       - "./assets:/tohr/dist-front/assets/external-links"
-      - shared-tmp:/tmp
+      - shared-tmp:/tmp # Used to share torrent files between Tohr and transmission.
     networks:
       tohr-network:
 
   tohr-transmission:
     image: "linuxserver/transmission"
     environment:
+      - PUID=1000
+      - PGID=1000
       - TZ=Europe/Paris
     ports:
       - "9091:9091"
@@ -25,7 +27,7 @@ services:
       - "./transmission-data/data/musics:/data/musics"
       - "./transmission-data/data/series:/data/series"
       - "./transmission-data/data/other:/data/other"
-      - "shared-tmp:/tmp"
+      - "shared-tmp:/tmp" # Used to share torrent files between Tohr and transmission.
     networks:
       tohr-network:
         aliases:
