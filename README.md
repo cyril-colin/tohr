@@ -27,7 +27,7 @@ First of all, install [Docker](https://docs.docker.com/engine/install/ubuntu/) a
 
 ### Prepare directories
 First of all, prepare a directory to put in all your configuration.
-Then choose your version, available on the (Tohr Docker Hub)[https://hub.docker.com/r/coyotetuba/tohr] : 
+Then choose your version, available on the [Tohr Docker Hub](https://hub.docker.com/r/coyotetuba/tohr) : 
 ```bash
 mkdir tohr && cd tohr
 # Prepare directories that will contains downloads and configuration
@@ -45,7 +45,7 @@ curl -o docker-compose.yml ${SOURCE}/docker-compose-prod.yml
 vi docker-compose.yml
 ```
 Usual data to edit are :
-  - ``tohr.image`` : the docker build tag
+  - ``tohr.image`` : the docker build tag. Available on [Tohr Docker Hub](https://hub.docker.com/r/coyotetuba/tohr)
   - ``tohr.ports`` : to fit to your environments
   - ``volume`` : to add your tohr configuration and assets
   - ``tohr-transmission.ports`` : idem, to fit to your needs. See transmission documentation
