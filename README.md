@@ -44,12 +44,12 @@ Now you can get the docker-compose.yml sample from the github repository. This f
 curl -o docker-compose.yml ${SOURCE}/docker-compose-prod.yml
 vi docker-compose.yml
 ```
-> Usual data to edit are :
->  - tohr.image : the docker build tag
->  - tohr.ports : to fit to your environments
->  - volume : to add your tohr configuration and assets
->  - tohr-transmission.ports : idem, to fit to your needs. See transmission documentation
->  - tohr-transmission.volumes : to fit to your downloads favorite destinations
+Usual data to edit are :
+  - ``tohr.image`` : the docker build tag
+  - ``tohr.ports`` : to fit to your environments
+  - ``volume`` : to add your tohr configuration and assets
+  - ``tohr-transmission.ports`` : idem, to fit to your needs. See transmission documentation
+  - ``tohr-transmission.volumes`` : to fit to your downloads favorite destinations
 
 
 ### Get and edit Tohr configuration
@@ -57,16 +57,16 @@ vi docker-compose.yml
 curl -o config.production.json ${SOURCE}/back/config/config.sample.json
 vi config.production.json
 ```
-> Usual data to edit are :
->  - ``users`` : user and password to allow users to login.
->  - ``jwtSecret`` : The secret to protect JWT
->  - ``diskToWatch`` : The reference to a element of first column 
->    of "df -h" command. This allow Tohr to check spaces left 
->    on disks
->  - ``transmissionDaemonLogin`` : The login to let Tohr access to
->    transmission
->  - ``transmissionDaemonPassword`` : The password to let Tohr access
->    to transmission
+Usual data to edit are :
+  - ``users`` : user and password to allow users to login.
+  - ``jwtSecret`` : The secret to protect JWT
+  - ``diskToWatch`` : The reference to a element of first column 
+    of "df -h" command. This allow Tohr to check spaces left 
+    on disks
+  - ``transmissionDaemonLogin`` : The login to let Tohr access to
+    transmission
+  - ``transmissionDaemonPassword`` : The password to let Tohr access
+    to transmission
 
 
 ### Get and configure Transmission configuration
@@ -74,10 +74,10 @@ vi config.production.json
 curl -o transmission-data/config/settings.json ${SOURCE}/back/config/transmission-settings.json
 vi transmission-data/config/settings.json
 ```
-> Usual data to edit are :
->  - ``rpc-username`` : The user login for transmission. Should be the same as         transmissionDaemonLogin in `config.production.json`
->  - ``rpc-password`` : The user password for transmission. Should be the same as         transmissionDaemonLogin in `config.production.json`
-> Note : this file will be edited at the transmission start up in order to secure the password. Please see the [Transmission documentation](https://hub.docker.com/r/linuxserver/transmission/).
+Usual data to edit are :
+  - ``rpc-username`` : The user login for transmission. Should be the same as         transmissionDaemonLogin in `config.production.json`
+  - ``rpc-password`` : The user password for transmission. Should be the same as         transmissionDaemonLogin in `config.production.json`
+ Note : this file will be edited at the transmission start up in order to secure the password. Please see the [Transmission documentation](https://hub.docker.com/r/linuxserver/transmission/).
 
 
 ### Finally, run Tohr !
