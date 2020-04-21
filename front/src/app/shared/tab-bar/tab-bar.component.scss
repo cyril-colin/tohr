@@ -26,4 +26,9 @@
   .separator {
     border-right: solid 1px $textSecondary;
   }
+
+  .active {
+    background-color: $drawBg;
+    opacity: 0.7;
+  }
 }
