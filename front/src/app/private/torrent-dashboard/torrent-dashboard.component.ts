@@ -45,8 +45,4 @@ export class TorrentDashboardComponent implements OnInit {
       })
     );
   }
-
-  openUploadForm() {
-    this.router.navigate(['..', 'browser'], {relativeTo: this.route});
-  }
 }
