@@ -5,6 +5,7 @@ import { ProxyAuthentService, LoginData } from '../../core/services/proxy/proxy-
 import { ErrorAreaItem } from '../../shared/error-area/error-area.component';
 import { MainToolbarService } from 'src/app/shared/main-toolbar/main-toolbar.service';
 import { TranslateService } from '@ngx-translate/core';
+import { CurrentUserService } from 'src/app/core/services/current-user/current-user.service';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private mainToolbarService: MainToolbarService,
+    private currentUserService: CurrentUserService,
     ) { }
 
   isLoading = false;
@@ -38,6 +40,7 @@ export class LoginComponent implements OnInit {
       this.proxyAuthentService.login(loginData).subscribe(
         () => {
           this.router.navigate(['..', 'private', 'browser'], {relativeTo: this.route});
+          this.currentUserService.isLoggedListener$();
           this.isLoading = false;
         } ,
         err => {

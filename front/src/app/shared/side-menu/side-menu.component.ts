@@ -5,7 +5,6 @@ import { SIDE_MENU_CONTAINER_DATA, SideMenuInjectedData } from './side-menu-inje
 import { ProxyMonitoringService } from 'src/app/core/services/proxy/proxy-monitoring/proxy-monitoring.service';
 import { Observable } from 'rxjs';
 import { ExternalLink } from 'src/app/core/model/external-link.model';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-side-menu',

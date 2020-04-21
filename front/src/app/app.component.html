@@ -5,3 +5,4 @@
 </main>
 
 <footer *ngIf="(version$ | async) as version"><div>{{ version.version }}</div></footer>
+<app-tab-bar *ngIf="isLogged$ | async"></app-tab-bar>

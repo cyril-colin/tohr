@@ -19,3 +19,9 @@ footer {
   align-items: center;
   justify-content: center;
 }
+
+::ng-deep app-tab-bar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+}
