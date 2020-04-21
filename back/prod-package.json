@@ -5,11 +5,11 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.19.2",
-    "commander": "^3.0.2",
+    "commander": "^4.1.1",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
-    "node-cache": "^4.2.1",
-    "torrent-search-api": "^2.0.10",
+    "node-cache": "^5.1.0",
+    "torrent-search-api": "^2.1.1",
     "winston": "^3.2.1"
   }
 }
