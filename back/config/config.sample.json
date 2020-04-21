@@ -2,7 +2,7 @@
   "bind": "0.0.0.0",
   "serverPort": 4201,
   "distPath": "../dist-front/",
-  "logFile": "./logs/all-logs.log",
+  "logFile": "/tohr/logs/tohr.log",
   "transmissionDaemonLogin" : "tohr-dev",
   "transmissionDaemonPassword" : "tohr",
   "transmissionDaemonUrl" : "http://transmission-alias:9091/transmission/rpc",

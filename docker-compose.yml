@@ -6,6 +6,7 @@ services:
       - "4201:4201"
     volumes:
       - .:/tohr
+      - ./logs:/tohr/logs
       - shared-tmp:/tmp
     networks:
       tohr-network:
