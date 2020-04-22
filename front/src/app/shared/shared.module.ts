@@ -18,6 +18,7 @@ import { TorrentBrowserItemComponent } from './torrent-browser-item/torrent-brow
 import { TorrentBrowserSearchComponent } from './torrent-browser-search/torrent-browser-search.component';
 import { TabBarComponent } from './tab-bar/tab-bar.component';
 import { RouterModule } from '@angular/router';
+import { TorrentUploadComponent } from './torrent-upload/torrent-upload.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { RouterModule } from '@angular/router';
     ProgressBarComponent,
     DestinationListComponent,
     TorrentBrowserSearchComponent,
+    TorrentUploadComponent,
     TabBarComponent,
   ],
   imports: [

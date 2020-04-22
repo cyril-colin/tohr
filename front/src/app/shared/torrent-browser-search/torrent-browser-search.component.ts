@@ -3,6 +3,7 @@ import { TorrentDestination } from 'src/app/core/model/torrent-destination';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SearchData } from 'src/app/core/services/proxy/proxy-browser/proxy-browser.service';
 import { state, style, transition, animate, trigger } from '@angular/animations';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-torrent-browser-search',
@@ -31,13 +32,19 @@ export class TorrentBrowserSearchComponent implements OnInit {
 
   formAnimation: string;
   form: FormGroup;
+  uploadMode = false;
+  title: string;
+  switchLink: string;
 
   constructor(
     private fb: FormBuilder,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
     this.formAnimation = 'in'
+    this.title = this.searchTitle;
+    this.switchLink = this.translateService.instant('torrentBrowserSearch.switchUpload');
     this.form = this.fb.group({
       searchValue: this.fb.control(null, [Validators.required]),
       destination: this.fb.control(this.selected),
@@ -56,5 +63,15 @@ export class TorrentBrowserSearchComponent implements OnInit {
 
   toggleForm(): void {
     this.formAnimation = this.formAnimation === 'out' ? 'in' : 'out';
+  }
+
+  switchMode() {
+    this.uploadMode = !this.uploadMode;
+    this.title = !this.uploadMode ? this.searchTitle : this.translateService.instant('torrentBrowserSearch.titleUpload');
+    this.switchLink  =!this.uploadMode ? this.translateService.instant('torrentBrowserSearch.switchUpload') : this.translateService.instant('torrentBrowserSearch.switchSearch');
+  }
+
+  get searchTitle() {
+    return this.translateService.instant('torrentBrowserSearch.title') + ' ' + this.selected.description;
   }
 }

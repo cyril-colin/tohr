@@ -1,9 +1,9 @@
 <div class="card search">
   <div class="search-title"  (click)="toggleForm()">
-    <div>{{ 'torrentBrowserSearch.title' | translate }} {{ selected.description }}</div>
+    <div>{{ title }}</div>
     <div><i class="material-icons">keyboard_arrow_down</i></div>
   </div>
-
+  <ng-container *ngIf="!uploadMode">
   <form [@slideInOut]="formAnimation" (submit)="search()">
     <app-destination-list [destinations]=destinations [selected]=selected (selectEvent)=selectDestination($event)></app-destination-list>
 
@@ -20,6 +20,15 @@
   <div *ngIf="selected.warning" class="warning">
     {{ selected.warning }}
   </div>
+</ng-container>
+
+  <app-torrent-upload *ngIf="uploadMode"></app-torrent-upload>
+  <div class="switcher">
+    <a class="link" (click)="switchMode()">
+      {{ switchLink }}
+    </a>
+  </div>
+
 </div>
 
 
