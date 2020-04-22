@@ -1,6 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SideMenuService } from '../side-menu/side-menu.service';
-import { Title } from '@angular/platform-browser';
 import { MainToolbarService } from './main-toolbar.service';
 import { Observable } from 'rxjs';
 import { CurrentUserService } from 'src/app/core/services/current-user/current-user.service';
@@ -16,7 +14,6 @@ import { Router } from '@angular/router';
 export class MainToolbarComponent implements OnInit {
   diskStatus$: Observable<DiskStatus[]>;
   constructor(
-    private sideMenuService: SideMenuService,
     private titleService: MainToolbarService,
     private currentUserService: CurrentUserService,
     private proxyMonitoringService: ProxyMonitoringService,
@@ -25,9 +22,6 @@ export class MainToolbarComponent implements OnInit {
 
   get title(): Observable<string> {
     return this.titleService.title$;
-  }
-  openSideMenu() {
-    this.sideMenuService.open();
   }
 
   ngOnInit() {

@@ -103,13 +103,10 @@
     "available": "Space left"
   },
 
-  "sideMenu": {
-    "backLink": "Back",
+  "tabBar": {
     "torrentLink": "Torrent list",
     "monitoringLink": "Monitoring",
-    "browserLink": "Torrent browser",
-    "addFormLink": "Upload a torrent",
-    "logout": "Logout"
+    "browserLink": "Torrent browser"
   }
 
 }

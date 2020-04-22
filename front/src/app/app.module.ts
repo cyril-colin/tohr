@@ -9,8 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PublicModule } from './public/public.module';
 import { SharedModule } from './shared/shared.module';
 import { PrivateModule } from './private/private.module';
-import { SideMenuComponent } from './shared/side-menu/side-menu.component';
-import { SideMenuService } from './shared/side-menu/side-menu.service';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MainToolbarComponent } from './shared/main-toolbar/main-toolbar.component';
 import { ModalService } from './shared/modal/modal.service';
@@ -24,7 +22,6 @@ import { environment } from '../environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
-    SideMenuComponent,
     MainToolbarComponent,
   ],
 
@@ -49,7 +46,6 @@ import { environment } from '../environments/environment';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthentInterceptor, multi: true },
-    SideMenuService,
     ModalService,
   ],
   bootstrap: [AppComponent]

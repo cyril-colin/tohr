@@ -103,13 +103,10 @@
     "available": "Espace disponible"
   },
 
-  "sideMenu": {
-    "backLink": "Retour",
+  "tabBar": {
     "torrentLink": "Les torrents",
     "monitoringLink": "Monitoring",
-    "browserLink": "Recherche",
-    "addFormLink": "Ajouter un .torrent",
-    "logout": "Déconnexion"
+    "browserLink": "Recherche"
   }
 
 }

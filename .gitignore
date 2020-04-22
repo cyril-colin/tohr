@@ -41,7 +41,6 @@ yarn-error.log
 testem.log
 /typings
 
-src/assets/external-links
 # System Files
 .DS_Store
 Thumbs.db
@@ -50,7 +49,6 @@ dist-front
 dist-back
 back/config/config.production.json
 back/config/config.dev.json
-front/src/assets/external-links/
 bin
 logs
 front/src/assets/version.txt

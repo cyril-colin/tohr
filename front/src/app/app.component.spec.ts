@@ -4,7 +4,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { MainToolbarComponent } from './shared/main-toolbar/main-toolbar.component';
-import { SideMenuService } from './shared/side-menu/side-menu.service';
 import { TranslateTestingModule } from './shared/translate-testing.module';
 
 describe('AppComponent', () => {
@@ -21,7 +20,6 @@ describe('AppComponent', () => {
       ],
 
       providers: [
-        {provide: SideMenuService, useValue: {open: () => null}}
       ]
     }).compileComponents();
   }));

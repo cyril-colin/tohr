@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MainToolbarComponent } from './main-toolbar.component';
-import { SideMenuService } from '../side-menu/side-menu.service';
 import { TranslateTestingModule } from '../translate-testing.module';
 
 describe('MainToolbarComponent', () => {
@@ -15,7 +14,6 @@ describe('MainToolbarComponent', () => {
         TranslateTestingModule,
       ],
       providers: [
-        {provide: SideMenuService, useValue: {open: () => null}}
       ]
     })
     .compileComponents();

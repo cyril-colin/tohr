@@ -11,7 +11,6 @@ import { tap, takeUntil, map } from 'rxjs/operators';
 import { ProxyMonitoringService } from 'src/app/core/services/proxy/proxy-monitoring/proxy-monitoring.service';
 import { MainToolbarService } from 'src/app/shared/main-toolbar/main-toolbar.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ExternalLink } from 'src/app/core/model/external-link.model';
 
 @Component({
   selector: 'app-torrent-upload',
@@ -22,7 +21,6 @@ export class TorrentUploadComponent implements OnInit, OnDestroy {
   private componetDestroyed$ = new Subject();
   torrentsToAdd: TorrentPost[] = [];
   destinations$: Observable<TorrentDestination[]>;
-  externalLinks$: Observable<ExternalLink[]>;
   destination: TorrentDestination;
   fileNumber = 0;
 
@@ -45,9 +43,6 @@ export class TorrentUploadComponent implements OnInit, OnDestroy {
     this.destinations$ = this.proxyMonitoringService.getTorrentDestinations().pipe(
       tap(res => this.destination = res.filter(t => t.default)[0])
     );
-
-    this.externalLinks$ = this.proxyMonitoringService.getExternalLinks().pipe(
-      map(links => links.filter(l => l.type === 'TORRENT')));
   }
 
 

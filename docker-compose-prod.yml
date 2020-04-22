@@ -6,7 +6,6 @@ services:
       - "4201:4201"
     volumes:
       - "./config.production.json:/tohr/dist-back/config/config.production.json"
-      - "./assets:/tohr/dist-front/assets/external-links"
       - "./logs:/tohr/logs"
       - shared-tmp:/tmp # Used to share torrent files between Tohr and transmission.
     networks:
