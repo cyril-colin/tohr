@@ -115,9 +115,8 @@ cp back/config/config.sample.json back/config/config.dev.json
 nano back/config/config.dev.json # Set users and transmission login settings.
 
 # Run
-docker-compose up -d # start the backend with a connected transmission
-npm start # start the front
-docker-compose logs -f tohr-dev
+npm start # start back and front
+docker-compose logs -f tohr-dev # to see the backend logs
   
 ```
 

@@ -5,7 +5,7 @@
   "author": "Cyril COLIN",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config front/proxy.conf.json",
+    "start": "docker-compose up -d && ng serve --proxy-config front/proxy.conf.json",
     "test": "ng test --code-coverage --browsers=ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e"
