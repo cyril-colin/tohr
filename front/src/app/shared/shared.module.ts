@@ -19,6 +19,7 @@ import { TorrentBrowserSearchComponent } from './torrent-browser-search/torrent-
 import { TabBarComponent } from './tab-bar/tab-bar.component';
 import { RouterModule } from '@angular/router';
 import { TorrentUploadComponent } from './torrent-upload/torrent-upload.component';
+import { HeaderCollapseComponent } from './header-collapse/header-collapse.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { TorrentUploadComponent } from './torrent-upload/torrent-upload.componen
     TorrentBrowserSearchComponent,
     TorrentUploadComponent,
     TabBarComponent,
+    HeaderCollapseComponent,
   ],
   imports: [
     CommonModule,
@@ -66,6 +68,8 @@ import { TorrentUploadComponent } from './torrent-upload/torrent-upload.componen
     TorrentBrowserItemComponent,
     TorrentBrowserSearchComponent,
     TabBarComponent,
+    HeaderCollapseComponent,
+    TorrentUploadComponent,
   ]
 })
 export class SharedModule { }

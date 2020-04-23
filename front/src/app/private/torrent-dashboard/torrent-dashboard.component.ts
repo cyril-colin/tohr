@@ -4,7 +4,6 @@ import { switchMap, catchError } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Torrent } from 'src/app/core/model/torrent';
 import { TorrentDataService } from 'src/app/core/services/torrent-data/torrent-data.service';
-import { MainToolbarService } from 'src/app/shared/main-toolbar/main-toolbar.service';
 import { TranslateService } from '@ngx-translate/core';
 
 
@@ -21,13 +20,11 @@ export class TorrentDashboardComponent implements OnInit {
     public torrentDataService: TorrentDataService,
     private router: Router,
     private route: ActivatedRoute,
-    private mainToolbarService: MainToolbarService,
     private translate: TranslateService,
   ) { }
 
 
   ngOnInit() {
-    this.mainToolbarService.setMainTitle('torrentDashboard.mainTitle');
     this.torrents$ = timer(0, 5000).pipe(
       switchMap(() => this.torrentDataService.loadInitialData()),
       catchError(error => {

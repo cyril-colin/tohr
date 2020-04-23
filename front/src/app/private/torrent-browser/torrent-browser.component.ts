@@ -3,13 +3,10 @@ import { BrowserTorrent } from 'src/app/core/model/torrent';
 import { Observable } from 'rxjs';
 import { ProxyBrowserService, SearchData } from 'src/app/core/services/proxy/proxy-browser/proxy-browser.service';
 import { ProxyMonitoringService } from 'src/app/core/services/proxy/proxy-monitoring/proxy-monitoring.service';
-import { MainToolbarService } from 'src/app/shared/main-toolbar/main-toolbar.service';
 import { TorrentDestination } from 'src/app/core/model/torrent-destination';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-import { TorrentBrowserSearchComponent } from 'src/app/shared/torrent-browser-search/torrent-browser-search.component';
+import { HeaderCollapseComponent } from 'src/app/shared/header-collapse/header-collapse.component';
 
 @Component({
   selector: 'app-torrent-browser',
@@ -17,9 +14,12 @@ import { TorrentBrowserSearchComponent } from 'src/app/shared/torrent-browser-se
   styleUrls: ['./torrent-browser.component.scss']
 })
 export class TorrentBrowserComponent implements OnInit {
-  @ViewChild(TorrentBrowserSearchComponent) searchCompoenent: TorrentBrowserSearchComponent;
+  @ViewChild(HeaderCollapseComponent) header: HeaderCollapseComponent;
   torrents$: Observable<BrowserTorrent[]>;
   torrentDestinations$: Observable<TorrentDestination[]>;
+  searchMode = true;
+  switchLink: string;
+  title: string;
 
   searchResult: BrowserTorrent[] = [];
   selectedDestination: TorrentDestination;
@@ -28,16 +28,14 @@ export class TorrentBrowserComponent implements OnInit {
   constructor(
     private proxyBrowserService: ProxyBrowserService,
     private proxyMonitoringService: ProxyMonitoringService,
-    private mainToolbarService: MainToolbarService,
-    private fb: FormBuilder,
-    private router: Router,
     private translate: TranslateService,
   ) { }
 
   ngOnInit(): void {
-      this.mainToolbarService.setMainTitle('browser.mainTitle');
+      this.switchLink = this.translate.instant('torrentBrowserSearch.switchUpload');
       this.torrentDestinations$ = this.proxyMonitoringService.getTorrentDestinations().pipe(
         tap(res => this.selectedDestination = res.find(r => r.default)),
+        tap(() => this.title = this.searchTitle),
       );
   }
 
@@ -49,7 +47,7 @@ export class TorrentBrowserComponent implements OnInit {
       next: (res) => {
         this.searching = false;
         if (res.length > 0) {
-          this.searchCompoenent.toggleForm();
+          this.header.toggleBar();
         }
         this.searchResult = res;
       },
@@ -62,5 +60,17 @@ export class TorrentBrowserComponent implements OnInit {
         this.searching = false;
       }
     });
+  }
+
+
+  switchMode() {
+    this.searchMode = !this.searchMode;
+    this.title = this.searchMode ? this.searchTitle : this.translate.instant('torrentBrowserSearch.titleUpload');
+    this.switchLink = this.searchMode ?
+      this.translate.instant('torrentBrowserSearch.switchUpload') : this.translate.instant('torrentBrowserSearch.switchSearch');
+  }
+
+  get searchTitle() {
+    return this.translate.instant('torrentBrowserSearch.title') + ' ' + this.selectedDestination.description;
   }
 }

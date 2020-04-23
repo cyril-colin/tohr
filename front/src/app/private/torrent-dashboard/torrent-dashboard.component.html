@@ -1,3 +1,7 @@
+<app-header-collapse [empty]="true">
+  <div title>{{'torrentDashboard.mainTitle' | translate}}</div>
+</app-header-collapse>
+
 <div class="dashboard">
   <ng-container *ngIf="(torrents$ | async) as torrents; else listError">
     <ng-container *ngIf="torrents.length > 0; else listEmpty">

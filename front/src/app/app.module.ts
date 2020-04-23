@@ -10,7 +10,6 @@ import { PublicModule } from './public/public.module';
 import { SharedModule } from './shared/shared.module';
 import { PrivateModule } from './private/private.module';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { MainToolbarComponent } from './shared/main-toolbar/main-toolbar.component';
 import { ModalService } from './shared/modal/modal.service';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -22,7 +21,6 @@ import { environment } from '../environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
-    MainToolbarComponent,
   ],
 
   imports: [

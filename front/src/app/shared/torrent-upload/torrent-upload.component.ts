@@ -7,9 +7,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TorrentDataService } from 'src/app/core/services/torrent-data/torrent-data.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { tap, takeUntil, map } from 'rxjs/operators';
+import { tap, takeUntil } from 'rxjs/operators';
 import { ProxyMonitoringService } from 'src/app/core/services/proxy/proxy-monitoring/proxy-monitoring.service';
-import { MainToolbarService } from 'src/app/shared/main-toolbar/main-toolbar.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -34,12 +33,10 @@ export class TorrentUploadComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private torrentDataService: TorrentDataService,
-    private mainToolbarService: MainToolbarService,
     private translate: TranslateService,
   ) { }
 
   ngOnInit(): void {
-    this.mainToolbarService.setMainTitle('uploadForm.mainTitle');
     this.destinations$ = this.proxyMonitoringService.getTorrentDestinations().pipe(
       tap(res => this.destination = res.filter(t => t.default)[0])
     );
