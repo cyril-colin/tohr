@@ -67,11 +67,19 @@ export class TorrentUploadComponent implements OnInit, OnDestroy {
   }
 
 
-  updateSelectedFiles(files: File[]) {
+  updateSelectedFiles(files: FileList) {
     this.fileNumber = files.length;
-    this.uploadService.getConvertedFiles(files).pipe(takeUntil(this.componetDestroyed$)).subscribe({
-      next: torrents => this.torrentsToAdd = torrents,
+    this.errors = [];
+    Array.from(files).forEach(f => {
+      if (!f.name.endsWith('.torrent')) {
+        this.errors.push({id: 0, message: `${f.name} must be a *.torrent file !`});
+      }
     });
+    if (this.errors.length === 0) {
+      this.uploadService.getConvertedFiles(files).pipe(takeUntil(this.componetDestroyed$)).subscribe({
+        next: torrents => this.torrentsToAdd = torrents,
+      });
+    }
   }
 
 

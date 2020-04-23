@@ -13,13 +13,13 @@ export class UploadService {
   /**
    * Return an observable containing a list of torrent
    * compatible with the proxy.
-   * 
+   *
    * Note that it convert all given File objects into
    * a base64 string.
    */
-  getConvertedFiles(files: File[]): Observable<TorrentPost[]> {
+  getConvertedFiles(files: FileList): Observable<TorrentPost[]> {
     const observables: Observable<string>[] = [];
-    for (const file of files) {
+    for (const file of Array.from(files)) {
       observables.push(this.readFile(file));
     }
 
