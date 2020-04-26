@@ -1,0 +1,33 @@
+@import "../../../colors.scss";
+
+:host {
+  background-color: $bgSecondary;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 100px;
+  margin-bottom: 50px;
+
+  .bar {
+    height: 30px;
+    font-size: 23px;
+    padding-top: 10px;
+  }
+
+  .btn-collapse {
+    bottom: -17px;
+    position: relative;
+
+    background-color: $bgSecondary;
+    padding: 5px;
+    border-radius: 50%;
+    box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    line-height: 0px;
+
+    i {
+      font-size: 35px;
+    }
+  }
+
+}

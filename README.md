@@ -75,9 +75,9 @@ curl -o transmission-data/config/settings.json ${SOURCE}/back/config/transmissio
 vi transmission-data/config/settings.json
 ```
 Usual data to edit are :
-  - ``rpc-username`` : The user login for transmission. Should be the same as         transmissionDaemonLogin in `config.production.json`
-  - ``rpc-password`` : The user password for transmission. Should be the same as         transmissionDaemonLogin in `config.production.json`
- Note : this file will be edited at the transmission start up in order to secure the password. Please see the [Transmission documentation](https://hub.docker.com/r/linuxserver/transmission/).
+  - ``rpc-username`` : The user login for transmission. Should be the same as transmissionDaemonLogin in `config.production.json`
+  - ``rpc-password`` : The user password for transmission. Should be the same as transmissionDaemonPassword in `config.production.json`
+> Note : this file will be edited at the transmission start up in order to secure the password. Please see the [Transmission documentation](https://hub.docker.com/r/linuxserver/transmission/).
 
 
 ### Finally, run Tohr !
@@ -115,9 +115,8 @@ cp back/config/config.sample.json back/config/config.dev.json
 nano back/config/config.dev.json # Set users and transmission login settings.
 
 # Run
-docker-compose up -d # start the backend with a connected transmission
-npm start # start the front
-docker-compose logs -f tohr-dev
+npm start # start back and front
+docker-compose logs -f tohr-dev # to see the backend logs
   
 ```
 

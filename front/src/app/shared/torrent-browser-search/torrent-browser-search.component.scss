@@ -1,27 +1,20 @@
 @import "../../../colors.scss";
 
 :host {
+  display: flex;
+    flex-direction: row;
+    justify-content: center;
 
-  form {
-    border-top: 1px solid $drawBg;
-  }
-  .search {
-    .search-title {
+    form {
       display: flex;
-      height: 35px;
-      flex-direction: row;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
-      padding: 7px;
-
-      div i {
-        font-size: 40px;
-      }
     }
-  }
   .search-input {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    max-width: 200px;
 
     .btn-search {
       width: 70px;

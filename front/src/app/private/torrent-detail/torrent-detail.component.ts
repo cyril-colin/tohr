@@ -7,7 +7,6 @@ import { DeleteConfirmDialogComponent } from 'src/app/shared/delete-confirm-dial
 import { TorrentDataService } from 'src/app/core/services/torrent-data/torrent-data.service';
 import { MoveDialogComponent } from 'src/app/shared/move-dialog/move-dialog.component';
 import { ProxyTorrentService } from 'src/app/core/services/proxy/proxy-torrent/proxy-torrent.service';
-import { MainToolbarService } from 'src/app/shared/main-toolbar/main-toolbar.service';
 import { ModalService } from 'src/app/shared/modal/modal.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -27,13 +26,11 @@ export class TorrentDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     private torrentDataService: TorrentDataService,
     private proxyTorrentService: ProxyTorrentService,
-    private mainToolbarService: MainToolbarService,
     public modalService: ModalService,
     private translate: TranslateService,
   ) { }
 
   ngOnInit() {
-    this.mainToolbarService.setMainTitle('torrentDetail.mainTitle');
     this.refresh();
   }
 
@@ -72,9 +69,6 @@ export class TorrentDetailComponent implements OnInit, OnDestroy {
           this.errors.push(this.translate.instant('torrentDetail.errors.NaN'));
         } else {
           this.torrent$ = this.proxyTorrentService.getTorrent(+params.id).pipe(
-            tap(torrent => {
-              this.mainToolbarService.setMainTitle(torrent.name);
-            }),
             catchError(err => {
               console.error('Cannot fetch torrent.', err);
               this.errors.push(this.translate.instant('torrentDetail.errors.default'));

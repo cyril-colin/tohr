@@ -1,5 +1,4 @@
-import { Component, Inject, AfterViewChecked, AfterContentInit, OnInit } from '@angular/core';
-import { SideMenuService } from './shared/side-menu/side-menu.service';
+import { Component, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DOCUMENT } from '@angular/common';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -16,7 +15,6 @@ export class AppComponent {
   version$: Observable<any>;
   isLogged$: BehaviorSubject<boolean>;
   constructor(
-    private sideMenuService: SideMenuService,
     private translate: TranslateService,
     private monitoringService: ProxyMonitoringService,
     private currentUserService: CurrentUserService,
@@ -30,8 +28,4 @@ export class AppComponent {
       translate.use(browserLanguage);
       this.document.documentElement.lang = browserLanguage;
     }
-
-  openSideMenu() {
-    this.sideMenuService.open();
-  }
 }

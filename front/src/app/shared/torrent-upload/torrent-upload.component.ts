@@ -7,22 +7,19 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TorrentDataService } from 'src/app/core/services/torrent-data/torrent-data.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { tap, takeUntil, map } from 'rxjs/operators';
+import { tap, takeUntil } from 'rxjs/operators';
 import { ProxyMonitoringService } from 'src/app/core/services/proxy/proxy-monitoring/proxy-monitoring.service';
-import { MainToolbarService } from 'src/app/shared/main-toolbar/main-toolbar.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ExternalLink } from 'src/app/core/model/external-link.model';
 
 @Component({
-  selector: 'app-upload-form',
-  templateUrl: 'upload-form.component.html',
-  styleUrls: ['upload-form.component.scss']
+  selector: 'app-torrent-upload',
+  templateUrl: 'torrent-upload.component.html',
+  styleUrls: ['torrent-upload.component.scss']
 })
-export class UploadFormComponent implements OnInit, OnDestroy {
+export class TorrentUploadComponent implements OnInit, OnDestroy {
   private componetDestroyed$ = new Subject();
   torrentsToAdd: TorrentPost[] = [];
   destinations$: Observable<TorrentDestination[]>;
-  externalLinks$: Observable<ExternalLink[]>;
   destination: TorrentDestination;
   fileNumber = 0;
 
@@ -36,18 +33,13 @@ export class UploadFormComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private torrentDataService: TorrentDataService,
-    private mainToolbarService: MainToolbarService,
     private translate: TranslateService,
   ) { }
 
   ngOnInit(): void {
-    this.mainToolbarService.setMainTitle('uploadForm.mainTitle');
     this.destinations$ = this.proxyMonitoringService.getTorrentDestinations().pipe(
       tap(res => this.destination = res.filter(t => t.default)[0])
     );
-
-    this.externalLinks$ = this.proxyMonitoringService.getExternalLinks().pipe(
-      map(links => links.filter(l => l.type === 'TORRENT')));
   }
 
 
@@ -75,20 +67,24 @@ export class UploadFormComponent implements OnInit, OnDestroy {
   }
 
 
-  updateSelectedFiles(files: File[]) {
+  updateSelectedFiles(files: FileList) {
     this.fileNumber = files.length;
-    this.uploadService.getConvertedFiles(files).pipe(takeUntil(this.componetDestroyed$)).subscribe({
-      next: torrents => this.torrentsToAdd = torrents,
+    this.errors = [];
+    Array.from(files).forEach(f => {
+      if (!f.name.endsWith('.torrent')) {
+        this.errors.push({id: 0, message: `${f.name} must be a *.torrent file !`});
+      }
     });
+    if (this.errors.length === 0) {
+      this.uploadService.getConvertedFiles(files).pipe(takeUntil(this.componetDestroyed$)).subscribe({
+        next: torrents => this.torrentsToAdd = torrents,
+      });
+    }
   }
 
 
   selectDestination(des: TorrentDestination) {
     this.destination = des;
-  }
-
-  cancel() {
-    this.router.navigate(['..', 'dashboard'], { relativeTo: this.route });
   }
 
   private getUploadError(response: HttpErrorResponse): ErrorAreaItem {

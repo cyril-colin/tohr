@@ -34,6 +34,7 @@ export class TorrentBrowserService {
     env.torrentProviders.forEach(p => {
       ts.overrideConfig(p.name, {
         baseUrl: p.baseUrl,
+        enableCloudFareBypass: true,
       });
       ts.enableProvider(p.name, p.username, p.password);
     });

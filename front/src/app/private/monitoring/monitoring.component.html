@@ -1,3 +1,7 @@
+<app-header-collapse [empty]="true">
+  <div title>{{'monitoring.mainTitle' | translate}}</div>
+</app-header-collapse>
+
 <div class="monitoring">
     <div *ngIf="currentProcessInfo$ | async as info" class="card info">
       <app-current-process-info [currentProcessInfo]=info></app-current-process-info>

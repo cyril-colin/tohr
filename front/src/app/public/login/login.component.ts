@@ -3,8 +3,6 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProxyAuthentService, LoginData } from '../../core/services/proxy/proxy-authent/proxy-authent.service';
 import { ErrorAreaItem } from '../../shared/error-area/error-area.component';
-import { MainToolbarService } from 'src/app/shared/main-toolbar/main-toolbar.service';
-import { TranslateService } from '@ngx-translate/core';
 import { CurrentUserService } from 'src/app/core/services/current-user/current-user.service';
 
 @Component({
@@ -19,7 +17,6 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private mainToolbarService: MainToolbarService,
     private currentUserService: CurrentUserService,
     ) { }
 
@@ -28,7 +25,6 @@ export class LoginComponent implements OnInit {
   errors: ErrorAreaItem[] = [];
 
   ngOnInit() {
-    this.mainToolbarService.setMainTitle('login.mainTitle');
     this.form = this.generateForm();
   }
 

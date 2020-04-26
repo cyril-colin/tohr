@@ -2,7 +2,7 @@ import * as express from 'express';
 import { TorrentBrowserService, BrowserSearch } from '../services/torrent-browser.service';
 import { TransmissionDaemonService } from '../services/transmission-daemon.service';
 import { Environment } from '../environment';
-import { HttpErrorService } from '../services/http-error.service';
+import { HttpErrorService, ApiError } from '../services/http-error.service';
 import { BrowserTorrent } from '../core/torrent.model';
 
 
@@ -30,7 +30,13 @@ export class TorrentBrowserController {
 
     return this.ts.search(params)
           .then(torrents => response.send(torrents))
-          .catch(err => this.httpErrorService.error500(response, err));
+          .catch(err => {
+            if (err.constructor.name === 'CloudflareError') {
+              response.status(500).send({message: 'cloudflare'} as ApiError);
+            } else {
+              this.httpErrorService.error500(response, err)
+            }
+          });
   }
 
   add(request: express.Request, response: express.Response): Promise<void | express.Response> {

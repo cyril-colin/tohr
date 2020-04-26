@@ -83,6 +83,15 @@ button:disabled {
   opacity: 0.2;
 }
 
+.link {
+  text-decoration: underline;
+  color: $drawPrimary;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .card {
   overflow-wrap: break-word;
   word-break: break-all;

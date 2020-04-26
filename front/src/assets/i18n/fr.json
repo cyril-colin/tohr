@@ -60,6 +60,7 @@
     "fileNumber": "fichier(s)",
     "buttonUpload": "Lancer !",
     "buttonBack": "Retour",
+    "addIn": "Ajouter dans :",
     "errors": {
       "selectTorrent": "Merci d'ajouter au moins un torrent.",
       "500": "Le serveur rencontre une erreur. Le client torrent est-il démarré ?"
@@ -92,20 +93,20 @@
 
   "torrentBrowserSearch": {
     "title": "Chercher dans ",
-    "placeholder": "Chercher dans "
+    "titleUpload": "Ajout manuel",
+    "placeholder": "Chercher dans ",
+    "switchUpload": "Ajouter un .torrent manuellement",
+    "switchSearch": "Chercher un torrent"
   },
 
   "mainToolBar": {
     "available": "Espace disponible"
   },
 
-  "sideMenu": {
-    "backLink": "Retour",
+  "tabBar": {
     "torrentLink": "Les torrents",
     "monitoringLink": "Monitoring",
-    "browserLink": "Recherche",
-    "addFormLink": "Ajouter un .torrent",
-    "logout": "Déconnexion"
+    "browserLink": "Recherche"
   }
 
 }

@@ -82,12 +82,6 @@ export class MonitoringController {
     return status;
   }
 
-  getExternalLinks(request: express.Request, response: express.Response): Promise<any> {
-    const externalLinks = this.env.externalLinks;
-
-    return Promise.resolve(externalLinks).then( res => response.send(res));
-  }
-
   getLogs(request: express.Request, response: express.Response): void {
     const file = this.env.logFile;
     const path = file.startsWith('/') ? file : this.systemInformationService.getRootDir() + file;

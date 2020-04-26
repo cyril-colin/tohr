@@ -60,6 +60,7 @@
     "fileNumber": "file(s)",
     "buttonUpload": "Run !",
     "buttonBack": "Back",
+    "addIn": "Add file in :",
     "errors": {
       "selectTorrent": "Please add at least one torrent.",
       "500": "Server error occured."
@@ -92,20 +93,20 @@
 
   "torrentBrowserSearch": {
     "title": "Search in ",
-    "placeholder": "Search in "
+    "titleUpload": "Add manually",
+    "placeholder": "Search in ",
+    "switchUpload": "Add a .torrent manually",
+    "switchSearch": "Search a torrent"
   },
 
   "mainToolBar": {
     "available": "Space left"
   },
 
-  "sideMenu": {
-    "backLink": "Back",
+  "tabBar": {
     "torrentLink": "Torrent list",
     "monitoringLink": "Monitoring",
-    "browserLink": "Torrent browser",
-    "addFormLink": "Upload a torrent",
-    "logout": "Logout"
+    "browserLink": "Torrent browser"
   }
 
 }
