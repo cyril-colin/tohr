@@ -6,6 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "docker-compose up -d && ng serve --proxy-config front/proxy.conf.json",
+    "logs": "docker-compose logs -f tohr-dev",
     "test": "ng test --code-coverage --browsers=ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e"

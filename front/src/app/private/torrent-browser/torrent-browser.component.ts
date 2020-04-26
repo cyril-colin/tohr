@@ -43,6 +43,7 @@ export class TorrentBrowserComponent implements OnInit {
   search(search: SearchData): void {
     this.searching = true;
     this.selectedDestination = search.destination;
+    this.searchErrors = [];
     this.proxyBrowserService.search(search).subscribe({
       next: (res) => {
         this.searching = false;
@@ -52,7 +53,7 @@ export class TorrentBrowserComponent implements OnInit {
         this.searchResult = res;
       },
       error: (err) => {
-        this.searching = false
+        this.searching = false;
         this.searchErrors.push(this.translate.instant('browser.errors.search'));
         console.error(err);
       },
