@@ -16,7 +16,9 @@ export class TorrentDataService {
   }
 
   loadInitialData(): Observable<Torrent[]> {
-    return this.proxyTorrentService.getAllTorrent().pipe(tap(torrents => this.torrentsSubject.next(torrents)));
+    return this.proxyTorrentService.getAllTorrent().pipe(
+      tap(torrents => this.torrentsSubject.next(torrents)),
+    );
   }
 
   addTorrent(torrent: TorrentPost): Observable<Torrent[]> {

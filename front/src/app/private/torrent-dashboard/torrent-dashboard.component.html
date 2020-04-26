@@ -1,5 +1,8 @@
-<app-header-collapse [empty]="true">
+<app-header-collapse [empty]="false">
   <div title>{{'torrentDashboard.mainTitle' | translate}}</div>
+  <div content class="filter-form">
+    <app-torrent-list-filter (filterEvent)="filter($event)"></app-torrent-list-filter>
+  </div>
 </app-header-collapse>
 
 <div class="dashboard">

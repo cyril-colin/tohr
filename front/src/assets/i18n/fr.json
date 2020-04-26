@@ -19,6 +19,7 @@
 
   "torrentDashboard": {
     "mainTitle": "Les torrents",
+    "filterName": "Titre du torrent",
     "loading": "Chargement en cours...",
     "empty": "La liste des torrents est vide.",
     "errors": {

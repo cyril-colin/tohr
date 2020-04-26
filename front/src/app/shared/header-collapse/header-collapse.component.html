@@ -1,7 +1,7 @@
 <div class="bar">
   <ng-content select="[title]"></ng-content>
 </div>
-<div *ngIf="!empty" [@slideInOut]="collapseAnimation">
+<div class="wrapper-content" *ngIf="!empty" [@slideInOut]="collapseAnimation">
   <ng-content class="content" select="[content]"></ng-content>
 </div>
 <div *ngIf="!empty" (click)="toggleBar()" class="btn-action btn-collapse" [@rotatedState]='state'><i class="material-icons">keyboard_arrow_down</i></div>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, timer, of } from 'rxjs';
-import { switchMap, catchError } from 'rxjs/operators';
-import { Router, ActivatedRoute } from '@angular/router';
+import { switchMap, catchError, map } from 'rxjs/operators';
 import { Torrent } from 'src/app/core/model/torrent';
 import { TorrentDataService } from 'src/app/core/services/torrent-data/torrent-data.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,14 +17,22 @@ export class TorrentDashboardComponent implements OnInit {
   errors: string[] = [];
   constructor(
     public torrentDataService: TorrentDataService,
-    private router: Router,
-    private route: ActivatedRoute,
     private translate: TranslateService,
   ) { }
 
 
   ngOnInit() {
-    this.torrents$ = timer(0, 5000).pipe(
+    this.torrents$ = this.torrents;
+  }
+
+  filter(event) {
+    this.torrents$ = this.torrents.pipe(
+      map(torrents => torrents.filter(t => t.name.toLowerCase().includes(event.nameFilter.toLowerCase()))),
+    );
+  }
+
+  get torrents(): Observable<Torrent[]> {
+    return timer(0, 5000).pipe(
       switchMap(() => this.torrentDataService.loadInitialData()),
       catchError(error => {
         console.error('Unable to reach the torrent list from server.', error);

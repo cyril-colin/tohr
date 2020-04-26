@@ -19,6 +19,7 @@
 
   "torrentDashboard": {
     "mainTitle": "Torrent list",
+    "filterName": "Torrent title",
     "loading": "Loading...",
     "empty": "Torrent list empty",
     "errors": {
