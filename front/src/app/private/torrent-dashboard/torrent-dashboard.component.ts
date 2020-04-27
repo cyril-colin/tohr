@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, timer, of } from 'rxjs';
-import { switchMap, catchError } from 'rxjs/operators';
-import { Router, ActivatedRoute } from '@angular/router';
+import { switchMap, catchError, map } from 'rxjs/operators';
 import { Torrent } from 'src/app/core/model/torrent';
 import { TorrentDataService } from 'src/app/core/services/torrent-data/torrent-data.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ButtonListAction } from 'src/app/shared/button-list-action/button-list-action.component';
 
 
 @Component({
@@ -16,16 +16,45 @@ export class TorrentDashboardComponent implements OnInit {
 
   torrents$: Observable<Torrent[]>;
   errors: string[] = [];
+  sorters: ButtonListAction[] = [];
   constructor(
     public torrentDataService: TorrentDataService,
-    private router: Router,
-    private route: ActivatedRoute,
     private translate: TranslateService,
   ) { }
 
 
   ngOnInit() {
-    this.torrents$ = timer(0, 5000).pipe(
+    this.torrents$ = this.torrents;
+    this.sorters = [
+      { label: this.translate.instant('torrentDashboard.filters.name'), id: 'name' },
+      { label: this.translate.instant('torrentDashboard.filters.size'), id: 'size' },
+    ];
+
+  }
+
+  filter(event) {
+    this.torrents$ = this.torrents.pipe(
+      map(torrents => torrents.filter(t => t.name.toLowerCase().includes(event.nameFilter.toLowerCase()))),
+    );
+  }
+
+  sortList(action: ButtonListAction) {
+    switch (action.id) {
+      case 'name':
+        this.torrents$ = this.torrents$.pipe(
+          map(torrents => torrents.sort((a, b) => a.name.localeCompare(b.name))),
+        );
+        break;
+      case 'size':
+        this.torrents$ = this.torrents$.pipe(
+          map(torrents => torrents.sort((a, b) => (a.totalSize - b.totalSize))),
+        );
+        break;
+    }
+  }
+
+  get torrents(): Observable<Torrent[]> {
+    return timer(0, 5000).pipe(
       switchMap(() => this.torrentDataService.loadInitialData()),
       catchError(error => {
         console.error('Unable to reach the torrent list from server.', error);

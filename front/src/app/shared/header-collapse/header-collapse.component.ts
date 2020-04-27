@@ -29,12 +29,13 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 })
 export class HeaderCollapseComponent implements OnInit {
   @Input() empty = false;
+  @Input() defaultDisplay = true;
   collapseAnimation: string;
   state = 'rotated';
   constructor() { }
 
   ngOnInit(): void {
-    this.collapseAnimation = 'in';
+    this.collapseAnimation = this.defaultDisplay ? 'in' : 'out';
   }
 
   toggleBar(): void {

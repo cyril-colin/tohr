@@ -1,0 +1,9 @@
+<div class="action-list">
+  <button [@slideInOut]="collapseAnimation" *ngFor="let a of buttons" class="btn-primary" (click)="launchAction(a)">
+    {{ a.label }}
+  </button>
+</div>
+
+<button class="btn-primary btn-round toggle" (click)="toggleButtons()">
+  <em class="material-icons">sort</em>
+</button>

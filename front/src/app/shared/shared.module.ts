@@ -20,6 +20,8 @@ import { TabBarComponent } from './tab-bar/tab-bar.component';
 import { RouterModule } from '@angular/router';
 import { TorrentUploadComponent } from './torrent-upload/torrent-upload.component';
 import { HeaderCollapseComponent } from './header-collapse/header-collapse.component';
+import { TorrentListFilterComponent } from './torrent-list-filter/torrent-list-filter.component';
+import { ButtonListActionComponent } from './button-list-action/button-list-action.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { HeaderCollapseComponent } from './header-collapse/header-collapse.compo
     TorrentUploadComponent,
     TabBarComponent,
     HeaderCollapseComponent,
+    TorrentListFilterComponent,
+    ButtonListActionComponent,
   ],
   imports: [
     CommonModule,
@@ -70,6 +74,8 @@ import { HeaderCollapseComponent } from './header-collapse/header-collapse.compo
     TabBarComponent,
     HeaderCollapseComponent,
     TorrentUploadComponent,
+    TorrentListFilterComponent,
+    ButtonListActionComponent,
   ]
 })
 export class SharedModule { }
