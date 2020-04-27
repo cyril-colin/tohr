@@ -4,6 +4,7 @@ import { TransmissionDaemonService } from '../services/transmission-daemon.servi
 import { Environment } from '../environment';
 import { HttpErrorService, ApiError } from '../services/http-error.service';
 import { BrowserTorrent } from '../core/torrent.model';
+import { LoggerService } from '../services/logger.service';
 
 
 export class TorrentBrowserController {
@@ -12,6 +13,7 @@ export class TorrentBrowserController {
     private transmissionDaemonService: TransmissionDaemonService,
     private env: Environment,
     private httpErrorService: HttpErrorService,
+    private loggerService: LoggerService,
   ) { }
 
   search(request: express.Request, response: express.Response): Promise<any> {
@@ -32,6 +34,7 @@ export class TorrentBrowserController {
           .then(torrents => response.send(torrents))
           .catch(err => {
             if (err.constructor.name === 'CloudflareError') {
+              this.loggerService.error(err);
               response.status(500).send({message: 'cloudflare'} as ApiError);
             } else {
               this.httpErrorService.error500(response, err)

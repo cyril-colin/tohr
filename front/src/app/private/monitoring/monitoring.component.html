@@ -1,5 +1,8 @@
-<app-header-collapse [empty]="true">
+<app-header-collapse [empty]="false">
   <div title>{{'monitoring.mainTitle' | translate}}</div>
+  <div content>
+    <a href="" (click)="logout()">{{ 'monitoring.logout' | translate }} {{ currentUser.username }}</a>
+  </div>
 </app-header-collapse>
 
 <div class="monitoring">

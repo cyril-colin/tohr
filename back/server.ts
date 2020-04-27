@@ -47,7 +47,7 @@ const torrentBrowserService = new TorrentBrowserService(TS, config);
 const httpErrorService = new HttpErrorService(loggerService);
 const torrentController = new TorrentController(tdService, config, httpErrorService, loggerService);
 const monitoringController = new MonitoringController(config, systemInformationService, loggerService);
-const torrentBrowserController = new TorrentBrowserController(torrentBrowserService, tdService, config, httpErrorService);
+const torrentBrowserController = new TorrentBrowserController(torrentBrowserService, tdService, config, httpErrorService, loggerService);
 const currentUserService = new CurrentUserService();
 
 
