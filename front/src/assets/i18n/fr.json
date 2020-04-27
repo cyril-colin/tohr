@@ -18,6 +18,10 @@
   },
 
   "torrentDashboard": {
+    "filters": {
+      "size": "Trier par taille",
+      "name": "Trier par nom"
+    },
     "mainTitle": "Les torrents",
     "filterName": "Titre du torrent",
     "loading": "Chargement en cours...",

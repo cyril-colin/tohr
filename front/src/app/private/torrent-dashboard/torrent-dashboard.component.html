@@ -1,4 +1,4 @@
-<app-header-collapse [empty]="false">
+<app-header-collapse [empty]="false" [defaultDisplay]="false">
   <div title>{{'torrentDashboard.mainTitle' | translate}}</div>
   <div content class="filter-form">
     <app-torrent-list-filter (filterEvent)="filter($event)"></app-torrent-list-filter>
@@ -23,5 +23,7 @@
     <app-loading-page [errors]="errors" [errorMessage]="'torrentDashboard.errors.prefix' | translate"
       [loadingMessage]="'torrentDashboard.loading' | translate"></app-loading-page>
   </ng-template>
+
+  <app-button-list-action [buttons]="sorters" (choice)="sortList($event)"></app-button-list-action>
 </div>
 
