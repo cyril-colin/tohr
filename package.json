@@ -30,6 +30,7 @@
     "@types/express-jwt": "0.0.42",
     "@types/jsonwebtoken": "^8.3.8",
     "@types/torrent-search-api": "^2.0.0",
+    "cloudscraper": "https://github.com/bestplay9384/cloudscraper",
     "axios": "^0.19.2",
     "commander": "^4.1.1",
     "express": "^4.17.1",
