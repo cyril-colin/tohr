@@ -109,6 +109,19 @@
     "available": "Space left"
   },
 
+  "torrentStatus": {
+    "TR_STATUS_STOPPED": "Paused",
+    "TR_STATUS_CHECK_WAIT": "File check pending",
+    "TR_STATUS_CHECK": "Checking files",
+    "TR_STATUS_DOWNLOAD_WAIT": "Wait for download",
+    "TR_STATUS_DOWNLOAD": "Downloading",
+    "TR_STATUS_SEED_WAIT": "Waiting for seeding",
+    "TR_STATUS_SEED": "Seeding"
+  },
+
+  "torrentActions.startError": "Cannot start torrent.",
+  "torrentActions.stopError": "Cannot stop torrent.",
+
   "tabBar": {
     "torrentLink": "Torrent list",
     "monitoringLink": "Monitoring",

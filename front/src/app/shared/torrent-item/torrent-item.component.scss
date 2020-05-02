@@ -9,7 +9,6 @@
     align-items: center;
     justify-content: space-between;
     margin-top: 20px;
-    cursor: pointer;
 
     .panel {
       display: flex;
@@ -28,10 +27,23 @@
       margin-bottom: 7px;
       font-size: 16px;
       width: 95%;
+      cursor: pointer;
     }
 
     .destination {
       font-size: 50px;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .loading-button {
+      width: 30px;
+      height: 30px;
     }
 
 

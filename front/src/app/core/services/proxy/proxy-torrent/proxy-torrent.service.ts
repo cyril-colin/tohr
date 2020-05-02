@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Torrent, TorrentPost, mockTorrents } from 'src/app/core/model/torrent';
+import { Observable } from 'rxjs';
+import { Torrent, TorrentPost } from 'src/app/core/model/torrent';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { RpcResponse } from 'src/app/core/model/rpc-response';
 import { RpcTorrentList } from 'src/app/core/model/torrent-list';
@@ -17,7 +17,6 @@ export class ProxyTorrentService {
 
   getAllTorrent(): Observable<Torrent[]> {
     return  this.http.get<RpcResponse<RpcTorrentList>>(this.endpoint + '/torrents').pipe(map(res => res.arguments.torrents));
-    // return  of(mockTorrents);
   }
 
   getTorrent(id: number): Observable<Torrent> {
@@ -42,5 +41,12 @@ export class ProxyTorrentService {
 
   move(id: number, destination: TorrentDestination): Observable<void> {
     return  this.http.put<void>(this.endpoint + '/torrents/' + id + '/move', {destinationName: destination.name});
+  }
+
+  start(id: number) {
+    return  this.http.put<void>(this.endpoint + '/torrents/' + id + '/start', {});
+  }
+  stop(id: number) {
+    return  this.http.put<void>(this.endpoint + '/torrents/' + id + '/stop', {});
   }
 }

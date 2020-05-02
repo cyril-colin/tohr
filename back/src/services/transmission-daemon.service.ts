@@ -2,12 +2,12 @@ import * as NodeCache from 'node-cache';
 import { Environment } from '../environment';
 import axios, { AxiosRequestConfig } from 'axios';
 import { LoggerService } from './logger.service';
+import { TR_STATUS } from '../core/torrent.model';
 
 export interface TransmissionRequest {
   arguments: any;
   method: string;
 }
-
 
 export class TransmissionDaemonService {
   static CACHE_SESSION_KEY = 'transmissionSessionId';
@@ -20,7 +20,7 @@ export class TransmissionDaemonService {
     const requestBody: TransmissionRequest = {
       method: 'torrent-get',
       arguments: {
-        fields: ['id', 'name', 'totalSize', 'downloadDir', 'percentDone', 'rateDownload', 'rateUpload', 'error', 'errorString']
+        fields: ['id', 'name', 'totalSize', 'downloadDir', 'percentDone', 'rateDownload', 'rateUpload', 'error', 'errorString', 'status']
       }
     };
 
@@ -30,6 +30,10 @@ export class TransmissionDaemonService {
 
     // this.logger.debug('request : ', requestBody);
     return this.sendRequest(requestBody);
+  }
+
+  public getStatus(status: number): string {
+    return TR_STATUS[status];
   }
 
   public add(downloadDir: string, metaInfo: string): Promise<any> {
@@ -76,6 +80,26 @@ export class TransmissionDaemonService {
         location,
         move: true,
       }
+    };
+
+    this.logger.debug('request : ', JSON.stringify(requestBody));
+    return this.sendRequest(requestBody);
+  }
+
+  public stop(id: number): Promise<any> {
+    const requestBody: TransmissionRequest = {
+      method: 'torrent-stop',
+      arguments: { ids: [+id]}
+    };
+
+    this.logger.debug('request : ', JSON.stringify(requestBody));
+    return this.sendRequest(requestBody);
+  }
+
+  public start(id: number): Promise<any> {
+    const requestBody: TransmissionRequest = {
+      method: 'torrent-start',
+      arguments: { ids: [+id]}
     };
 
     this.logger.debug('request : ', JSON.stringify(requestBody));
