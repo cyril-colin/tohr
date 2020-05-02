@@ -15,20 +15,6 @@ export interface Torrent {
   status: number;
 }
 
-/**
- * @see https://github.com/transmission/transmission/blob/master/libtransmission/transmission.h
- * The description of status
- */
-export const TR_STATUS = {
-  0: 'TR_STATUS_STOPPED',
-  1: 'TR_STATUS_CHECK_WAIT',
-  2: 'TR_STATUS_CHECK',
-  3: 'TR_STATUS_DOWNLOAD_WAIT',
-  4: 'TR_STATUS_DOWNLOAD',
-  5: 'TR_STATUS_SEED_WAIT',
-  6: 'TR_STATUS_SEED',
-}
-
 
 
 export interface BrowserTorrent {

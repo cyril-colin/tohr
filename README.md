@@ -126,11 +126,10 @@ docker-compose logs -f tohr-dev # to see the backend logs
 #### Build the production
 ```bash
 vi package.json # Update manually version
-vi docker-compose-prod.yml # Update the docker tag of tohr image
 VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]') &&\
  git commit -am ${VERSION} && \
  git tag -a ${VERSION} -m ${VERSION} 
-git push --tags
+git push --tags && git push
 ```
 
 

@@ -2,12 +2,24 @@ import * as NodeCache from 'node-cache';
 import { Environment } from '../environment';
 import axios, { AxiosRequestConfig } from 'axios';
 import { LoggerService } from './logger.service';
-import { TR_STATUS } from '../core/torrent.model';
 
 export interface TransmissionRequest {
   arguments: any;
   method: string;
 }
+/**
+ * @see https://github.com/transmission/transmission/blob/master/libtransmission/transmission.h
+ * The description of status
+ */
+const TR_STATUS: {value: number, text: string}[] = [
+  {value: 0, text: 'TR_STATUS_STOPPED'},
+  {value: 1, text: 'TR_STATUS_CHECK_WAIT'},
+  {value: 2, text: 'TR_STATUS_CHECK'},
+  {value: 3, text: 'TR_STATUS_DOWNLOAD_WAIT'},
+  {value: 4, text: 'TR_STATUS_DOWNLOAD'},
+  {value: 5, text: 'TR_STATUS_SEED_WAIT'},
+  {value: 6, text: 'TR_STATUS_SEED'},
+];
 
 export class TransmissionDaemonService {
   static CACHE_SESSION_KEY = 'transmissionSessionId';
@@ -33,7 +45,7 @@ export class TransmissionDaemonService {
   }
 
   public getStatus(status: number): string {
-    return TR_STATUS[status];
+    return TR_STATUS.find(s => s.value === status).text;
   }
 
   public add(downloadDir: string, metaInfo: string): Promise<any> {
