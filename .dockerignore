@@ -1,1 +1,4 @@
 **/node_modules
+.git/
+transmission-data
+logs
