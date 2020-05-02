@@ -109,7 +109,6 @@ export class TorrentController {
     }
     const tdRequest = this.transmissionDaemonService.stop(request.params.id as any);
     tdRequest.then(data => {
-      console.log(data);
       response.send(data);
     });
     tdRequest.catch(err => this.httpErrorService.error500(response, err));
@@ -123,7 +122,6 @@ export class TorrentController {
     }
     const tdRequest = this.transmissionDaemonService.start(request.params.id as any);
     tdRequest.then(data => {
-      console.log(data);
       response.send(data);
     });
     tdRequest.catch(err => this.httpErrorService.error500(response, err));
