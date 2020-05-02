@@ -11,6 +11,8 @@ export interface Torrent {
   error: number;
   errorString: string;
   destination?: TorrentDestination;
+  statusStr: string;
+  status: number;
 }
 
 export interface TorrentMove {
@@ -45,10 +47,3 @@ export interface BrowserTag {
   name: string,
   color: string
 }
-
-
-export const mockTorrents: Torrent[] = [
-  { downloadDir: '/media/NFS/music', error: 0, errorString: null, id: 1, name: 'Ubuntu', percentDone: 0.5, rateDownload: 20, rateUpload: 20, totalSize: 90000 },
-  { downloadDir: '/tmp/test', error: 0, errorString: null, id: 2, name: 'The.Handmaids.Tale.S03E08.MULTi.1080p.HDTV.x264-HYBRiS.mkv', percentDone: 0.5, rateDownload: 20, rateUpload: 20, totalSize: 90000 },
-  { downloadDir: '/tmp/test', error: 0, errorString: null, id: 3, name: 'Middle Earth - Le Seigneur Des Anneaux & The Hobbit Version Longue MULTI Bluray 1080p DTS HDMA x264 - MAN OF STYLE', percentDone: 0.5, rateDownload: 20, rateUpload: 20, totalSize: 90000 },
-]

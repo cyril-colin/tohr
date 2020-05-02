@@ -1,4 +1,4 @@
-<div class="action-list">
+<div class="action-list" [@slideInOut]="collapseAnimation">
   <button [@slideInOut]="collapseAnimation" *ngFor="let a of buttons" class="btn-primary" (click)="launchAction(a)">
     {{ a.label }}
   </button>

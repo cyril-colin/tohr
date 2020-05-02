@@ -21,6 +21,7 @@
   "torrentDashboard": {
     "filters": {
       "size": "Trier par taille",
+      "status": "Trier par état",
       "name": "Trier par nom"
     },
     "mainTitle": "Les torrents",
@@ -108,6 +109,19 @@
   "mainToolBar": {
     "available": "Espace disponible"
   },
+
+  "torrentStatus": {
+    "TR_STATUS_STOPPED": "Pause",
+    "TR_STATUS_CHECK_WAIT": "Check des fichiers en attente",
+    "TR_STATUS_CHECK": "Check des fichiers en cours",
+    "TR_STATUS_DOWNLOAD_WAIT": "DL en attente",
+    "TR_STATUS_DOWNLOAD": "DL en cours",
+    "TR_STATUS_SEED_WAIT": "Partage en attente",
+    "TR_STATUS_SEED": "Partage en cours"
+  },
+
+  "torrentActions.startError": "Démarrage impossible",
+  "torrentActions.stopError": "Arrrêt impossible",
 
   "tabBar": {
     "torrentLink": "Les torrents",

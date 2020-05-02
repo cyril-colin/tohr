@@ -134,5 +134,12 @@ git push --tags
 ```
 
 
+## External links
+
+This application works thanks to the transmission-daemon RPC api and the lib torrent-search-api :
+- [Transmission api spécification](https://github.com/transmission/transmission/blob/master/extras/rpc-spec.txt)
+- [torrent-search-api](https://github.com/JimmyLaurent/torrent-search-api)
+
+
 
 

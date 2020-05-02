@@ -20,6 +20,7 @@ export class TorrentController {
       const destinationsList: TorrentDestination[] = this.env.monitoring.destinations;
       data.arguments.torrents.forEach((t: Torrent) => {
         t.destination = destinationsList.find(d => d.path === t.downloadDir);
+        t.statusStr = this.transmissionDaemonService.getStatus(t.status).trim().toLocaleUpperCase();
       });
 
       response.send(data);
@@ -39,6 +40,7 @@ export class TorrentController {
       const destinationsList: TorrentDestination[] = this.env.monitoring.destinations;
       data.arguments.torrents.forEach((t: Torrent) => {
         t.destination = destinationsList.find(d => d.path === t.downloadDir);
+        t.statusStr = this.transmissionDaemonService.getStatus(t.status).trim().toLocaleUpperCase();
       });
 
       response.send(data);
@@ -93,6 +95,32 @@ export class TorrentController {
     }
 
     const tdRequest = this.transmissionDaemonService.move(request.params.id as any, selectedDestination.path);
+    tdRequest.then(data => {
+      response.send(data);
+    });
+    tdRequest.catch(err => this.httpErrorService.error500(response, err));
+
+    return tdRequest;
+  }
+
+  stop(request: express.Request, response: express.Response): Promise<any> {
+    if (isNaN(request.params.id as any)) {
+      return this.httpErrorService.error400('Not a number.', response, request.query, request.params);
+    }
+    const tdRequest = this.transmissionDaemonService.stop(request.params.id as any);
+    tdRequest.then(data => {
+      response.send(data);
+    });
+    tdRequest.catch(err => this.httpErrorService.error500(response, err));
+
+    return tdRequest;
+  }
+
+  start(request: express.Request, response: express.Response): Promise<any> {
+    if (isNaN(request.params.id as any)) {
+      return this.httpErrorService.error400('Not a number.', response, request.query, request.params);
+    }
+    const tdRequest = this.transmissionDaemonService.start(request.params.id as any);
     tdRequest.then(data => {
       response.send(data);
     });
