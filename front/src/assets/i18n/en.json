@@ -21,8 +21,9 @@
   "torrentDashboard": {
     "mainTitle": "Torrent list",
     "filters": {
-      "size": "Trier par taille",
-      "name": "Trier par nom"
+      "size": "Sort by size",
+      "status": "Sort by state",
+      "name": "Sort by name"
     },
     "filterName": "Torrent title",
     "loading": "Loading...",

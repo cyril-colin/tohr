@@ -13,11 +13,13 @@ export interface ButtonListAction {
     trigger('slideInOut', [
       state('in', style({
         overflow: 'hidden',
+        width: '*',
         height: '*',
       })),
       state('out', style({
         opacity: '0',
         overflow: 'hidden',
+        width: '0px',
         height: '0px',
       })),
       transition('in => out', animate('200ms ease-in-out')),

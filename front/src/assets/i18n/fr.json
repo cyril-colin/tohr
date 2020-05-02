@@ -21,6 +21,7 @@
   "torrentDashboard": {
     "filters": {
       "size": "Trier par taille",
+      "status": "Trier par état",
       "name": "Trier par nom"
     },
     "mainTitle": "Les torrents",

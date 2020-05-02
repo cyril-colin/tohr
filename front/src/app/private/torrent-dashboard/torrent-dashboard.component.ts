@@ -28,6 +28,7 @@ export class TorrentDashboardComponent implements OnInit {
     this.sorters = [
       { label: this.translate.instant('torrentDashboard.filters.name'), id: 'name' },
       { label: this.translate.instant('torrentDashboard.filters.size'), id: 'size' },
+      { label: this.translate.instant('torrentDashboard.filters.status'), id: 'status' },
     ];
 
   }
@@ -48,6 +49,11 @@ export class TorrentDashboardComponent implements OnInit {
       case 'size':
         this.torrents$ = this.torrents$.pipe(
           map(torrents => torrents.sort((a, b) => (a.totalSize - b.totalSize))),
+        );
+        break;
+      case 'status':
+        this.torrents$ = this.torrents$.pipe(
+          map(torrents => torrents.sort((a, b) => (a.status - b.status))),
         );
         break;
     }
