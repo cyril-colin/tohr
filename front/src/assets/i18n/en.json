@@ -128,6 +128,13 @@
   "torrentActions.startError": "Cannot start torrent.",
   "torrentActions.stopError": "Cannot stop torrent.",
 
+  "downloadConfirmDialog.mainTitle": "Download file",
+  "downloadConfirmDialog.text": "Be careful, download a file can consume a lot your data if your are on mobile.",
+  "downloadConfirmDialog.buttonCancel": "Cancel",
+  "downloadConfirmDialog.confirm": "Downaload",
+  "downloadConfirmDialog.error.download": "An error occurred.",
+
+
   "tabBar": {
     "torrentLink": "Torrent list",
     "monitoringLink": "Monitoring",

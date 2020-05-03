@@ -1,3 +1,7 @@
+# THIS DOCKER COMPOSE IS ONLY FOR DEVELOPMENT.
+# CHECK THE README TO SEE HOW TO INSTALL THE
+# PRODUCTION MODE.
+
 version: '3'
 services:
   tohr-dev:
@@ -7,6 +11,7 @@ services:
     volumes:
       - .:/tohr
       - ./logs:/tohr/logs
+      - "./transmission-data/data:/data"
       - shared-tmp:/tmp
     networks:
       tohr-network:

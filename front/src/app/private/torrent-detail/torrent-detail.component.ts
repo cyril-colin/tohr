@@ -2,13 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { Torrent } from 'src/app/core/model/torrent';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, tap, takeUntil } from 'rxjs/operators';
+import { catchError, takeUntil } from 'rxjs/operators';
 import { DeleteConfirmDialogComponent } from 'src/app/shared/delete-confirm-dialog/delete-confirm-dialog.component';
 import { TorrentDataService } from 'src/app/core/services/torrent-data/torrent-data.service';
 import { MoveDialogComponent } from 'src/app/shared/move-dialog/move-dialog.component';
 import { ProxyTorrentService } from 'src/app/core/services/proxy/proxy-torrent/proxy-torrent.service';
 import { ModalService } from 'src/app/shared/modal/modal.service';
 import { TranslateService } from '@ngx-translate/core';
+import { DownloadConfirmDialogComponent } from 'src/app/shared/download-confirm-dialog/download-confirm-dialog.component';
+import * as FileSaver from 'file-saver';
 
 
 @Component({
@@ -77,6 +79,29 @@ export class TorrentDetailComponent implements OnInit, OnDestroy {
           );
         }
       }
+    });
+  }
+
+  openDownloadWarning(torrent: Torrent, filename: string) {
+    const dialogRef = this.modalService.open<DownloadConfirmDialogComponent>(DownloadConfirmDialogComponent, {
+      data: torrent
+    });
+
+    dialogRef.instance.confirmEvent.pipe(takeUntil(this.componetDestroyed$)).subscribe(result => {
+      dialogRef.instance.isLoading = true;
+      dialogRef.instance.errors = [];
+      this.proxyTorrentService.download(torrent.id, filename).subscribe({
+        next: (res) => {
+          dialogRef.instance.isLoading = false;
+          FileSaver.saveAs(res, filename);
+          dialogRef.instance.close();
+        },
+        error: (err) => {
+          dialogRef.instance.isLoading = false;
+          dialogRef.instance.errors.push({id: 0, message: this.translate.instant('downloadConfirmDialog.error.download')});
+          console.error(err);
+        }
+      });
     });
   }
 

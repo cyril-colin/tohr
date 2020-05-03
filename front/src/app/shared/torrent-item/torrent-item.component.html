@@ -16,10 +16,10 @@
       </div>
       <ng-container *ngIf="!isLoading">
         <span class="status">{{ 'torrentStatus.'+ torrent.statusStr | translate}}</span>
-        <em *ngIf="isPaused"  (click)="startStop()" class="material-icons">play_arrow</em>
-        <em *ngIf="!isPaused" (click)="startStop()" class="material-icons">pause</em>
+        <em *ngIf="isPaused"  (click)="startStop()" class="material-icons btn-action">play_arrow</em>
+        <em *ngIf="!isPaused" (click)="startStop()" class="material-icons btn-action">pause</em>
       </ng-container>
-      <em class="material-icons" (click)="goTorrent(torrent)">remove_red_eye</em>
+      <em class="material-icons btn-action" (click)="goTorrent(torrent)">remove_red_eye</em>
 
     </div>
     <div class="error">

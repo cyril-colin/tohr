@@ -6,7 +6,6 @@
       <div class="actions">
         <i class="material-icons btn-action" (click)="openMoveDialog(torrent)">forward</i>
         <i class="material-icons btn-action" (click)="openDialog(torrent)">delete_forever</i>
-        <i class="material-icons btn-action">cloud_download</i>
       </div>
     </div>
   </app-header-collapse>
@@ -33,7 +32,14 @@
     <div class="title">{{ torrent.files.length }} {{ 'torrentDetail.files' | translate}} </div>
     <div *ngFor="let f of torrent.files">
       <div class="filename">{{f.name}}</div>
-      <div class="file-size">{{ f.bytesCompleted | filesize}} / {{ f.length | filesize}}</div>
+      <div class="file-size">
+        <span>{{ f.bytesCompleted | filesize}} / {{ f.length | filesize}}</span>
+        <span>
+          <i *ngIf="f.length > f.bytesCompleted" class="material-icons btn-action disabled">cloud_download</i>
+          <i *ngIf="!(f.length > f.bytesCompleted)" (click)="openDownloadWarning(torrent, f.name)" class="material-icons btn-action">cloud_download</i>
+        </span>
+      </div>
+
     </div>
   </div>
 

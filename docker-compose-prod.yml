@@ -5,12 +5,23 @@ services:
     ports:
       - "4201:4201"
     volumes:
+      # Give configuration to Docker
       - "./config.production.json:/tohr/dist-back/config/config.production.json"
+      # Share the logs between docker and host.
       - "./logs:/tohr/logs"
-      - shared-tmp:/tmp # Used to share torrent files between Tohr and transmission.
+      # Give access to tohr to data in order to give access
+      # to files to direct download features. Without this,
+      # only transmission has access.
+      - "./transmission-data/data:/data"
+      # Used to share torrent files between Tohr and transmission.
+      # this is useful to the "search and download" feature, because
+      # we donwload .torrent files in this directory.
+      - shared-tmp:/tmp
     networks:
       tohr-network:
 
+  # Please, see transmission docker documentation on
+  # docker hub : https://hub.docker.com/r/linuxserver/transmission/
   tohr-transmission:
     image: "linuxserver/transmission"
     environment:
@@ -23,11 +34,16 @@ services:
       - "51413:51413/udp"
     volumes:
       - "./transmission-data/config:/config"
+      # These volumes are required to store torrent once downloaded.
+      # They need to match with destintaiton configured in './config.production.json'
       - "./transmission-data/data/films:/data/films"
       - "./transmission-data/data/musics:/data/musics"
       - "./transmission-data/data/series:/data/series"
       - "./transmission-data/data/other:/data/other"
-      - "shared-tmp:/tmp" # Used to share torrent files between Tohr and transmission.
+      # Used to share torrent files between Tohr and transmission.
+      # this is useful to the "search and download" feature, because
+      # we donwload .torrent files in this directory.
+      - "shared-tmp:/tmp"
     networks:
       tohr-network:
         aliases:
