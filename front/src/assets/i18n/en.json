@@ -1,55 +1,40 @@
 {
-  "login": {
-    "mainTitle": "Login",
-    "inputLogin": "Username",
-    "inputPassword": "Password",
-    "buttonLogin": "Login"
-  },
+  "login.mainTitle": "Login",
+  "login.inputPassword": "Password",
+  "login.inputLogin": "Username",
+  "login.buttonLogin": "Login",
 
-  "monitoring": {
-    "mainTitle": "Monitoring",
-    "logout": "Logout from"
-  },
+  "monitoring.mainTitle": "Monitoring",
+  "monitoring.logout": "Logout from",
 
-  "currentProcessInfo": {
-    "cpu": "CPU",
-    "memory": "Memory",
-    "downloadLink": "Télécharger les logs",
-    "user": "User"
-  },
+  "currentProcessInfo.cpu": "CPU",
+  "currentProcessInfo.memory": "Memory",
+  "currentProcessInfo.downloadLink": "Télécharger les logs",
+  "currentProcessInfo.user": "User",
 
-  "torrentDashboard": {
-    "mainTitle": "Torrent list",
-    "filters": {
-      "size": "Sort by size",
-      "status": "Sort by state",
-      "date": "Sort by date",
-      "name": "Sort by name"
-    },
-    "filterName": "Torrent title",
-    "loading": "Loading...",
-    "empty": "Torrent list empty",
-    "errors": {
-      "prefix": "Cannot load the list",
-      "500": "Server error occured.",
-      "504": "The server is not responding"
-    }
-  },
+  "torrentDashboard.mainTitle": "Torrent list",
+  "torrentDashboard.filters.size": "Sort by size",
+  "torrentDashboard.filters.status": "Sort by state",
+  "torrentDashboard.filters.date": "Sort by date",
+  "torrentDashboard.filters.name": "Sort by name",
+  "torrentDashboard.filterName": "Torrent title",
+  "torrentDashboard.loading": "Loading...",
+  "torrentDashboard.empty": "Torrent list empty",
+  "torrentDashboard.errors.prefix": "Cannot load the list",
+  "torrentDashboard.errors.500": "Server error occured.",
+  "torrentDashboard.errors.504": "The server is not responding",
 
-  "browser": {
-    "mainTitle": "Torrent Browser",
-    "searchEmpty": "No result.",
-    "loading": "Loading...",
-    "emptyFilters": "We cannot get filters, so search feature is not available.",
-    "errors": {
-      "search": "Error on search.",
-      "searchNotValid": "Form not valid",
-      "prefix": "Cannot load the list",
-      "adding": "Error on add. Retry ?",
-      "500": "Server error occured.",
-      "504": "The server is not responding"
-    }
-  },
+  "browser.mainTitle": "Torrent Browser",
+  "browser.searchEmpty": "No result.",
+  "browser.loading": "Loading...",
+  "browser.emptyFilters": "We cannot get filters, so search feature is not available.",
+  "browser.errors.search": "Error on search.",
+  "browser.errors.searchNotValid": "Form not valid",
+  "browser.errors.prefix": "Cannot load the list",
+  "browser.errors.adding": "Error on add. Retry ?",
+  "browser.errors.500": "Server error occured.",
+  "browser.errors.504": "The server is not responding",
+
   "torrentDetail.main":"Main data",
   "torrentDetail.data-size":"Size and data",
   "torrentDetail.loading": "Loading ...",
@@ -66,64 +51,46 @@
   "torrentDetail.errors.default": "Cannot load the torrent.",
   "torrentDetail.errors.NaN": "Incorrect request",
 
-  "uploadForm": {
-    "mainTitle": "New torrent",
-    "selectTorrent": "Add files",
-    "fileNumber": "file(s)",
-    "buttonUpload": "Run !",
-    "buttonBack": "Back",
-    "addIn": "Add file in :",
-    "errors": {
-      "selectTorrent": "Please add at least one torrent.",
-      "500": "Server error occured."
-    }
-  },
+  "uploadForm.mainTitle": "New torrent",
+  "uploadForm.selectTorrent": "Add files",
+  "uploadForm.fileNumber": "file(s)",
+  "uploadForm.buttonUpload": "Run !",
+  "uploadForm.buttonBack": "Back",
+  "uploadForm.addIn": "Add file in :",
+  "uploadForm.errors.selectTorrent": "Please add at least one torrent.",
+  "uploadForm.errors.500": "Server error occured.",
 
-  "deleteConfirmDialog": {
-    "mainTitle": "Several choices possible...",
-    "buttonCancel": "Cancel",
-    "buttonWithData": "Delete with data",
-    "buttonWithout": "Delete only from list"
-  },
+  "deleteConfirmDialog.mainTitle": "Several choices possible...",
+  "deleteConfirmDialog.buttonCancel": "Cancel",
+  "deleteConfirmDialog.buttonWithData": "Delete with data",
+  "deleteConfirmDialog.buttonWithout": "Delete only from list",
 
-  "moveDialog": {
-    "mainTitle": "Put files in...",
-    "loading": "Loading...",
-    "buttonCancel": "Cancel",
-    "buttonMove": "Move !",
-    "errors": {
-      "prefix": "Cannot load the list :",
-      "cannotMove": "Cannot move."
-    }
-  },
+  "moveDialog.mainTitle": "Put files in...",
+  "moveDialog.loading": "Loading...",
+  "moveDialog.buttonCancel": "Cancel",
+  "moveDialog.buttonMove": "Move !",
+  "moveDialog.errors.prefix": "Cannot load the list :",
+  "moveDialog.errors.cannotMove": "Cannot move.",
 
-  "torrentBrowserItem": {
-    "more": "More",
-    "alreadyAdded": "Torrent already added",
-    "added": "Torrent added"
-  },
+  "torrentBrowserItem.more": "More",
+  "torrentBrowserItem.alreadyAdded": "Torrent already added",
+  "torrentBrowserItem.added": "Torrent added",
 
-  "torrentBrowserSearch": {
-    "title": "Search in ",
-    "titleUpload": "Add manually",
-    "placeholder": "Search in ",
-    "switchUpload": "Add a .torrent manually",
-    "switchSearch": "Search a torrent"
-  },
+  "torrentBrowserSearch.title": "Search in ",
+  "torrentBrowserSearch.titleUpload": "Add manually",
+  "torrentBrowserSearch.placeholder": "Search in ",
+  "torrentBrowserSearch.switchUpload": "Add a .torrent manually",
+  "torrentBrowserSearch.switchSearch": "Search a torrent",
 
-  "mainToolBar": {
-    "available": "Space left"
-  },
+  "mainToolBar.available": "Space left",
 
-  "torrentStatus": {
-    "TR_STATUS_STOPPED": "Paused",
-    "TR_STATUS_CHECK_WAIT": "File check pending",
-    "TR_STATUS_CHECK": "Checking files",
-    "TR_STATUS_DOWNLOAD_WAIT": "Wait for download",
-    "TR_STATUS_DOWNLOAD": "Downloading",
-    "TR_STATUS_SEED_WAIT": "Waiting for seeding",
-    "TR_STATUS_SEED": "Seeding"
-  },
+  "torrentStatus.TR_STATUS_STOPPED": "Paused",
+  "torrentStatus.TR_STATUS_CHECK_WAIT": "File check pending",
+  "torrentStatus.TR_STATUS_CHECK": "Checking files",
+  "torrentStatus.TR_STATUS_DOWNLOAD_WAIT": "Wait for download",
+  "torrentStatus.TR_STATUS_DOWNLOAD": "Downloading",
+  "torrentStatus.TR_STATUS_SEED_WAIT": "Waiting for seeding",
+  "torrentStatus.TR_STATUS_SEED": "Seeding",
 
   "torrentActions.startError": "Cannot start torrent.",
   "torrentActions.stopError": "Cannot stop torrent.",
@@ -134,11 +101,8 @@
   "downloadConfirmDialog.confirm": "Downaload",
   "downloadConfirmDialog.error.download": "An error occurred.",
 
-
-  "tabBar": {
-    "torrentLink": "Torrent list",
-    "monitoringLink": "Monitoring",
-    "browserLink": "Torrent browser"
-  }
+  "tabBar.torrentLink": "Torrent list",
+  "tabBar.monitoringLink": "Monitoring",
+  "tabBar.browserLink": "Torrent browser"
 
 }

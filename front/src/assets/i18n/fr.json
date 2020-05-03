@@ -1,55 +1,40 @@
 {
-  "login": {
-    "mainTitle": "Connexion",
-    "inputLogin": "Nom d'utilisateur",
-    "inputPassword": "Mot de passe",
-    "buttonLogin": "Connexion"
-  },
+  "login.mainTitle": "Connexion",
+  "login.inputLogin": "Nom d'utilisateur",
+  "login.inputPassword": "Mot de passe",
+  "login.buttonLogin": "Connexion",
 
-  "monitoring": {
-    "mainTitle": "Monitoring",
-    "logout": "Se déconnecter du compte"
-  },
+  "monitoring.mainTitle": "Monitoring",
+  "monitoring.logout": "Se déconnecter du compte",
 
-  "currentProcessInfo": {
-    "cpu": "CPU",
-    "memory": "Mémoire",
-    "downloadLink": "Télécharger les logs",
-    "user": "Utilisateur"
-  },
+  "currentProcessInfo.cpu": "CPU",
+  "currentProcessInfo.memory": "Mémoire",
+  "currentProcessInfo.downloadLink": "Télécharger les logs",
+  "currentProcessInfo.user": "Utilisateur",
 
-  "torrentDashboard": {
-    "filters": {
-      "size": "Trier par taille",
-      "status": "Trier par état",
-      "date": "Trier par date",
-      "name": "Trier par nom"
-    },
-    "mainTitle": "Les torrents",
-    "filterName": "Titre du torrent",
-    "loading": "Chargement en cours...",
-    "empty": "La liste des torrents est vide.",
-    "errors": {
-      "prefix": "Impossible de charger la liste :",
-      "500": "Le serveur rencontre une erreur. Le client torrent est-il démarré ?",
-      "504": "Le serveur ne répond pas."
-    }
-  },
+  "torrentDashboard.filters.size": "Trier par taille",
+  "torrentDashboard.filters.status": "Trier par état",
+  "torrentDashboard.filters.date": "Trier par date",
+  "torrentDashboard.filters.name": "Trier par nom",
+  "torrentDashboard.mainTitle": "Les torrents",
+  "torrentDashboard.filterName": "Titre du torrent",
+  "torrentDashboard.loading": "Chargement en cours...",
+  "torrentDashboard.empty": "La liste des torrents est vide.",
+  "torrentDashboard.errors.prefix": "Impossible de charger la liste :",
+  "torrentDashboard.errors.500": "Le serveur rencontre une erreur. Le client torrent est-il démarré ?",
+  "torrentDashboard.errors.504": "Le serveur ne répond pas.",
 
-  "browser": {
-    "mainTitle": "Recherche",
-    "searchEmpty": "Aucun resultat",
-    "loading": "Loading...",
-    "emptyFilters": "Impossible de récupérer les filtres, aucune recherche ne peut être faite.",
-    "errors": {
-      "search": "Erreur lors de la recherche.",
-      "searchNotValid": "Formulaire de recherche invalide",
-      "prefix": "Impossible de charger la liste.",
-      "adding": "Erreur d'ajout. Retenter peut suffire...",
-      "500": "Le serveur rencontre une erreur. Le client torrent est-il démarré ?",
-      "504": "Le serveur ne répond pas."
-    }
-  },
+  "browser.mainTitle": "Recherche",
+  "browser.searchEmpty": "Aucun resultat",
+  "browser.loading": "Loading...",
+  "browser.emptyFilters": "Impossible de récupérer les filtres, aucune recherche ne peut être faite.",
+  "browser.errors.search": "Erreur lors de la recherche.",
+  "browser.errors.searchNotValid": "Formulaire de recherche invalide",
+  "browser.errors.prefix": "Impossible de charger la liste.",
+  "browser.errors.adding": "Erreur d'ajout. Retenter peut suffire...",
+  "browser.errors.500": "Le serveur rencontre une erreur. Le client torrent est-il démarré ?",
+  "browser.errors.504": "Le serveur ne répond pas.",
+
   "torrentDetail.main":"Infos générales",
   "torrentDetail.data-size":"Taille et données",
   "torrentDetail.loading": "Chargement en cours...",
@@ -66,64 +51,46 @@
   "torrentDetail.errors.default": "Impossible de charger le torrent.",
   "torrentDetail.errors.NaN": "Requête incorrecte.",
 
-  "uploadForm": {
-    "mainTitle": "Nouveau torrent",
-    "selectTorrent": "Ajouter des fichiers",
-    "fileNumber": "fichier(s)",
-    "buttonUpload": "Lancer !",
-    "buttonBack": "Retour",
-    "addIn": "Ajouter dans :",
-    "errors": {
-      "selectTorrent": "Merci d'ajouter au moins un torrent.",
-      "500": "Le serveur rencontre une erreur. Le client torrent est-il démarré ?"
-    }
-  },
+  "uploadForm.mainTitle": "Nouveau torrent",
+  "uploadForm.selectTorrent": "Ajouter des fichiers",
+  "uploadForm.fileNumber": "fichier(s)",
+  "uploadForm.buttonUpload": "Lancer !",
+  "uploadForm.buttonBack": "Retour",
+  "uploadForm.addIn": "Ajouter dans :",
+  "uploadForm.errors.selectTorrent": "Merci d'ajouter au moins un torrent.",
+  "uploadForm.errors.500": "Le serveur rencontre une erreur. Le client torrent est-il démarré ?",
 
-  "deleteConfirmDialog": {
-    "mainTitle": "Plusieurs choix sont possibles...",
-    "buttonCancel": "Annuler",
-    "buttonWithData": "Supprimer toutes les données",
-    "buttonWithout": "Supprimer de la liste"
-  },
+  "deleteConfirmDialog.mainTitle": "Plusieurs choix sont possibles...",
+  "deleteConfirmDialog.buttonCancel": "Annuler",
+  "deleteConfirmDialog.buttonWithData": "Supprimer toutes les données",
+  "deleteConfirmDialog.buttonWithout": "Supprimer de la liste",
 
-  "moveDialog": {
-    "mainTitle": "Déposer ces fichiers dans...",
-    "loading": "Chargement en cours...",
-    "buttonCancel": "Annuler",
-    "buttonMove": "Déplacer",
-    "errors": {
-      "prefix": "Impossible de charger la liste :",
-      "cannotMove": "Déplacement impossible."
-    }
-  },
+  "moveDialog.mainTitle": "Déposer ces fichiers dans...",
+  "moveDialog.loading": "Chargement en cours...",
+  "moveDialog.buttonCancel": "Annuler",
+  "moveDialog.buttonMove": "Déplacer",
+  "moveDialog.errors.prefix": "Impossible de charger la liste :",
+  "moveDialog.errors.cannotMove": "Déplacement impossible.",
 
-  "torrentBrowserItem": {
-    "more": "Détails",
-    "alreadyAdded": "Torrent déjà ajouté",
-    "added": "Torrent ajouté"
-  },
+  "torrentBrowserItem.more": "Détails",
+  "torrentBrowserItem.alreadyAdded": "Torrent déjà ajouté",
+  "torrentBrowserItem.added": "Torrent ajouté",
 
-  "torrentBrowserSearch": {
-    "title": "Chercher dans ",
-    "titleUpload": "Ajout manuel",
-    "placeholder": "Chercher dans ",
-    "switchUpload": "Ajouter un .torrent manuellement",
-    "switchSearch": "Chercher un torrent"
-  },
+  "torrentBrowserSearch.title": "Chercher dans ",
+  "torrentBrowserSearch.titleUpload": "Ajout manuel",
+  "torrentBrowserSearch.placeholder": "Chercher dans ",
+  "torrentBrowserSearch.switchUpload": "Ajouter un .torrent manuellement",
+  "torrentBrowserSearch.switchSearch": "Chercher un torrent",
 
-  "mainToolBar": {
-    "available": "Espace disponible"
-  },
+  "mainToolBar.available": "Espace disponible",
 
-  "torrentStatus": {
-    "TR_STATUS_STOPPED": "Pause",
-    "TR_STATUS_CHECK_WAIT": "Check des fichiers en attente",
-    "TR_STATUS_CHECK": "Check des fichiers en cours",
-    "TR_STATUS_DOWNLOAD_WAIT": "DL en attente",
-    "TR_STATUS_DOWNLOAD": "DL en cours",
-    "TR_STATUS_SEED_WAIT": "Partage en attente",
-    "TR_STATUS_SEED": "Partage en cours"
-  },
+  "torrentStatus.TR_STATUS_STOPPED": "Pause",
+  "torrentStatus.TR_STATUS_CHECK_WAIT": "Check des fichiers en attente",
+  "torrentStatus.TR_STATUS_CHECK": "Check des fichiers en cours",
+  "torrentStatus.TR_STATUS_DOWNLOAD_WAIT": "DL en attente",
+  "torrentStatus.TR_STATUS_DOWNLOAD": "DL en cours",
+  "torrentStatus.TR_STATUS_SEED_WAIT": "Partage en attente",
+  "torrentStatus.TR_STATUS_SEED": "Partage en cours",
 
   "torrentActions.startError": "Démarrage impossible",
   "torrentActions.stopError": "Arrrêt impossible",
@@ -134,10 +101,7 @@
   "downloadConfirmDialog.confirm": "Télécharger",
   "downloadConfirmDialog.error.download": "Une erreur est survenue lors du téléchargement.",
 
-  "tabBar": {
-    "torrentLink": "Les torrents",
-    "monitoringLink": "Monitoring",
-    "browserLink": "Recherche"
-  }
-
+  "tabBar.torrentLink": "Les torrents",
+  "tabBar.monitoringLink": "Monitoring",
+  "tabBar.browserLink": "Recherche"
 }
