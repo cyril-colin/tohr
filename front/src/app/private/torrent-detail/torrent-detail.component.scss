@@ -1,21 +1,36 @@
 @import '../../../colors.scss';
 
 :host {
-  .panel {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-
-    .icon i {
-      font-size: 60px;
-        color: $drawPrimary;
+  .card {
+    margin-bottom: 10px;
+    .title {
+      font-size: 25px;
+      margin-bottom:5px;
     }
   }
 
-
-
-  .delete-button {
-    color: $drawDanger;
+  .filename, .announce, .scrape {
+    color: $textSecondary;
+    font-size: 12px;
   }
+
+  .tracker:not(:last-child) {
+    padding-bottom: 3px;
+    border-bottom: solid 1px $textSecondary;
+  }
+
+
+  .actions {
+    margin-top: 20px;
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    i {
+      font-size: 30px;
+        color: $drawPrimary;
+    }
+
+  }
+
 }

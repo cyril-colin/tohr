@@ -35,7 +35,8 @@ export class TorrentController {
       return this.httpErrorService.error400('Not a number.', response, request.query, request.params);
     }
 
-    const tdRequest = this.transmissionDaemonService.get([+request.params.id]);
+    const fields = ['id', 'name', 'totalSize', 'downloadDir', 'percentDone', 'rateDownload', 'rateUpload', 'error', 'errorString', 'status', 'trackers', 'addedDate', 'files'];
+    const tdRequest = this.transmissionDaemonService.get([+request.params.id], fields);
     tdRequest.then(data => {
       const destinationsList: TorrentDestination[] = this.env.monitoring.destinations;
       data.arguments.torrents.forEach((t: Torrent) => {

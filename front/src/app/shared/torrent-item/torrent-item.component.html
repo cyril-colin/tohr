@@ -5,7 +5,7 @@
 
   <div class="panel info">
     <div class="title" (click)="goTorrent(torrent)">{{ torrent.name }}</div>
-
+    <div>{{ torrent.addedDate * 1000 | date:'yyyy/MM/dd HH:mm:ss'}}</div>
     <div class="bar">
       <app-progress-bar [torrent]=torrent></app-progress-bar>
     </div>

@@ -28,12 +28,10 @@ export class TransmissionDaemonService {
 
   constructor(private cache: NodeCache, private config: Environment, private logger: LoggerService) { }
 
-  public get(ids?: number[]): Promise<any> {
+  public get(ids?: number[], fields: string[] = ['id', 'name', 'totalSize', 'downloadDir', 'percentDone', 'rateDownload', 'rateUpload', 'error', 'addedDate', 'errorString', 'status']): Promise<any> {
     const requestBody: TransmissionRequest = {
       method: 'torrent-get',
-      arguments: {
-        fields: ['id', 'name', 'totalSize', 'downloadDir', 'percentDone', 'rateDownload', 'rateUpload', 'error', 'errorString', 'status']
-      }
+      arguments: { fields }
     };
 
     if (ids) {

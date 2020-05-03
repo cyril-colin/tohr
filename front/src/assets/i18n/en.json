@@ -23,6 +23,7 @@
     "filters": {
       "size": "Sort by size",
       "status": "Sort by state",
+      "date": "Sort by date",
       "name": "Sort by name"
     },
     "filterName": "Torrent title",
@@ -49,18 +50,22 @@
       "504": "The server is not responding"
     }
   },
+  "torrentDetail.main":"Main data",
+  "torrentDetail.data-size":"Size and data",
+  "torrentDetail.loading": "Loading ...",
+  "torrentDetail.completeName": "Complete name",
+  "torrentDetail.destination": "Destination",
+  "torrentDetail.addedDate": "Added ",
+  "torrentDetail.totalSize": "Size",
+  "torrentDetail.downloaded": "Downloaded",
+  "torrentDetail.uploaded": "Uploaded",
+  "torrentDetail.status": "Status",
+  "torrentDetail.files": "fichier(s)",
+  "torrentDetail.trackers": "Trackers",
+  "torrentDetail.errors.prefix": "Cannot load the torrent.",
+  "torrentDetail.errors.default": "Cannot load the torrent.",
+  "torrentDetail.errors.NaN": "Incorrect request",
 
-  "torrentDetail": {
-    "mainTitle": "A torrent",
-    "loading": "Loading",
-    "completeName": "Complete name",
-    "destination": "Destination",
-    "errors": {
-      "prefix": "Cannot load the torrent.",
-      "default": "Cannot load the torrent.",
-      "NaN": "Incorrect request"
-    }
-  },
   "uploadForm": {
     "mainTitle": "New torrent",
     "selectTorrent": "Add files",
