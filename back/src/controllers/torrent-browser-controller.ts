@@ -17,7 +17,7 @@ export class TorrentBrowserController {
   ) { }
 
   search(request: express.Request, response: express.Response): Promise<any> {
-    const params: BrowserSearch = request.query;
+    const params: BrowserSearch = request.query as unknown as BrowserSearch;
     if (!params.search || typeof(params.search) !== 'string' || params.search.length > 50) {
       return this.httpErrorService.error400('Search must be string with a maximum of 50 characters.', response);
     }

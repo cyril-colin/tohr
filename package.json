@@ -33,7 +33,7 @@
     "@types/torrent-search-api": "^2.0.0",
     "axios": "^0.19.2",
     "brotli": "^1.3.2",
-    "cloudscraper": "https://github.com/bestplay9384/cloudscraper",
+    "cloudscraper": "github:bestplay9384/cloudscraper#02b1688b98aa5deb8c14e73b92e228d999c19201",
     "commander": "^4.1.1",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",

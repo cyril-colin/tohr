@@ -136,11 +136,12 @@ export class TorrentController {
       return this.httpErrorService.error400('Not a number.', response, request.query, request.params);
     }
 
-    if (!request.query.filename || request.query.filename.includes('../')) {
+    const query: any = request.query;
+    if (!request.query.filename || query.filename.includes('../')) {
       return this.httpErrorService.error400('Not a valid filename.', response, request.query, request.params);
     }
 
-    const filename = decodeURI(request.query.filename).replace(/\"/g, '');
+    const filename = decodeURI(query.filename).replace(/\"/g, '');
 
     const res = this.transmissionDaemonService.get([+request.params.id], ['name', 'files', 'downloadDir'])
     .then((data: {arguments: {torrents: Torrent[]}}) => {
