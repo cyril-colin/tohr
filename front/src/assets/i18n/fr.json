@@ -22,6 +22,7 @@
     "filters": {
       "size": "Trier par taille",
       "status": "Trier par état",
+      "date": "Trier par date",
       "name": "Trier par nom"
     },
     "mainTitle": "Les torrents",
@@ -49,18 +50,22 @@
       "504": "Le serveur ne répond pas."
     }
   },
+  "torrentDetail.main":"Infos générales",
+  "torrentDetail.data-size":"Taille et données",
+  "torrentDetail.loading": "Chargement en cours...",
+  "torrentDetail.completeName": "Nom complet",
+  "torrentDetail.destination": "Destination",
+  "torrentDetail.addedDate": "Ajouté le ",
+  "torrentDetail.totalSize": "Taille",
+  "torrentDetail.downloaded": "Téléchargé",
+  "torrentDetail.uploaded": "Uploadé",
+  "torrentDetail.status": "Status",
+  "torrentDetail.files": "fichier(s)",
+  "torrentDetail.trackers": "Trackers",
+  "torrentDetail.errors.prefix": "Impossible de charger le torrent.",
+  "torrentDetail.errors.default": "Impossible de charger le torrent.",
+  "torrentDetail.errors.NaN": "Requête incorrecte.",
 
-  "torrentDetail": {
-    "mainTitle": "Un torrent",
-    "loading": "Chargement en cours...",
-    "completeName": "Nom complet",
-    "destination": "Destination",
-    "errors": {
-      "prefix": "Impossible de charger le torrent.",
-      "default": "Impossible de charger le torrent.",
-      "NaN": "Requête incorrecte."
-    }
-  },
   "uploadForm": {
     "mainTitle": "Nouveau torrent",
     "selectTorrent": "Ajouter des fichiers",
@@ -122,6 +127,12 @@
 
   "torrentActions.startError": "Démarrage impossible",
   "torrentActions.stopError": "Arrrêt impossible",
+
+  "downloadConfirmDialog.mainTitle": "Télécharger le fichier",
+  "downloadConfirmDialog.text": "Attention, télécharger le fichier peut être long, et consomme beaucoup de data si tu es sur mobile.",
+  "downloadConfirmDialog.buttonCancel": "Annuler",
+  "downloadConfirmDialog.confirm": "Télécharger",
+  "downloadConfirmDialog.error.download": "Une erreur est survenue lors du téléchargement.",
 
   "tabBar": {
     "torrentLink": "Les torrents",

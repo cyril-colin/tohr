@@ -13,6 +13,9 @@ export interface Torrent {
   destination?: TorrentDestination;
   statusStr: string;
   status: number;
+  addedDate: number;
+  files: {bytesCompleted: number, length:number, name:string}[];
+  trackers: {announce: string, scrape: string}[];
 }
 
 export interface TorrentMove {

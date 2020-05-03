@@ -22,6 +22,7 @@ import { TorrentUploadComponent } from './torrent-upload/torrent-upload.componen
 import { HeaderCollapseComponent } from './header-collapse/header-collapse.component';
 import { TorrentListFilterComponent } from './torrent-list-filter/torrent-list-filter.component';
 import { ButtonListActionComponent } from './button-list-action/button-list-action.component';
+import { DownloadConfirmDialogComponent } from './download-confirm-dialog/download-confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { ButtonListActionComponent } from './button-list-action/button-list-acti
     HeaderCollapseComponent,
     TorrentListFilterComponent,
     ButtonListActionComponent,
+    DownloadConfirmDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -76,6 +78,7 @@ import { ButtonListActionComponent } from './button-list-action/button-list-acti
     TorrentUploadComponent,
     TorrentListFilterComponent,
     ButtonListActionComponent,
+    DownloadConfirmDialogComponent,
   ]
 })
 export class SharedModule { }

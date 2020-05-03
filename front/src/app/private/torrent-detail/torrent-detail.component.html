@@ -1,27 +1,56 @@
-<div *ngIf="(torrent$ | async) as torrent; else loading" class="card torrent">
-    <div class="actions">
-      <i class="material-icons btn-action" (click)="openMoveDialog(torrent)">forward</i>
-      <i class="material-icons btn-action" (click)="openDialog(torrent)">delete_forever</i>
-      <i class="material-icons btn-action">cloud_download</i>
-    </div>
 
-
-    <div class="divider"></div>
-
-    <div class="panel">
-      <div class="icon">
-        <i class="material-icons">{{ torrent.destination.icon }}</i>
+<ng-container *ngIf="(torrent$ | async) as torrent; else loading">
+  <app-header-collapse [empty]="false" [defaultDisplay]="true">
+    <div title>{{ torrent.name }}</div>
+    <div content>
+      <div class="actions">
+        <i class="material-icons btn-action" (click)="openMoveDialog(torrent)">forward</i>
+        <i class="material-icons btn-action" (click)="openDialog(torrent)">delete_forever</i>
       </div>
+    </div>
+  </app-header-collapse>
+
+  <div class="card">
       <div class="infos">
+        <div class="title">{{ 'torrentDetail.main' | translate}}</div>
         <div>{{ 'torrentDetail.completeName' | translate }} : <b>{{ torrent.name }}</b> </div>
         <div>{{ 'torrentDetail.destination' | translate }} : <b>{{ torrent.destination.path}}</b> </div>
+        <div>{{ 'torrentDetail.addedDate' | translate}} {{ torrent.addedDate * 1000 | date:'yyyy/MM/dd HH:mm:ss'}}</div>
       </div>
-    </div>
+  </div>
 
-    <div class="divider"></div>
-
+  <div class="card">
+    <div class="title">{{ 'torrentDetail.data-size' | translate}}</div>
     <app-progress-bar [torrent]=torrent></app-progress-bar>
-</div>
+    <div>{{ 'torrentDetail.totalSize' | translate}} : {{ torrent.totalSize | filesize }}</div>
+    <div>{{ 'torrentDetail.downloaded' | translate}} : {{ torrent.rateDownload | filesize }} ( {{ torrent.percentDone * 100 }} % ) </div>
+    <div>{{ 'torrentDetail.uploaded' | translate}} : {{ torrent.rateUpload | filesize }}</div>
+    <div>{{ 'torrentDetail.status' | translate}} : {{ 'torrentStatus.'+ torrent.statusStr | translate}}</div>
+  </div>
+
+  <div class="card">
+    <div class="title">{{ torrent.files.length }} {{ 'torrentDetail.files' | translate}} </div>
+    <div *ngFor="let f of torrent.files">
+      <div class="filename">{{f.name}}</div>
+      <div class="file-size">
+        <span>{{ f.bytesCompleted | filesize}} / {{ f.length | filesize}}</span>
+        <span>
+          <i *ngIf="f.length > f.bytesCompleted" class="material-icons btn-action disabled">cloud_download</i>
+          <i *ngIf="!(f.length > f.bytesCompleted)" (click)="openDownloadWarning(torrent, f.name)" class="material-icons btn-action">cloud_download</i>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">{{ 'torrentDetail.trackers' | translate}}</div>
+    <div *ngFor="let t of torrent.trackers" class="tracker">
+      <div class="announce">{{t.announce}}</div>
+      <div class="scrape">{{ t.scrape}}</div>
+    </div>
+  </div>
+</ng-container>
 
 
 

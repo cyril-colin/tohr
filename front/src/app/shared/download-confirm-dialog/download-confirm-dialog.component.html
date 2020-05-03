@@ -1,0 +1,24 @@
+<div class="dialog">
+  <div class="dialog-title">
+    {{ 'downloadConfirmDialog.mainTitle' | translate }}
+  </div>
+
+  <div class="content">
+    {{ 'downloadConfirmDialog.text' | translate}}
+  </div>
+
+  <div class="error">
+    <app-error-area [errors]=errors></app-error-area>
+  </div>
+
+  <div class="actions">
+    <div *ngIf="isLoading" class="loading-button">
+      <div class="lds-dual-ring"></div>
+    </div>
+    <ng-container *ngIf="!isLoading">
+      <button class="btn-secondary" (click)="close()">{{ 'downloadConfirmDialog.buttonCancel' | translate }}</button>
+      <button class="btn-primary" (click)="confirm()">{{ 'downloadConfirmDialog.confirm' | translate }}</button>
+    </ng-container>
+
+  </div>
+</div>

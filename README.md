@@ -16,6 +16,7 @@ advices, fork this project or post issues.
 - Add a torrent file manually
 - Download data in specific destination paths (usefull to send downloads into a [Plex](https://www.plex.tv/) category...)
 - Manage [Transmission](https://hub.docker.com/r/linuxserver/transmission/) torrents : list, details, deletion
+- Direct download files
 - Monitoring page : disks spaces left, used memory...
 - Installation with Docker and docker-compose
 - Progressive Web App enabled

@@ -1,9 +1,10 @@
 import * as express from 'express';
+import * as fs from 'fs';
 import { Torrent } from '../core//torrent.model';
 import { TorrentDestination } from '../core/monitoring/torrent-destination.model';
 import { TransmissionDaemonService } from '../services/transmission-daemon.service';
 import { Environment } from '../environment';
-import { HttpErrorService } from '../services/http-error.service';
+import { HttpErrorService, ApiError } from '../services/http-error.service';
 import { LoggerService } from '../services/logger.service';
 
 export class TorrentController {
@@ -35,7 +36,8 @@ export class TorrentController {
       return this.httpErrorService.error400('Not a number.', response, request.query, request.params);
     }
 
-    const tdRequest = this.transmissionDaemonService.get([+request.params.id]);
+    const fields = ['id', 'name', 'totalSize', 'downloadDir', 'percentDone', 'rateDownload', 'rateUpload', 'error', 'errorString', 'status', 'trackers', 'addedDate', 'files'];
+    const tdRequest = this.transmissionDaemonService.get([+request.params.id], fields);
     tdRequest.then(data => {
       const destinationsList: TorrentDestination[] = this.env.monitoring.destinations;
       data.arguments.torrents.forEach((t: Torrent) => {
@@ -127,6 +129,39 @@ export class TorrentController {
     tdRequest.catch(err => this.httpErrorService.error500(response, err));
 
     return tdRequest;
+  }
+
+  download(request: express.Request, response: express.Response): Promise<any>  {
+    if (isNaN(request.params.id as any)) {
+      return this.httpErrorService.error400('Not a number.', response, request.query, request.params);
+    }
+
+    if (!request.query.filename || request.query.filename.includes('../')) {
+      return this.httpErrorService.error400('Not a valid filename.', response, request.query, request.params);
+    }
+
+    const filename = decodeURI(request.query.filename).replace(/\"/g, '');
+
+    const res = this.transmissionDaemonService.get([+request.params.id], ['name', 'files', 'downloadDir'])
+    .then((data: {arguments: {torrents: Torrent[]}}) => {
+      const file = data.arguments.torrents[0].files.find(f => f.name.trim() === filename.trim());
+      const path = data.arguments.torrents[0].downloadDir + '/'+file.name;
+      const stat = fs.statSync(path);
+      const rs = fs.createReadStream(path);
+      response.writeHead(200, {
+        'Content-Type': 'application/octet-stream',
+        'Content-disposition': 'attachment; filename='+file.name,
+        'Content-Length': stat.size,
+      });
+      rs.pipe(response);
+    })
+    .catch(err => {
+      this.logger.error('Error getting torrent', err);
+      response.status(500).send({ message: 'Error getting torrent '+request.params.id } as ApiError)
+    });
+
+    return res;
+
   }
 
 }

@@ -64,6 +64,7 @@ app.get(API_PREFIX + '/torrents/:id', (req: any, res: any) => torrentController.
 app.put(API_PREFIX + '/torrents/:id/move', (req: any, res: any) => torrentController.move(req, res));
 app.put(API_PREFIX + '/torrents/:id/start', (req: any, res: any) => torrentController.start(req, res));
 app.put(API_PREFIX + '/torrents/:id/stop', (req: any, res: any) => torrentController.stop(req, res));
+app.get(API_PREFIX + '/torrents/:id/download', (req: any, res: any) => torrentController.download(req, res));
 app.delete(API_PREFIX + '/torrents/:id', (req: any, res: any) =>  torrentController.remove(req, res));
 app.post(API_PREFIX + '/torrents', (req: any, res: any) => torrentController.add(req, res));
 

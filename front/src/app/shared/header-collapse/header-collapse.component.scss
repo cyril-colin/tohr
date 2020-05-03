@@ -5,12 +5,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   border-bottom-left-radius: 100px;
   border-bottom-right-radius: 100px;
   margin-bottom: 50px;
 
   .bar {
-    height: 30px;
+    min-height: 30px;
     font-size: 23px;
     padding-top: 10px;
   }

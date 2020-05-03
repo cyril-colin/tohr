@@ -16,7 +16,10 @@ export class ProxyTorrentService {
 
 
   getAllTorrent(): Observable<Torrent[]> {
-    return  this.http.get<RpcResponse<RpcTorrentList>>(this.endpoint + '/torrents').pipe(map(res => res.arguments.torrents));
+    return  this.http.get<RpcResponse<RpcTorrentList>>(this.endpoint + '/torrents').pipe(
+      map(res => res.arguments.torrents),
+      map(torrents => torrents.sort((a, b) => (b.addedDate - a.addedDate))),
+    );
   }
 
   getTorrent(id: number): Observable<Torrent> {
@@ -48,5 +51,17 @@ export class ProxyTorrentService {
   }
   stop(id: number) {
     return  this.http.put<void>(this.endpoint + '/torrents/' + id + '/stop', {});
+  }
+
+  download(id: number, filename: string) {
+    const params = new HttpParams({
+      fromObject: {
+        filename: JSON.stringify(filename),
+      }
+    });
+    return  this.http.get(this.endpoint + '/torrents/' + id + '/download', {
+      params,
+      responseType: 'blob'
+    });
   }
 }
