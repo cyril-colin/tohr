@@ -13,7 +13,7 @@ export class TorrentBrowserController {
     private env: Environment,
   ) { }
 
-  async search(request: express.Request, response: express.Response, next): Promise<any> {
+  async search(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
     const params: BrowserSearch = request.query as unknown as BrowserSearch;
     if (!params.search || typeof(params.search) !== 'string' || params.search.length > 50) {
       return next(new HttpBadRequest('invalid-search'));
@@ -40,7 +40,7 @@ export class TorrentBrowserController {
     return response.send(torrents);
   }
 
-  async add(request: express.Request, response: express.Response, next): Promise<any> {
+  async add(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
     const params: BrowserTorrent = request.body;
     if (!params) {
       return next(new HttpBadRequest('invalid-given-torrent'));

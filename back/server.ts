@@ -41,7 +41,7 @@ const app = express();
 
 const loggerService = new LoggerService(logger);
 const cache = new NodeCache();
-const tdService = new TransmissionDaemonService(cache, config, loggerService);
+const tdService = new TransmissionDaemonService(cache, config);
 const systemInformationService = new SystemInformationService();
 const torrentBrowserService = new TorrentBrowserService(TS, config);
 const torrentController = new TorrentController(tdService, config);

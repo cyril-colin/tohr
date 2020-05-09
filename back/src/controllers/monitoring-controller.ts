@@ -1,6 +1,5 @@
 import * as express from 'express';
 import { SystemInformationService } from '../services/system-information.service';
-import { LoggerService } from '../services/logger.service';
 import { CurrentProcessInfo } from '../core/monitoring/current-process-info.model';
 import { Environment } from '../environment';
 import { HttpInternalError } from '../core/errors';
@@ -12,7 +11,7 @@ export class MonitoringController {
     private systemInformationService: SystemInformationService,
   ) { }
 
-  async getProcessInformations(request: express.Request, response: express.Response, next): Promise<any> {
+  async getProcessInformations(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
     const info = new CurrentProcessInfo();
     info.processUser = this.systemInformationService.getProcessUser();
     const errors: Error[] = [];
@@ -37,7 +36,7 @@ export class MonitoringController {
     ;
   }
 
-  async getTorrentDestinations(request: express.Request, response: express.Response, next): Promise<any> {
+  async getTorrentDestinations(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
     const torrentDestinations = this.env.monitoring.destinations;
     const promises: Promise<string>[] = [];
     const errors: any[] = [];
@@ -65,13 +64,13 @@ export class MonitoringController {
 
 
 
-  async diskUsage(request: express.Request, response: express.Response, next): Promise<any> {
+  async diskUsage(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
     const toKeep = this.env.monitoring.diskToWatch;
     const status = await this.systemInformationService.getDiskStatus().catch(err => new HttpInternalError('disk-status-failed', err));
     return response.json((status as DiskStatus[]).filter(d => toKeep.includes(d.fileSystem)));
   }
 
-  async getLogs(request: express.Request, response: express.Response, next) {
+  async getLogs(request: express.Request, response: express.Response, next: express.NextFunction) {
     const file = this.env.logFile;
     const path = file.startsWith('/') ? file : this.systemInformationService.getRootDir() + file;
     return response.download(path);
