@@ -1,0 +1,11 @@
+<app-header-collapse [empty]="true">
+  <div title>{{'unavailable.mainTitle' | translate}}</div>
+</app-header-collapse>
+
+
+<div class="card">
+  {{'unavailable.content' | translate}}
+
+  <button class="btn btn-primary" [routerLink]="['/private/browser']">{{'unavailable.retry-button' | translate}}</button>
+
+</div>

@@ -16,6 +16,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { UnavailabletInterceptor } from './shared/unavailable-interceptor';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { environment } from '../environments/environment';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthentInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: UnavailabletInterceptor, multi: true },
     ModalService,
   ],
   bootstrap: [AppComponent]

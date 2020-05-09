@@ -101,6 +101,14 @@
   "downloadConfirmDialog.confirm": "Downaload",
   "downloadConfirmDialog.error.download": "An error occurred.",
 
+  "unavailable.mainTitle": "Not available",
+  "unavailable.content": "The server is not responding.",
+  "unavailable.retry-button": "Try again",
+
+  "not-found.mainTitle": "Lost ?",
+  "not-found.content": "Page not found",
+  "not-found.retry-button": "Go back to torrent list",
+
   "tabBar.torrentLink": "Torrent list",
   "tabBar.monitoringLink": "Monitoring",
   "tabBar.browserLink": "Torrent browser"
