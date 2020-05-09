@@ -1,20 +1,20 @@
 import * as express from 'express';
 import * as jwt from 'jsonwebtoken';
 import { Environment } from '../environment.js';
+import { HttpUnauthorizedError } from '../core/errors';
 
 export class LoginController {
   constructor(
     private env: Environment,
   ) {}
 
-  login(req: express.Request, res: express.Response) {
-    let response: any = 401;
-    this.env.users.forEach((user: any) => {
-      if (req.body.login === user.login && req.body.password === user.password) {
-        response = { accessToken: jwt.sign({ username: req.body.login }, this.env.jwtSecret) };
-      }
-    });
+  async login(req: express.Request, res: express.Response, next: express.NextFunction): Promise<any> {
 
-    res.send(response);
+    const user = this.env.users.find(u => req.body.login === u.login && req.body.password === u.password);
+    if (!user) {
+      return next(new HttpUnauthorizedError('invalid-credentials'));
+    }
+    const accessToken = jwt.sign({ username: req.body.login }, this.env.jwtSecret);
+    return res.json({ accessToken });
   }
 }

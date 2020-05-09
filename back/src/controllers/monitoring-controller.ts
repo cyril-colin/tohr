@@ -3,19 +3,19 @@ import { SystemInformationService } from '../services/system-information.service
 import { LoggerService } from '../services/logger.service';
 import { CurrentProcessInfo } from '../core/monitoring/current-process-info.model';
 import { Environment } from '../environment';
+import { HttpInternalError } from '../core/errors';
+import { DiskStatus } from '../core/monitoring/disk-status.model';
 
 export class MonitoringController {
   constructor(
     private env: Environment,
     private systemInformationService: SystemInformationService,
-    private loggerService: LoggerService,
-
   ) { }
 
-  getProcessInformations(request: express.Request, response: express.Response): Promise<any> {
+  async getProcessInformations(request: express.Request, response: express.Response, next): Promise<any> {
     const info = new CurrentProcessInfo();
     info.processUser = this.systemInformationService.getProcessUser();
-    const errors: any[] = [];
+    const errors: Error[] = [];
     const promises: Promise<any>[] = [
       this.systemInformationService.getCpuUsage()
             .then(cpuUsage => info.cpuUsage = +cpuUsage)
@@ -25,24 +25,19 @@ export class MonitoringController {
             .catch(err => errors.push(err)),
     ];
 
-    return Promise.all(promises).then(status => {
-      if (errors.length > 0) {
-        this.loggerService.warn('Error list :', errors);
-        response.status(500).send('error getting information');
-      }
-
-      if (errors.length === 0) {
-        response.status(200).send(info);
-      }
-    })
-    .catch(err => {
-      this.loggerService.error('Errors catched by Promise.all()', err);
-      this.loggerService.error('Error list :', errors);
-      response.status(500).send('error getting information');
+    await Promise.all(promises).catch(err => {
+      return next(new HttpInternalError('getting-process-info-failed', err));
     });
+
+    if (errors.length > 0) {
+      return next(new HttpInternalError('getting-process-info-failed', errors));
+    }
+
+    return response.json(info);
+    ;
   }
 
-  getTorrentDestinations(request: express.Request, response: express.Response): Promise<any> {
+  async getTorrentDestinations(request: express.Request, response: express.Response, next): Promise<any> {
     const torrentDestinations = this.env.monitoring.destinations;
     const promises: Promise<string>[] = [];
     const errors: any[] = [];
@@ -57,34 +52,28 @@ export class MonitoringController {
     });
 
 
-    return Promise.all(promises).then(_ => {
-      response.send(this.env.monitoring.destinations);
-    }).catch(err => {
-      console.warn(errors);
-      response.status(500).send(this.env.monitoring.destinations);
+    await Promise.all(promises).catch(err => {
+      return next(new HttpInternalError('getting-destinations-failed', err));
     });
+
+    if (errors.length > 0) {
+      return next(new HttpInternalError('getting-process-info-failed', errors));
+    }
+
+    return response.json(this.env.monitoring.destinations);
   }
 
 
 
-  diskUsage(request: express.Request, response: express.Response): Promise<any> {
+  async diskUsage(request: express.Request, response: express.Response, next): Promise<any> {
     const toKeep = this.env.monitoring.diskToWatch;
-    const status = this.systemInformationService.getDiskStatus();
-    status.then(ds => {
-      response.send(ds.filter(d => toKeep.includes(d.fileSystem)));
-    });
-
-    status.catch(err => {
-      console.error(err);
-      response.sendStatus(500);
-    });
-
-    return status;
+    const status = await this.systemInformationService.getDiskStatus().catch(err => new HttpInternalError('disk-status-failed', err));
+    return response.json((status as DiskStatus[]).filter(d => toKeep.includes(d.fileSystem)));
   }
 
-  getLogs(request: express.Request, response: express.Response): void {
+  async getLogs(request: express.Request, response: express.Response, next) {
     const file = this.env.logFile;
     const path = file.startsWith('/') ? file : this.systemInformationService.getRootDir() + file;
-    response.download(path);
+    return response.download(path);
   }
 }

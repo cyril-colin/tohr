@@ -103,7 +103,7 @@ export class TransmissionDaemonService {
     };
 
     this.logger.debug('request : ', JSON.stringify(requestBody));
-    return this.sendRequest(requestBody);
+    return Promise.reject({myError: 'BOUYA'});
   }
 
   public start(id: number): Promise<any> {

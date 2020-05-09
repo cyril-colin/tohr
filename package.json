@@ -38,6 +38,7 @@
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
     "file-saver": "^2.0.2",
+    "http-status-codes": "^1.4.0",
     "ngx-filesize": "^2.0.13",
     "node-cache": "^5.1.0",
     "rxjs": "^6.5.5",
