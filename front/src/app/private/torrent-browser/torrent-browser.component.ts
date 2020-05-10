@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { ProxyBrowserService, SearchData } from 'src/app/core/services/proxy/proxy-browser/proxy-browser.service';
 import { ProxyMonitoringService } from 'src/app/core/services/proxy/proxy-monitoring/proxy-monitoring.service';
 import { TorrentDestination } from 'src/app/core/model/torrent-destination';
-import { tap } from 'rxjs/operators';
+import { tap, share } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { HeaderCollapseComponent } from 'src/app/shared/header-collapse/header-collapse.component';
 
@@ -34,6 +34,7 @@ export class TorrentBrowserComponent implements OnInit {
   ngOnInit(): void {
       this.switchLink = this.translate.instant('torrentBrowserSearch.switchUpload');
       this.torrentDestinations$ = this.proxyMonitoringService.getTorrentDestinations().pipe(
+        share(),
         tap(res => this.selectedDestination = res.find(r => r.default)),
         tap(() => this.title = this.searchTitle),
       );

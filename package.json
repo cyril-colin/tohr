@@ -1,11 +1,12 @@
 {
   "name": "tohr",
-  "version": "1.0.3-SNAPSHOT-19",
+  "version": "1.0.3-SNAPSHOT-20",
   "description": "An attempt to be a more mobile friendly UI for transmission-daemon",
   "author": "Cyril COLIN",
   "scripts": {
     "ng": "ng",
     "start": "docker-compose up -d && ng serve --proxy-config front/proxy.conf.json",
+    "stop": "docker-compose down -v",
     "logs": "docker-compose logs -f tohr-dev",
     "build": "docker build . -t tohr-build-local",
     "test": "ng test --code-coverage --browsers=ChromeHeadless",
@@ -38,6 +39,7 @@
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
     "file-saver": "^2.0.2",
+    "http-status-codes": "^1.4.0",
     "ngx-filesize": "^2.0.13",
     "node-cache": "^5.1.0",
     "rxjs": "^6.5.5",

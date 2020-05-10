@@ -2,9 +2,8 @@ import * as express from 'express';
 import { TorrentBrowserService, BrowserSearch } from '../services/torrent-browser.service';
 import { TransmissionDaemonService } from '../services/transmission-daemon.service';
 import { Environment } from '../environment';
-import { HttpErrorService, ApiError } from '../services/http-error.service';
 import { BrowserTorrent } from '../core/torrent.model';
-import { LoggerService } from '../services/logger.service';
+import { HttpBadRequest, HttpTorrentSearchError, HttpTransmissionError } from '../core/errors';
 
 
 export class TorrentBrowserController {
@@ -12,61 +11,53 @@ export class TorrentBrowserController {
     private ts: TorrentBrowserService,
     private transmissionDaemonService: TransmissionDaemonService,
     private env: Environment,
-    private httpErrorService: HttpErrorService,
-    private loggerService: LoggerService,
   ) { }
 
-  search(request: express.Request, response: express.Response): Promise<any> {
+  async search(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
     const params: BrowserSearch = request.query as unknown as BrowserSearch;
     if (!params.search || typeof(params.search) !== 'string' || params.search.length > 50) {
-      return this.httpErrorService.error400('Search must be string with a maximum of 50 characters.', response);
+      return next(new HttpBadRequest('invalid-search'));
     }
 
     if (!params.category || typeof(params.category) !== 'string' && (params.category as string).length > 50) {
-      return this.httpErrorService.error400('Category must be string with a maximum of 50 characters.', response);
+      return next(new HttpBadRequest('invalid-category'));
     }
 
     if (params.limit && isNaN(params.limit)) {
-      return this.httpErrorService.error400('Limit must be a number.', response);
+      return next(new HttpBadRequest('invalid-limit'));
     }
 
-    return this.ts.search(params)
-          .then(torrents => response.send(torrents))
-          .catch(err => {
-            if (err.constructor.name === 'CloudflareError') {
-              this.loggerService.error(err);
-              response.status(500).send({message: 'cloudflare'} as ApiError);
-            } else {
-              this.httpErrorService.error500(response, err)
-            }
-          });
+    const torrents = await this.ts.search(params).catch(err => {
+      const error = new HttpTorrentSearchError(err);
+      const scraperErrorsType = ['CloudflareError', 'ParserError', 'CaptchaError' ];
+      if (scraperErrorsType.includes(err.constructor.name)) {
+       error.businessCode = 'cloudflare-error'
+      }
+
+      return next(error);
+    });
+
+    return response.send(torrents);
   }
 
-  add(request: express.Request, response: express.Response): Promise<void | express.Response> {
+  async add(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
     const params: BrowserTorrent = request.body;
     if (!params) {
-      return this.httpErrorService.error400('No given torrent.', response);
+      return next(new HttpBadRequest('invalid-given-torrent'));
     }
 
     const isKnownDestination = this.env.monitoring.destinations.find(d => d.path === params.destination.path);
     if (!params.destination || !isKnownDestination) {
-      return this.httpErrorService.error400('Destination not known.', response);
+      return next(new HttpBadRequest('invalid-destination'));
     }
 
     if (!params.link || 10 > params.link.length || params.link.length > 150 ) {
-      return this.httpErrorService.error400('Download link not correct', response);
+      return next(new HttpBadRequest('invalid-download-link'));
     }
 
-
     const torrentPath = '/tmp/' + Math.random().toString(36).substring(7)+'.torrent';
-    return this.ts.downloadTorrent(params, torrentPath)
-          .then((buffer: any) => {
-            this.transmissionDaemonService.addTorrentFile(torrentPath, params.destination.path).then(upload => {
-              return response.send(upload);
-            }).catch(err => this.httpErrorService.error500(response, err));
-          }).catch((err: any) => {
-            console.error(err);
-            return this.httpErrorService.error500(response, err);
-          });
+    await this.ts.downloadTorrent(params, torrentPath).catch((err: any) => new HttpTorrentSearchError(err));
+    const uploadResult = await this.transmissionDaemonService.addTorrentFile(torrentPath, params.destination.path).catch(err => new HttpTransmissionError(err));
+    return response.json(uploadResult);
   }
 }

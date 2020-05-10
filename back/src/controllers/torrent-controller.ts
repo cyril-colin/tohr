@@ -4,164 +4,133 @@ import { Torrent } from '../core//torrent.model';
 import { TorrentDestination } from '../core/monitoring/torrent-destination.model';
 import { TransmissionDaemonService } from '../services/transmission-daemon.service';
 import { Environment } from '../environment';
-import { HttpErrorService, ApiError } from '../services/http-error.service';
-import { LoggerService } from '../services/logger.service';
+import { HttpBadRequest, HttpTransmissionError } from '../core/errors';
 
 export class TorrentController {
   constructor(
     private transmissionDaemonService: TransmissionDaemonService,
     private env: Environment,
-    private httpErrorService: HttpErrorService,
-    private logger: LoggerService,
   ) { }
 
-  getAll(request: any, response: express.Response): Promise<any> {
-    const tdRequest = this.transmissionDaemonService.get();
-    tdRequest.then(data => {
-      const destinationsList: TorrentDestination[] = this.env.monitoring.destinations;
-      data.arguments.torrents.forEach((t: Torrent) => {
-        t.destination = destinationsList.find(d => d.path === t.downloadDir);
-        t.statusStr = this.transmissionDaemonService.getStatus(t.status).trim().toLocaleUpperCase();
-      });
-
-      response.send(data);
+  async getAll(request: any, response: express.Response, next: express.NextFunction): Promise<any> {
+    const data = await this.transmissionDaemonService.get().catch(err => next(new HttpTransmissionError(err)));
+    const destinationsList: TorrentDestination[] = this.env.monitoring.destinations;
+    data.arguments.torrents.forEach((t: Torrent) => {
+      t.destination = destinationsList.find(d => d.path === t.downloadDir);
+      t.statusStr = this.transmissionDaemonService.getStatus(t.status).trim().toLocaleUpperCase();
     });
 
-    tdRequest.catch(err => this.httpErrorService.error500(response, err));
-    return tdRequest;
+    return response.json(data);
   }
 
-  get(request: express.Request, response: express.Response): Promise<any> {
+  async get(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
     if (isNaN(request.params.id as any)) {
-      return this.httpErrorService.error400('Not a number.', response, request.query, request.params);
+      return next(new HttpBadRequest('invalid-id'));
     }
 
     const fields = ['id', 'name', 'totalSize', 'downloadDir', 'percentDone', 'rateDownload', 'rateUpload', 'error', 'errorString', 'status', 'trackers', 'addedDate', 'files'];
-    const tdRequest = this.transmissionDaemonService.get([+request.params.id], fields);
-    tdRequest.then(data => {
-      const destinationsList: TorrentDestination[] = this.env.monitoring.destinations;
-      data.arguments.torrents.forEach((t: Torrent) => {
-        t.destination = destinationsList.find(d => d.path === t.downloadDir);
-        t.statusStr = this.transmissionDaemonService.getStatus(t.status).trim().toLocaleUpperCase();
-      });
-
-      response.send(data);
+    const data = await this.transmissionDaemonService.get([+request.params.id], fields).catch(err => next(new HttpTransmissionError(err)));
+    const destinationsList: TorrentDestination[] = this.env.monitoring.destinations;
+    data.arguments.torrents.forEach((t: Torrent) => {
+      t.destination = destinationsList.find(d => d.path === t.downloadDir);
+      t.statusStr = this.transmissionDaemonService.getStatus(t.status).trim().toLocaleUpperCase();
     });
 
-    tdRequest.catch(err => this.httpErrorService.error500(response, err));
-
-    return tdRequest;
+    return response.json(data);;
   }
 
-  add(request: express.Request, response: express.Response): Promise<any> {
+  async add(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
     if (!request.body.downloadDir) {
-      return this.httpErrorService.error400('Missing downloadDir.', response, request.query, request.params);
+      return next(new HttpBadRequest('invalid-download-dir'));
     }
 
     if (!request.body.metainfo) {
-      return this.httpErrorService.error400('Missing metainfo.', response, request.query, request.params);
+      next(new HttpBadRequest('invalid-metainfo'));
     }
 
-    const tdRequest = this.transmissionDaemonService.add(request.body.downloadDir, request.body.metainfo);
-    tdRequest.then(data => response.send(data));
-    tdRequest.catch(err => this.httpErrorService.error500(response, err));
-    return tdRequest;
+    const data = await this.transmissionDaemonService.add(request.body.downloadDir, request.body.metainfo)
+    .catch(err => next(new HttpTransmissionError(err)));
+    return response.json(data);
   }
 
-  remove(request: express.Request, response: express.Response): Promise<any> {
+  async remove(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
     if (!request.params.id) {
-      return this.httpErrorService.error400('Missing id.', response, request.query, request.params);
+      return next(new HttpBadRequest('invalid-id'));
     }
 
     const deleteDataPresent = request.query.deleteLocalData && (request.query.deleteLocalData === 'true'|| request.query.deleteLocalData === 'false' );
     if (!deleteDataPresent) {
-      return this.httpErrorService.error400('Missing deleteLocalData.', response, request.query, request.params);
+      return next(new HttpBadRequest('invalid-destination'));
     }
 
     const deleteDataBoolean = request.query.deleteLocalData === 'true';
-    const tdRequest = this.transmissionDaemonService.remove(request.params.id, deleteDataBoolean);
-    tdRequest.then(data => response.send(data));
-    tdRequest.catch(err => this.httpErrorService.error500(response, err));
-    return tdRequest;
+    const data = await this.transmissionDaemonService.remove(request.params.id, deleteDataBoolean)
+    .catch(err => next(new HttpTransmissionError(err)));
+    return response.json(data);
   }
 
 
-  move(request: express.Request, response: express.Response): Promise<any> {
+  async move(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
     if (isNaN(request.params.id as any)) {
-      return this.httpErrorService.error400('Not a number.', response, request.query, request.params);
+      return next(new HttpBadRequest('invalid-id'));
     }
 
     const selectedDestination = this.env.monitoring.destinations.find(d => d.name === request.body.destinationName);
     if (!selectedDestination) {
-      return this.httpErrorService.error400('Not a valid destination.', response, request.query, request.params);
+      return next(new HttpBadRequest('invalid-destination'));
     }
 
-    const tdRequest = this.transmissionDaemonService.move(request.params.id as any, selectedDestination.path);
-    tdRequest.then(data => {
-      response.send(data);
-    });
-    tdRequest.catch(err => this.httpErrorService.error500(response, err));
+    const data = await this.transmissionDaemonService.move(request.params.id as any, selectedDestination.path)
+    .catch(err => next(new HttpTransmissionError(err)));
 
-    return tdRequest;
+    return response.json(data);
   }
 
-  stop(request: express.Request, response: express.Response): Promise<any> {
+  async stop(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
     if (isNaN(request.params.id as any)) {
-      return this.httpErrorService.error400('Not a number.', response, request.query, request.params);
+      return next(new HttpBadRequest('invalid-id'));
     }
-    const tdRequest = this.transmissionDaemonService.stop(request.params.id as any);
-    tdRequest.then(data => {
-      response.send(data);
-    });
-    tdRequest.catch(err => this.httpErrorService.error500(response, err));
 
-    return tdRequest;
+    const data = await this.transmissionDaemonService.stop(request.params.id as any)
+    .catch(err => next(new HttpTransmissionError(err)));
+
+    return response.json(data);
   }
 
-  start(request: express.Request, response: express.Response): Promise<any> {
+  async start(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
     if (isNaN(request.params.id as any)) {
-      return this.httpErrorService.error400('Not a number.', response, request.query, request.params);
+      return next(new HttpBadRequest('invalid-id'));
     }
-    const tdRequest = this.transmissionDaemonService.start(request.params.id as any);
-    tdRequest.then(data => {
-      response.send(data);
-    });
-    tdRequest.catch(err => this.httpErrorService.error500(response, err));
+    const data = await this.transmissionDaemonService.start(request.params.id as any)
+    .catch(err => next(new HttpTransmissionError(err)));
 
-    return tdRequest;
+    return response.json(data);
   }
 
-  download(request: express.Request, response: express.Response): Promise<any>  {
+  async download(request: express.Request, response: express.Response, next: express.NextFunction)  {
     if (isNaN(request.params.id as any)) {
-      return this.httpErrorService.error400('Not a number.', response, request.query, request.params);
+      return next(new HttpBadRequest('invalid-id'));
     }
 
     const query: any = request.query;
     if (!request.query.filename || query.filename.includes('../')) {
-      return this.httpErrorService.error400('Not a valid filename.', response, request.query, request.params);
+      return next(new HttpBadRequest('invalid-filename'));
     }
 
     const filename = decodeURI(query.filename).replace(/\"/g, '');
+    const data = await this.transmissionDaemonService.get([+request.params.id], ['name', 'files', 'downloadDir'])
+    .catch(err => next(new HttpTransmissionError(err)));
 
-    const res = this.transmissionDaemonService.get([+request.params.id], ['name', 'files', 'downloadDir'])
-    .then((data: {arguments: {torrents: Torrent[]}}) => {
-      const file = data.arguments.torrents[0].files.find(f => f.name.trim() === filename.trim());
-      const path = data.arguments.torrents[0].downloadDir + '/'+file.name;
-      const stat = fs.statSync(path);
-      const rs = fs.createReadStream(path);
-      response.writeHead(200, {
-        'Content-Type': 'application/octet-stream',
-        'Content-disposition': 'attachment; filename='+file.name,
-        'Content-Length': stat.size,
-      });
-      rs.pipe(response);
-    })
-    .catch(err => {
-      this.logger.error('Error getting torrent', err);
-      response.status(500).send({ message: 'Error getting torrent '+request.params.id } as ApiError)
+    const file = data.arguments.torrents[0].files.find(f => f.name.trim() === filename.trim());
+    const path = data.arguments.torrents[0].downloadDir + '/'+file.name;
+    const stat = fs.statSync(path);
+    const rs = fs.createReadStream(path);
+    response.writeHead(200, {
+      'Content-Type': 'application/octet-stream',
+      'Content-disposition': 'attachment; filename='+file.name,
+      'Content-Length': stat.size,
     });
-
-    return res;
+    rs.pipe(response);
 
   }
 

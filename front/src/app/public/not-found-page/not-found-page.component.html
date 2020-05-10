@@ -1,0 +1,11 @@
+<app-header-collapse [empty]="true">
+  <div title>{{'not-found.mainTitle' | translate}}</div>
+</app-header-collapse>
+
+
+<div class="card">
+  {{'not-found.content' | translate}}
+
+  <button class="btn btn-primary" [routerLink]="['/private/dashboard']">{{'not-found.retry-button' | translate}}</button>
+
+</div>

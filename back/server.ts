@@ -14,8 +14,8 @@ import { TransmissionDaemonService } from './src/services/transmission-daemon.se
 import { TorrentBrowserService } from './src/services/torrent-browser.service';
 import { TorrentBrowserController } from './src/controllers/torrent-browser-controller';
 import TS from 'torrent-search-api';
-import { HttpErrorService } from './src/services/http-error.service';
 import { CurrentUserService } from './src/services/current-user.service';
+import { handleErrors } from './src/core/errors';
 
 program.option('-c, --config <config>', 'The configuration file', 'config.production.json');
 program.parse(process.argv);
@@ -41,40 +41,40 @@ const app = express();
 
 const loggerService = new LoggerService(logger);
 const cache = new NodeCache();
-const tdService = new TransmissionDaemonService(cache, config, loggerService);
+const tdService = new TransmissionDaemonService(cache, config);
 const systemInformationService = new SystemInformationService();
 const torrentBrowserService = new TorrentBrowserService(TS, config);
-const httpErrorService = new HttpErrorService(loggerService);
-const torrentController = new TorrentController(tdService, config, httpErrorService, loggerService);
-const monitoringController = new MonitoringController(config, systemInformationService, loggerService);
-const torrentBrowserController = new TorrentBrowserController(torrentBrowserService, tdService, config, httpErrorService, loggerService);
+const torrentController = new TorrentController(tdService, config);
+const monitoringController = new MonitoringController(config, systemInformationService);
+const torrentBrowserController = new TorrentBrowserController(torrentBrowserService, tdService, config);
 const currentUserService = new CurrentUserService();
 
 
 app.use((req: any, res: any, next: any) => {
-  loggerService.info(`${currentUserService.getUsername(req)} | ${req.method} ${req.url}`);
+  if (req.url !== '/api/torrents')
+    loggerService.info(`${currentUserService.getUsername(req)} | ${req.method} ${req.url}`);
   next();
 });
 
 const API_PREFIX = '/api';
 app.use(API_PREFIX, express.json({limit: '50mb'}));
-app.post(API_PREFIX + '/login', (req: any, res: any) => (new LoginController(config)).login(req, res));
-app.get(API_PREFIX + '/torrents', (req: any, res: any) => torrentController.getAll(req, res));
-app.get(API_PREFIX + '/torrents/:id', (req: any, res: any) => torrentController.get(req, res));
-app.put(API_PREFIX + '/torrents/:id/move', (req: any, res: any) => torrentController.move(req, res));
-app.put(API_PREFIX + '/torrents/:id/start', (req: any, res: any) => torrentController.start(req, res));
-app.put(API_PREFIX + '/torrents/:id/stop', (req: any, res: any) => torrentController.stop(req, res));
-app.get(API_PREFIX + '/torrents/:id/download', (req: any, res: any) => torrentController.download(req, res));
-app.delete(API_PREFIX + '/torrents/:id', (req: any, res: any) =>  torrentController.remove(req, res));
-app.post(API_PREFIX + '/torrents', (req: any, res: any) => torrentController.add(req, res));
+app.post(API_PREFIX + '/login', (req: any, res: any, next) => (new LoginController(config)).login(req, res, next));
+app.get(API_PREFIX + '/torrents', (req: any, res: any, next) => torrentController.getAll(req, res, next).catch(next));
+app.get(API_PREFIX + '/torrents/:id', (req: any, res: any, next) => torrentController.get(req, res, next).catch(next));
+app.put(API_PREFIX + '/torrents/:id/move', (req: any, res: any, next) => torrentController.move(req, res, next).catch(next));
+app.put(API_PREFIX + '/torrents/:id/start', (req: any, res: any, next) => torrentController.start(req, res, next).catch(next));
+app.put(API_PREFIX + '/torrents/:id/stop', (req: any, res: any, next) => torrentController.stop(req, res, next).catch(next));
+app.get(API_PREFIX + '/torrents/:id/download', (req: any, res: any, next) => torrentController.download(req, res, next).catch(next));
+app.delete(API_PREFIX + '/torrents/:id', (req: any, res: any, next) =>  torrentController.remove(req, res, next).catch(next));
+app.post(API_PREFIX + '/torrents', (req: any, res: any, next) => torrentController.add(req, res, next).catch(next));
 
-app.get(API_PREFIX + '/monitoring/disk-usage', (req: any, res: any) => monitoringController.diskUsage(req, res));
-app.get(API_PREFIX + '/monitoring/process-informations', (req: any, res: any) => monitoringController.getProcessInformations(req, res));
-app.get(API_PREFIX + '/monitoring/torrent-destinations', (req: any, res: any) => monitoringController.getTorrentDestinations(req, res));
-app.get(API_PREFIX + '/monitoring/logs', (req: any, res: any) => monitoringController.getLogs(req, res));
+app.get(API_PREFIX + '/monitoring/disk-usage', (req: any, res: any, next) => monitoringController.diskUsage(req, res, next).catch(next));
+app.get(API_PREFIX + '/monitoring/process-informations', (req: any, res: any, next) => monitoringController.getProcessInformations(req, res, next).catch(next));
+app.get(API_PREFIX + '/monitoring/torrent-destinations', (req: any, res: any, next) => monitoringController.getTorrentDestinations(req, res, next).catch(next));
+app.get(API_PREFIX + '/monitoring/logs', (req: any, res: any, next) => monitoringController.getLogs(req, res, next).catch(next));
 
-app.post(API_PREFIX + '/browser/add', (req: any, res: any) => torrentBrowserController.add(req, res));
-app.get(API_PREFIX + '/browser/search', (req: any, res: any) => torrentBrowserController.search(req, res));
+app.post(API_PREFIX + '/browser/add', (req: any, res: any, next) => torrentBrowserController.add(req, res, next).catch(next));
+app.get(API_PREFIX + '/browser/search', (req: any, res: any, next) => torrentBrowserController.search(req, res, next).catch(next));
 
 app.get('*', (req: any, res: any) => {
   const allowedExt = ['.js', '.ico', '.css', '.png', '.jpg', '.woff2', '.woff', '.ttf', '.svg','.json', '.webmanifest', '.txt' ];
@@ -89,6 +89,7 @@ app.get('*', (req: any, res: any) => {
 // Allow any method from any host and log requests
 
 app.use(API_PREFIX, jwtExpress({ secret: config.jwtSecret }).unless({ path: [API_PREFIX + '/login'] }));
+app.use(handleErrors);
 app.listen(config.serverPort, config.bind, () => {
   loggerService.info(`Server now listening on ${config.bind}:${config.serverPort} with config ${program.config}`);
 });

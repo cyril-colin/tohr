@@ -26,7 +26,7 @@ export class TransmissionDaemonService {
   static HEADER_TRANSMISSION_SESSION = 'x-transmission-session-id';
   static MAX_SESSION_ATTEMPT = 5;
 
-  constructor(private cache: NodeCache, private config: Environment, private logger: LoggerService) { }
+  constructor(private cache: NodeCache, private config: Environment) { }
 
   public get(ids?: number[], fields: string[] = ['id', 'name', 'totalSize', 'downloadDir', 'percentDone', 'rateDownload', 'rateUpload', 'error', 'addedDate', 'errorString', 'status']): Promise<any> {
     const requestBody: TransmissionRequest = {
@@ -55,7 +55,6 @@ export class TransmissionDaemonService {
       }
     };
 
-    this.logger.debug('request : ', requestBody);
     return this.sendRequest(requestBody);
   }
 
@@ -68,7 +67,6 @@ export class TransmissionDaemonService {
       }
     };
 
-    this.logger.debug('request : ', requestBody);
     return this.sendRequest(requestBody);
   }
 
@@ -78,7 +76,6 @@ export class TransmissionDaemonService {
       arguments: { ids : [+id], 'delete-local-data': deleteLocalData}
     };
 
-    this.logger.debug('request : ', requestBody);
     return this.sendRequest(requestBody);
   }
 
@@ -92,7 +89,6 @@ export class TransmissionDaemonService {
       }
     };
 
-    this.logger.debug('request : ', JSON.stringify(requestBody));
     return this.sendRequest(requestBody);
   }
 
@@ -102,8 +98,7 @@ export class TransmissionDaemonService {
       arguments: { ids: [+id]}
     };
 
-    this.logger.debug('request : ', JSON.stringify(requestBody));
-    return this.sendRequest(requestBody);
+    return Promise.reject({myError: 'BOUYA'});
   }
 
   public start(id: number): Promise<any> {
@@ -112,7 +107,6 @@ export class TransmissionDaemonService {
       arguments: { ids: [+id]}
     };
 
-    this.logger.debug('request : ', JSON.stringify(requestBody));
     return this.sendRequest(requestBody);
   }
 
@@ -122,7 +116,6 @@ export class TransmissionDaemonService {
         return res.data;
       }).catch((error: any) => {
         if (error.response && error.response.status === 409) {
-          this.logger.info('Session not set or expired. Attempt number ' + attempt);
           if (attempt >= TransmissionDaemonService.MAX_SESSION_ATTEMPT) {
             throw error;
           }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { TorrentDestination } from 'src/app/core/model/torrent-destination';
 import { ProxyMonitoringService } from 'src/app/core/services/proxy/proxy-monitoring/proxy-monitoring.service';
 import { DiskStatus } from 'src/app/core/model/disk-status.model';
@@ -16,9 +16,7 @@ import { Router } from '@angular/router';
 export class MonitoringComponent implements OnInit {
 
   currentUser: User;
-  torrentTypes$: Observable<TorrentDestination[]>;
-  diskStatus$: Observable<DiskStatus[]>;
-  currentProcessInfo$: Observable<CurrentProcessInfo>;
+  allData$: Observable<any>;
 
   constructor(
     private router: Router,
@@ -27,9 +25,12 @@ export class MonitoringComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.torrentTypes$ = this.proxyMonitoringService.getTorrentDestinations();
-    this.diskStatus$ = this.proxyMonitoringService.getDiskUsage();
-    this.currentProcessInfo$ = this.proxyMonitoringService.getCurrentProcessInfo();
+
+    this.allData$ = forkJoin({
+      torrentTypes: this.proxyMonitoringService.getTorrentDestinations(),
+      diskStatus: this.proxyMonitoringService.getDiskUsage(),
+      currentProcessInfo:  this.proxyMonitoringService.getCurrentProcessInfo(),
+    });
     this.currentUser = this.currentUserService.currentUser
   }
 

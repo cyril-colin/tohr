@@ -101,6 +101,14 @@
   "downloadConfirmDialog.confirm": "Télécharger",
   "downloadConfirmDialog.error.download": "Une erreur est survenue lors du téléchargement.",
 
+  "unavailable.mainTitle": "Indisponible",
+  "unavailable.content": "Le serveur ne répond pas. Possible qu'il soit hors ligne ou buggé",
+  "unavailable.retry-button": "Essayer à nouveau",
+
+  "not-found.mainTitle": "Perdu ?",
+  "not-found.content": "La page demandée n'existe pas.",
+  "not-found.retry-button": "Revenir à la liste des torrents",
+
   "tabBar.torrentLink": "Les torrents",
   "tabBar.monitoringLink": "Monitoring",
   "tabBar.browserLink": "Recherche"
