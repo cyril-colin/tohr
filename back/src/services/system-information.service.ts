@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as os from 'os';
 import { DiskStatus } from '../core/monitoring/disk-status.model';
 import { TorrentDestination } from '../core/monitoring/torrent-destination.model';
+import { Environment } from '../environment';
 
 export class SystemInformationService {
   constructor() { }
@@ -49,6 +50,16 @@ export class SystemInformationService {
       return Promise.reject('not exists');
     }
     return this.exec('/usr/bin/stat -c "%A" ' + dest.path).then(res => res.replace(/(\r\n|\n|\r)/gm, ''));
+  }
+
+  public async isDestinationExists(dest: TorrentDestination): Promise<boolean> {
+    await fs.promises.access(dest.path).catch(error => Promise.reject(false));
+    return Promise.resolve(true);
+  }
+
+  public async isLogFileExists(config: Environment): Promise<boolean> {
+    await fs.promises.access(config.logFile).catch(error => Promise.reject(false));
+    return Promise.resolve(true);
   }
 
   private exec(command: string): Promise<string> {

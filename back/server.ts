@@ -90,6 +90,35 @@ app.get('*', (req: any, res: any) => {
 
 app.use(API_PREFIX, jwtExpress({ secret: config.jwtSecret }).unless({ path: [API_PREFIX + '/login'] }));
 app.use(handleErrors);
-app.listen(config.serverPort, config.bind, () => {
-  loggerService.info(`Server now listening on ${config.bind}:${config.serverPort} with config ${program.config}`);
+app.listen(config.serverPort, config.bind, async () => {
+  loggerService.info(`Tohr server now listening on ${config.bind}:${config.serverPort} with config ${program.config}`);
+  const checkPrefix = 'startup-check | ';
+  tdService.get()
+  .then(() => loggerService.info(checkPrefix + 'Torrent client is alive.'))
+  .catch(() => {
+    loggerService.warn(checkPrefix + 'Torrent client has error.');
+  });
+
+  const checkers = [];
+  config.monitoring.destinations.forEach(async d => checkers.push(systemInformationService.isDestinationExists(d)));
+
+  const noProblem = await Promise.all(checkers).catch(err => {
+    loggerService.error(checkPrefix + 'Problem with torrent destinations : ', err);
+    process.exit(1);
+  });
+
+  if (noProblem) {
+    loggerService.info(checkPrefix + 'Torrent destinations are accessibles.');
+  }
+
+  const logFileExists = await systemInformationService.isLogFileExists(config).catch(err => {
+    loggerService.error(checkPrefix + 'Problem logger file : ', err);
+    process.exit(1);
+  });
+
+  if (logFileExists) {
+    loggerService.info(checkPrefix + 'Log file exists : ' + config.logFile);
+  }
+
+
 });
