@@ -1,6 +1,6 @@
-<app-header-collapse>
+<app-header-collapse *ngIf="(torrentDestinations$ | async) as destinations">
   <div title>{{title}}</div>
-  <ng-container content *ngIf="(torrentDestinations$ | async) as destinations">
+  <ng-container content >
     <app-torrent-browser-search *ngIf="searchMode" [destinations]=destinations [selected]=selectedDestination (searchEvent)=search($event)></app-torrent-browser-search>
     <app-torrent-upload *ngIf="!searchMode"></app-torrent-upload>
     <a class="link" (click)="switchMode()">
@@ -10,7 +10,7 @@
 </app-header-collapse>
 
 <div class="dashboard" *ngIf="searchMode">
-  <ng-container *ngIf="(torrentDestinations$ | async) as destinations">
+  <ng-container *ngIf="(torrentDestinations$ | async) as destinations; else loader">
     <ng-template #distEmpty>
       {{ 'browser.emptyFilters' | translate }}
     </ng-template>
@@ -34,6 +34,10 @@
     </div>
 
   </ng-container>
+
+  <ng-template #loader>
+    <app-loading-page></app-loading-page>
+  </ng-template>
 
 
 
