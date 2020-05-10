@@ -1,4 +1,5 @@
 import * as HttpStatus from 'http-status-codes';
+import { UnauthorizedError } from 'express-jwt';
 
 
 export const BC_BAD_REQUEST = 'bad-request';
@@ -59,7 +60,10 @@ export class HttpUnauthorizedError extends HttpError {
 
 export function handleErrors (err, req, res, next) {
   console.error('error handler :', err);
-  if (err instanceof HttpError) {
+  if (err instanceof UnauthorizedError) {
+    const responseError = new HttpUnauthorizedError();
+    res.status(responseError.httpCode).json(responseError);
+  } else if (err instanceof HttpError) {
     delete err.originalError;
     res.status(err.httpCode).json(err);
   } else {
