@@ -16,6 +16,6 @@ export class LoggerService {
   }
 
   warn(message: string, ...optionalParams: any[]) {
-    this.logger.log('warning', message, ...optionalParams);
+    this.logger.log('warn', message, ...optionalParams);
   }
 }
