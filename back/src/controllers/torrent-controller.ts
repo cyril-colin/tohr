@@ -121,7 +121,7 @@ export class TorrentController {
     const data = await this.transmissionDaemonService.get([+request.params.id], ['name', 'files', 'downloadDir'])
     .catch(err => next(new HttpTransmissionError(err)));
 
-    const file = data.arguments.torrents[0].files.find(f => f.name.trim() === filename.trim());
+    const file = data.arguments.torrents[0].files.find((f: any) => f.name.trim() === filename.trim());
     const path = data.arguments.torrents[0].downloadDir + '/'+file.name;
     const stat = fs.statSync(path);
     const rs = fs.createReadStream(path);

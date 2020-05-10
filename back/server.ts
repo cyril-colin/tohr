@@ -99,7 +99,7 @@ app.listen(config.serverPort, config.bind, async () => {
     loggerService.warn(checkPrefix + 'Torrent client has error.');
   });
 
-  const checkers = [];
+  const checkers: any[] = [];
   config.monitoring.destinations.forEach(async d => checkers.push(systemInformationService.isDestinationExists(d)));
   const noProblem = await Promise.all(checkers).catch(err => {
     loggerService.error(checkPrefix + 'Problem with torrent destinations : ', err);

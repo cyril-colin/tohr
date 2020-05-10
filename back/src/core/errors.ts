@@ -58,7 +58,7 @@ export class HttpUnauthorizedError extends HttpError {
   }
 }
 
-export function handleErrors (err, req, res, next) {
+export function handleErrors (err: any, req: any, res: any, next: any) {
   console.error('error handler :', err);
   if (err instanceof UnauthorizedError) {
     const responseError = new HttpUnauthorizedError();
