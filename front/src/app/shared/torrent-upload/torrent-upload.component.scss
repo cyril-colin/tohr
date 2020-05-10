@@ -73,6 +73,11 @@
 }
 
 
+.warning {
+  word-break: break-word;
+  color: $textWarning;
+}
+
 #fileNumber {
   display: block;
   font-weight: 400;

@@ -29,6 +29,7 @@
   "browser.loading": "Loading...",
   "browser.emptyFilters": "We cannot get filters, so search feature is not available.",
   "browser.errors.search": "Error on search.",
+  "browser.errors.cloudflare-error": "The torrent provider has updated its security. Tohr cannot browse its torrents.",
   "browser.errors.searchNotValid": "Form not valid",
   "browser.errors.prefix": "Cannot load the list",
   "browser.errors.adding": "Error on add. Retry ?",

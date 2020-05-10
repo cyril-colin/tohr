@@ -36,9 +36,6 @@ const logger = createLogger({
   ]
 });
 
-const app = express();
-
-
 const loggerService = new LoggerService(logger);
 const cache = new NodeCache();
 const tdService = new TransmissionDaemonService(cache, config);
@@ -49,16 +46,18 @@ const monitoringController = new MonitoringController(config, systemInformationS
 const torrentBrowserController = new TorrentBrowserController(torrentBrowserService, tdService, config);
 const currentUserService = new CurrentUserService();
 
-
+const app = express();
+app.use(express.static(__dirname + '/' +config.distPath));
+const API_PREFIX = '/api';
+app.use(API_PREFIX, express.json({limit: '50mb'}));
 app.use((req: any, res: any, next: any) => {
-  if (req.url !== '/api/torrents')
+  if (req.url !== API_PREFIX + '/torrents')
     loggerService.info(`${currentUserService.getUsername(req)} | ${req.method} ${req.url}`);
   next();
 });
+app.use(API_PREFIX, jwtExpress({ secret: config.jwtSecret }).unless({ path: [API_PREFIX + '/login'] }));
 
-const API_PREFIX = '/api';
-app.use(API_PREFIX, express.json({limit: '50mb'}));
-app.post(API_PREFIX + '/login', (req: any, res: any, next) => (new LoginController(config)).login(req, res, next));
+app.post(API_PREFIX + '/login', (req: any, res: any, next) => (new LoginController(config)).login(req, res, next).catch(next));
 app.get(API_PREFIX + '/torrents', (req: any, res: any, next) => torrentController.getAll(req, res, next).catch(next));
 app.get(API_PREFIX + '/torrents/:id', (req: any, res: any, next) => torrentController.get(req, res, next).catch(next));
 app.put(API_PREFIX + '/torrents/:id/move', (req: any, res: any, next) => torrentController.move(req, res, next).catch(next));
@@ -76,20 +75,21 @@ app.get(API_PREFIX + '/monitoring/logs', (req: any, res: any, next) => monitorin
 app.post(API_PREFIX + '/browser/add', (req: any, res: any, next) => torrentBrowserController.add(req, res, next).catch(next));
 app.get(API_PREFIX + '/browser/search', (req: any, res: any, next) => torrentBrowserController.search(req, res, next).catch(next));
 
-app.get('*', (req: any, res: any) => {
-  const allowedExt = ['.js', '.ico', '.css', '.png', '.jpg', '.woff2', '.woff', '.ttf', '.svg','.json', '.webmanifest', '.txt' ];
-  if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
-    res.sendFile(path.resolve(`${__dirname}/${config.distPath}/${req.url.split('?')[0]}`));
-  } else {
-    res.sendFile(path.resolve(`${__dirname}/${config.distPath}/index.html`));
-  }
-});
+/**
+ * If no route match, let angular manage the not found errors.
+ */
+app.get('*', (req: any, res: any) => res.sendFile(path.resolve(`${__dirname}/${config.distPath}/index.html`)));
 
-
-// Allow any method from any host and log requests
-
-app.use(API_PREFIX, jwtExpress({ secret: config.jwtSecret }).unless({ path: [API_PREFIX + '/login'] }));
+/**
+ * Use our custom error handler to format error with compatible
+ * data for front project.
+ */
 app.use(handleErrors);
+
+/**
+ * Run the server and perform some validation to make sur this will
+ * work correctly.
+ */
 app.listen(config.serverPort, config.bind, async () => {
   loggerService.info(`Tohr server now listening on ${config.bind}:${config.serverPort} with config ${program.config}`);
   const checkPrefix = 'startup-check | ';
@@ -101,12 +101,10 @@ app.listen(config.serverPort, config.bind, async () => {
 
   const checkers = [];
   config.monitoring.destinations.forEach(async d => checkers.push(systemInformationService.isDestinationExists(d)));
-
   const noProblem = await Promise.all(checkers).catch(err => {
     loggerService.error(checkPrefix + 'Problem with torrent destinations : ', err);
     process.exit(1);
   });
-
   if (noProblem) {
     loggerService.info(checkPrefix + 'Torrent destinations are accessibles.');
   }
@@ -115,10 +113,7 @@ app.listen(config.serverPort, config.bind, async () => {
     loggerService.error(checkPrefix + 'Problem logger file : ', err);
     process.exit(1);
   });
-
   if (logFileExists) {
     loggerService.info(checkPrefix + 'Log file exists : ' + config.logFile);
   }
-
-
 });

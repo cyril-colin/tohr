@@ -107,7 +107,7 @@ export class TorrentController {
     return response.json(data);
   }
 
-  async download(request: express.Request, response: express.Response, next: express.NextFunction)  {
+  async download(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any>  {
     if (isNaN(request.params.id as any)) {
       return next(new HttpBadRequest('invalid-id'));
     }
@@ -130,8 +130,9 @@ export class TorrentController {
       'Content-disposition': 'attachment; filename='+file.name,
       'Content-Length': stat.size,
     });
-    rs.pipe(response);
 
+
+    return rs.pipe(response);
   }
 
 }

@@ -55,8 +55,11 @@ export class TorrentBrowserComponent implements OnInit {
       },
       error: (err) => {
         this.searching = false;
-        this.searchErrors.push(this.translate.instant('browser.errors.search'));
-        console.error(err);
+        if (err.error.businessCode === 'cloudflare-error') {
+          this.searchErrors.push(this.translate.instant('browser.errors.cloudflare-error'));
+        } else {
+          this.searchErrors.push(this.translate.instant('browser.errors.search'));
+        }
       },
       complete: () => {
         this.searching = false;

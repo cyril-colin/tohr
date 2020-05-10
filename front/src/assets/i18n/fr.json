@@ -29,6 +29,7 @@
   "browser.loading": "Loading...",
   "browser.emptyFilters": "Impossible de récupérer les filtres, aucune recherche ne peut être faite.",
   "browser.errors.search": "Erreur lors de la recherche.",
+  "browser.errors.cloudflare-error": "YggTorrent a mis à jour sa sécurité. Tohr ne peut donc plus y accéder. En attendant tu peux toujours aller sur le site, récupérer le .torrent que tu veux et l'ajouter grace au menu \"Ajouter un torrent manuellement\".",
   "browser.errors.searchNotValid": "Formulaire de recherche invalide",
   "browser.errors.prefix": "Impossible de charger la liste.",
   "browser.errors.adding": "Erreur d'ajout. Retenter peut suffire...",
