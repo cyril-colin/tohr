@@ -5,23 +5,29 @@
   </div>
 </app-header-collapse>
 
-<div class="monitoring">
-    <div *ngIf="currentProcessInfo$ | async as info" class="card info">
-      <app-current-process-info [currentProcessInfo]=info></app-current-process-info>
+<div class="monitoring" *ngIf="allData$ | async as allData; else loader">
+    <div class="card info">
+      <app-current-process-info [currentProcessInfo]=allData.currentProcessInfo></app-current-process-info>
     </div>
 
 
-    <div *ngIf="diskStatus$ | async as diskStatus" class="card disk-status-list">
-      <app-disk-status *ngFor="let ds of diskStatus" [diskStatus]=ds></app-disk-status>
+    <div class="card disk-status-list">
+      <app-disk-status *ngFor="let ds of allData.diskStatus" [diskStatus]=ds></app-disk-status>
     </div>
 
-    <div *ngIf="torrentTypes$ | async as torrentTypes" class="card types">
-      <div class="type" *ngFor="let torrentType of torrentTypes">
+    <div class="card types">
+      <div class="type" *ngFor="let torrentType of allData.torrentTypes">
         <app-torrent-destination [torrentDestination]=torrentType></app-torrent-destination>
       </div>
 
     </div>
 
 
+
+
 </div>
+
+<ng-template #loader>
+  <app-loading-page></app-loading-page>
+</ng-template>
 
