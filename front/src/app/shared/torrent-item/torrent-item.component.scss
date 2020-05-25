@@ -1,54 +1,73 @@
 @import "../../../colors.scss";
+@import "../../../mixin.scss";
 
 :host {
-  .torrent-item {
-    overflow-wrap: break-word;
-    word-break: break-all;
+  @include tohr-card;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+
+  .head {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 20px;
-
-    .panel {
+    width: 100%;
+    align-items: space-between;
+    justify-content: center;
+    .date {
+      @include tohr-title-secondary;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: flex-start;
+      flex-grow: 2;
+      align-items: center;
     }
-    .data {
-      color: $drawPrimary;
-    }
-    .info {
-        width: 80%;
-    }
-
-    .title {
-      margin-bottom: 7px;
-      font-size: 16px;
-      width: 95%;
-      cursor: pointer;
-    }
-
-    .destination {
-      font-size: 50px;
-    }
-
     .actions {
       display: flex;
       flex-direction: row;
+      flex-grow: 1;
       align-items: center;
-      justify-content: space-between;
-      width: 100%;
-    }
-    .loading-button {
-      width: 30px;
-      height: 30px;
-    }
+      justify-content: flex-end;
 
-
-    .bar {
-      width: 100%;
+      em {
+        font-size: 30px;
+      }
     }
   }
+
+  .infos {
+    display: flex;
+    flex-direction: row;
+
+    .destination {
+      font-size: 40px;
+      margin-right: 10px;
+    }
+  }
+
+  .infos > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .title {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    span {
+      @include tohr-title-primary;
+      width: 100%;;
+    }
+
+    em {
+      font-size: 20px;
+    }
+
+
+
+  }
+
 }

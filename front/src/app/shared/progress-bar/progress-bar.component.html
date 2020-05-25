@@ -1,12 +1,10 @@
 <div class="progress-bar">
-  <div *ngIf="torrent.error == 0" class="progress-bar-load" [ngStyle]="{'width': torrent.percentDone *100 + '%'}"></div>
+  <div class="progress-bar-load" [ngStyle]="{'width': torrent.percentDone *100 + '%'}"></div>
 
 
-  <div *ngIf="torrent.error != 0" class="torrent-error">
-    <span>{{ torrent.errorString }}</span>
-  </div>
 
-  <div *ngIf="torrent.error == 0" class="items">
+
+  <div class="items">
     <span class="item-start">
       <span class="rate">
         <i class="material-icons">keyboard_arrow_down</i>
@@ -24,4 +22,8 @@
       </span>
     </span>
   </div>
+</div>
+
+<div *ngIf="torrent.error != 0" class="torrent-error">
+  <span>{{ torrent.errorString }}</span>
 </div>

@@ -1,31 +1,25 @@
-<div class="card torrent-item">
-  <div class="panel data">
-    <i class="material-icons destination">{{ torrent.destination.icon}}</i>
-  </div>
 
-  <div class="panel info">
-    <div class="title" (click)="goTorrent(torrent)">{{ torrent.name }}</div>
-    <div>{{ torrent.addedDate * 1000 | date:'yyyy/MM/dd HH:mm:ss'}}</div>
-    <div class="bar">
-      <app-progress-bar [torrent]=torrent></app-progress-bar>
-    </div>
+<div class="infos">
+  <em class="material-icons destination">{{ torrent.destination.icon}}</em>
 
-    <div class="actions">
-      <div *ngIf="isLoading" class="loading-button">
-        <div class="lds-dual-ring"></div>
+  <div>
+    <div class="head">
+      <div class="date">{{ torrent.addedDate * 1000 | date:'yyyy/MM/dd HH:mm:ss'}}</div>
+      <div class="actions">
+        <div *ngIf="isLoading" class="loading-button">
+          <div class="lds-dual-ring"></div>
+        </div>
+        <ng-container *ngIf="!isLoading">
+          <em *ngIf="isPaused" (click)="startStop()" class="material-icons btn-action">play_arrow</em>
+          <em *ngIf="!isPaused" (click)="startStop()" class="material-icons btn-action">pause</em>
+        </ng-container>
+        <em class="material-icons btn-action" (click)="goTorrent(torrent)">remove_red_eye</em>
       </div>
-      <ng-container *ngIf="!isLoading">
-        <span class="status">{{ 'torrentStatus.'+ torrent.statusStr | translate}}</span>
-        <em *ngIf="isPaused"  (click)="startStop()" class="material-icons btn-action">play_arrow</em>
-        <em *ngIf="!isPaused" (click)="startStop()" class="material-icons btn-action">pause</em>
-      </ng-container>
-      <em class="material-icons btn-action" (click)="goTorrent(torrent)">remove_red_eye</em>
-
-    </div>
-    <div class="error">
       <app-error-area [errors]=errors></app-error-area>
     </div>
+    <div class="title" (click)="goTorrent(torrent)"><span>{{ torrent.name }}</span></div>
   </div>
-
-
 </div>
+
+
+<app-progress-bar [torrent]=torrent></app-progress-bar>
