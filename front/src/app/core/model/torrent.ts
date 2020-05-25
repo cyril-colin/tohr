@@ -36,7 +36,10 @@ export interface BrowserTorrent {
   desc: string;
   id: string;
   provider: string;
-  link: string;
+  link: {
+    path: string;
+    file: string;
+  };
   computedData: BrowserComputedData;
   destination?: any
 }

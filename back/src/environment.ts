@@ -11,12 +11,5 @@ export interface Environment {
     jwtSecret: string;
     users: { login: string, password: string, }[];
     monitoring: {diskToWatch: string[], destinations: TorrentDestination[]};
-    torrentProviders: TorrentProvider[];
-}
-
-export interface TorrentProvider {
-  name: 'YggTorrent';
-  baseUrl: string;
-  username: string;
-  password: string;
+    jackett: {url: string, apiKey: string};
 }

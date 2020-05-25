@@ -11,9 +11,8 @@ import { MonitoringController } from './src/controllers/monitoring-controller';
 import { SystemInformationService } from './src/services/system-information.service';
 import { LoggerService } from './src/services/logger.service';
 import { TransmissionDaemonService } from './src/services/transmission-daemon.service';
-import { TorrentBrowserService } from './src/services/torrent-browser.service';
+import { JacketClientService } from './src/services/jacket-client.service';
 import { TorrentBrowserController } from './src/controllers/torrent-browser-controller';
-import TS from 'torrent-search-api';
 import { CurrentUserService } from './src/services/current-user.service';
 import { handleErrors } from './src/core/errors';
 
@@ -40,10 +39,10 @@ const loggerService = new LoggerService(logger);
 const cache = new NodeCache();
 const tdService = new TransmissionDaemonService(cache, config);
 const systemInformationService = new SystemInformationService();
-const torrentBrowserService = new TorrentBrowserService(TS, config);
 const torrentController = new TorrentController(tdService, config);
 const monitoringController = new MonitoringController(config, systemInformationService);
-const torrentBrowserController = new TorrentBrowserController(torrentBrowserService, tdService, config);
+const jacketClientService = new JacketClientService(config.jackett.url, config.jackett.apiKey);
+const torrentBrowserController = new TorrentBrowserController(jacketClientService, tdService, config);
 const currentUserService = new CurrentUserService();
 
 const app = express();

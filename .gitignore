@@ -53,3 +53,4 @@ bin
 logs
 front/src/assets/version.txt
 transmission-data
+jackett
