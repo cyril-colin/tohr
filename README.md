@@ -118,22 +118,28 @@ Install [Node](https://nodejs.org/en/download/) : all the project is based on Ja
 git clone git@github.com:cyril-colin/tohr.git
 cd tohr
 npm install
+
+
 # Transmission configuration
 mkdir -p transmission-data/config \
-  transmission-data/data/films \ 
+  transmission-data/data/films \
   transmission-data/data/musics \
   transmission-data/data/series \
-  transmission-data/data/other \
-  jackett/config
-
+  transmission-data/data/other
 cp back/config/transmission-settings.json transmission-data/config/settings.json
-cp back/config/jackett.sample.json jackett/config/ServerConfig.json
+
+# Configure jackett
+docker-compose up -d jackett # http://localhost:9117 to access and configure Jackett in order to enable an indexer.
+docker-compose down
 
 # Run
+cp back/config/config.sample.json back/config/config.dev.json # Edit with the jackett ApiKey
 npm start # start back and front
-# http://localhost:9117 to access and configure Jackett in order to enable an indexer.
 docker-compose logs -f tohr-dev # to see the backend logs
-  
+
+
+npm run stop
+rm -rf transmission-data/ jackett/
 ```
 
 

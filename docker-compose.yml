@@ -17,7 +17,7 @@ services:
       tohr-network:
         aliases:
           - tohr-dev-alias
-    command: bash -c "ts-node-dev --project \"/tohr/tsconfig-back.json\"  \"/tohr/back/server.ts\" --config \"config.sample.json\""
+    command: bash -c "ts-node-dev --project \"/tohr/tsconfig-back.json\"  \"/tohr/back/server.ts\" --config \"config.dev.json\""
 
 
   tohr-transmission:
@@ -41,7 +41,7 @@ services:
           - transmission-alias
 
   jackett:
-    image: linuxserver/jackett
+    image: linuxserver/jackett:latest
     container_name: jackett
     environment:
       - PUID=1000
