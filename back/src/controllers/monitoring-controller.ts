@@ -1,9 +1,9 @@
 import * as express from 'express';
 import { SystemInformationService } from '../services/system-information.service';
-import { CurrentProcessInfo } from '../core/monitoring/current-process-info.model';
 import { Environment } from '../environment';
 import { HttpInternalError } from '../core/errors';
-import { DiskStatus } from '../core/monitoring/disk-status.model';
+import {CurrentProcessInfo} from '../core/public-models/current-process-info';
+import {DiskStatus} from '../core/public-models/disk-status';
 
 export class MonitoringController {
   constructor(

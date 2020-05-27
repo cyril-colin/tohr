@@ -1,6 +1,8 @@
-import { BrowserTorrent, BrowserTag } from '../core/torrent.model';
+
 import querystring from 'querystring';
-import { JTorrent } from '../jacket-client/models/jtorrent.model';
+import { JTorrent } from '../clients/jacket-client/models/jtorrent.model';
+import { BrowserTag } from '../core/public-models/torrent-browser-tag';
+import { TorrentBrowser } from '../core/public-models/torrent-browser';
 
 const knownTags : BrowserTag[] = [
   { name: '1080p', color: '#f23d3d'},
@@ -28,10 +30,10 @@ const knownTags : BrowserTag[] = [
 
 
 export class JackettMapper {
-  static toFrontResult(jackettTorrent: JTorrent): BrowserTorrent {
+  static toFrontResult(jackettTorrent: JTorrent): TorrentBrowser {
 
     const link = querystring.parse(jackettTorrent.Link.split('?')[1]);
-    const t : BrowserTorrent = {
+    const t : TorrentBrowser = {
       title: jackettTorrent.Title,
       time: null,
       seeds: jackettTorrent.Seeders,

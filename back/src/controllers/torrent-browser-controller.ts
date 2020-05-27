@@ -1,11 +1,11 @@
 import * as express from 'express';
 import { Environment } from '../environment';
-import { BrowserTorrent } from '../core/torrent.model';
 import { HttpBadRequest, HttpTorrentSearchError, HttpTransmissionError } from '../core/errors';
 import { JackettMapper } from '../mappers/jackett.mapper';
 import fs from 'fs';
 import { JackettClient } from '../clients/jacket-client/jackett-client';
 import { TransmissionDaemonClient } from '../clients/transmission-daemon-client/transmission-daemon-client';
+import { TorrentBrowser } from '../core/public-models/torrent-browser';
 
 
 export class TorrentBrowserController {
@@ -47,7 +47,7 @@ export class TorrentBrowserController {
    * data.
    */
   async add(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
-    const params: BrowserTorrent = request.body;
+    const params: TorrentBrowser = request.body;
     if (!params) {
       return next(new HttpBadRequest('invalid-given-torrent'));
     }

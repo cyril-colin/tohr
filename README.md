@@ -147,6 +147,7 @@ rm -rf transmission-data/ jackett/
 
 #### Build the production
 ```bash
+npm run build # Check if build works
 vi package.json # Update manually version
 VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]') &&\
  git commit -am ${VERSION} && \

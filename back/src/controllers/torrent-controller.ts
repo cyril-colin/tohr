@@ -1,10 +1,10 @@
 import * as express from 'express';
 import * as fs from 'fs';
-import { Torrent } from '../core//torrent.model';
-import { TorrentDestination } from '../core/monitoring/torrent-destination.model';
 import { Environment } from '../environment';
 import { HttpBadRequest, HttpTransmissionError } from '../core/errors';
 import { TransmissionDaemonClient } from '../clients/transmission-daemon-client/transmission-daemon-client';
+import { TorrentDestination } from '../core/public-models/torrent-destination';
+import { Torrent } from '../core/public-models/torrent';
 
 export class TorrentController {
   constructor(

@@ -1,4 +1,4 @@
-import { TorrentDestination } from './core/monitoring/torrent-destination.model';
+import { TorrentDestination } from './core/public-models/torrent-destination';
 
 export interface Environment {
     serverPort: number;
