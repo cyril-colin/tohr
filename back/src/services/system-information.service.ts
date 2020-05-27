@@ -53,13 +53,11 @@ export class SystemInformationService {
   }
 
   public async isDestinationExists(dest: TorrentDestination): Promise<boolean> {
-    await fs.promises.access(dest.path).catch(error => Promise.reject(false));
-    return Promise.resolve(true);
+    return fs.promises.access(dest.path).then(() => true);
   }
 
   public async isLogFileExists(config: Environment): Promise<boolean> {
-    await fs.promises.access(config.logFile).catch(error => Promise.reject(false));
-    return Promise.resolve(true);
+    return fs.promises.access(config.logFile).then(() => true);
   }
 
   private exec(command: string): Promise<string> {

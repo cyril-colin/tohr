@@ -100,21 +100,21 @@ app.listen(config.serverPort, config.bind, async () => {
     loggerService.warn(checkPrefix + 'Torrent client has error.');
   });
 
-  const checkers: any[] = [];
-  config.monitoring.destinations.forEach(async d => checkers.push(systemInformationService.isDestinationExists(d)));
-  const noProblem = await Promise.all(checkers).catch(err => {
-    loggerService.error(checkPrefix + 'Problem with torrent destinations : ', err);
-    process.exit(1);
-  });
-  if (noProblem) {
-    loggerService.info(checkPrefix + 'Torrent destinations are accessibles.');
-  }
+  // const checkers: any[] = [];
+  // config.monitoring.destinations.forEach(async d => checkers.push(systemInformationService.isDestinationExists(d)));
+  // const noProblem = await Promise.all(checkers).catch(err => {
+  //   loggerService.error(checkPrefix + 'Problem with torrent destinations : ', err);
+  //   process.exit(1);
+  // });
+  // if (noProblem) {
+  //   loggerService.info(checkPrefix + 'Torrent destinations are accessibles.');
+  // }
 
-  const logFileExists = await systemInformationService.isLogFileExists(config).catch(err => {
-    loggerService.error(checkPrefix + 'Problem logger file : ', err);
-    process.exit(1);
-  });
-  if (logFileExists) {
-    loggerService.info(checkPrefix + 'Log file exists : ' + config.logFile);
-  }
+  // const logFileExists = await systemInformationService.isLogFileExists(config).catch(err => {
+  //   loggerService.error(checkPrefix + 'Problem logger file : ', err);
+  //   process.exit(1);
+  // });
+  // if (logFileExists) {
+  //   loggerService.info(checkPrefix + 'Log file exists : ' + config.logFile);
+  // }
 });
