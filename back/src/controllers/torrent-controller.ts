@@ -2,22 +2,22 @@ import * as express from 'express';
 import * as fs from 'fs';
 import { Torrent } from '../core//torrent.model';
 import { TorrentDestination } from '../core/monitoring/torrent-destination.model';
-import { TransmissionDaemonService } from '../services/transmission-daemon.service';
 import { Environment } from '../environment';
 import { HttpBadRequest, HttpTransmissionError } from '../core/errors';
+import { TransmissionDaemonClient } from '../clients/transmission-daemon-client/transmission-daemon-client';
 
 export class TorrentController {
   constructor(
-    private transmissionDaemonService: TransmissionDaemonService,
+    private tdClient: TransmissionDaemonClient,
     private env: Environment,
   ) { }
 
   async getAll(request: any, response: express.Response, next: express.NextFunction): Promise<any> {
-    const data = await this.transmissionDaemonService.get().catch(err => next(new HttpTransmissionError(err)));
+    const data = await this.tdClient.get().catch(err => next(new HttpTransmissionError(err)));
     const destinationsList: TorrentDestination[] = this.env.monitoring.destinations;
     data.arguments.torrents.forEach((t: Torrent) => {
       t.destination = destinationsList.find(d => d.path === t.downloadDir);
-      t.statusStr = this.transmissionDaemonService.getStatus(t.status).trim().toLocaleUpperCase();
+      t.statusStr = this.tdClient.getStatus(t.status).trim().toLocaleUpperCase();
     });
 
     return response.json(data);
@@ -29,11 +29,11 @@ export class TorrentController {
     }
 
     const fields = ['id', 'name', 'totalSize', 'downloadDir', 'percentDone', 'rateDownload', 'rateUpload', 'error', 'errorString', 'status', 'trackers', 'addedDate', 'files'];
-    const data = await this.transmissionDaemonService.get([+request.params.id], fields).catch(err => next(new HttpTransmissionError(err)));
+    const data = await this.tdClient.get([+request.params.id], fields).catch(err => next(new HttpTransmissionError(err)));
     const destinationsList: TorrentDestination[] = this.env.monitoring.destinations;
     data.arguments.torrents.forEach((t: Torrent) => {
       t.destination = destinationsList.find(d => d.path === t.downloadDir);
-      t.statusStr = this.transmissionDaemonService.getStatus(t.status).trim().toLocaleUpperCase();
+      t.statusStr = this.tdClient.getStatus(t.status).trim().toLocaleUpperCase();
     });
 
     return response.json(data);;
@@ -48,7 +48,7 @@ export class TorrentController {
       next(new HttpBadRequest('invalid-metainfo'));
     }
 
-    const data = await this.transmissionDaemonService.add(request.body.downloadDir, request.body.metainfo)
+    const data = await this.tdClient.add(request.body.downloadDir, request.body.metainfo)
     .catch(err => next(new HttpTransmissionError(err)));
     return response.json(data);
   }
@@ -64,7 +64,7 @@ export class TorrentController {
     }
 
     const deleteDataBoolean = request.query.deleteLocalData === 'true';
-    const data = await this.transmissionDaemonService.remove(request.params.id, deleteDataBoolean)
+    const data = await this.tdClient.remove(request.params.id, deleteDataBoolean)
     .catch(err => next(new HttpTransmissionError(err)));
     return response.json(data);
   }
@@ -80,7 +80,7 @@ export class TorrentController {
       return next(new HttpBadRequest('invalid-destination'));
     }
 
-    const data = await this.transmissionDaemonService.move(request.params.id as any, selectedDestination.path)
+    const data = await this.tdClient.move(request.params.id as any, selectedDestination.path)
     .catch(err => next(new HttpTransmissionError(err)));
 
     return response.json(data);
@@ -91,7 +91,7 @@ export class TorrentController {
       return next(new HttpBadRequest('invalid-id'));
     }
 
-    const data = await this.transmissionDaemonService.stop(request.params.id as any)
+    const data = await this.tdClient.stop(request.params.id as any)
     .catch(err => next(new HttpTransmissionError(err)));
 
     return response.json(data);
@@ -101,7 +101,7 @@ export class TorrentController {
     if (isNaN(request.params.id as any)) {
       return next(new HttpBadRequest('invalid-id'));
     }
-    const data = await this.transmissionDaemonService.start(request.params.id as any)
+    const data = await this.tdClient.start(request.params.id as any)
     .catch(err => next(new HttpTransmissionError(err)));
 
     return response.json(data);
@@ -118,7 +118,7 @@ export class TorrentController {
     }
 
     const filename = decodeURI(query.filename).replace(/\"/g, '');
-    const data = await this.transmissionDaemonService.get([+request.params.id], ['name', 'files', 'downloadDir'])
+    const data = await this.tdClient.get([+request.params.id], ['name', 'files', 'downloadDir'])
     .catch(err => next(new HttpTransmissionError(err)));
 
     const file = data.arguments.torrents[0].files.find((f: any) => f.name.trim() === filename.trim());

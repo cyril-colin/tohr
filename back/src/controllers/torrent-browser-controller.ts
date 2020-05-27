@@ -1,17 +1,17 @@
 import * as express from 'express';
-import { TransmissionDaemonService } from '../services/transmission-daemon.service';
 import { Environment } from '../environment';
 import { BrowserTorrent } from '../core/torrent.model';
 import { HttpBadRequest, HttpTorrentSearchError, HttpTransmissionError } from '../core/errors';
-import { JackettClient } from '../jacket-client/jackett-client';
 import { JackettMapper } from '../mappers/jackett.mapper';
 import fs from 'fs';
+import { JackettClient } from '../clients/jacket-client/jackett-client';
+import { TransmissionDaemonClient } from '../clients/transmission-daemon-client/transmission-daemon-client';
 
 
 export class TorrentBrowserController {
   constructor(
     private jackettClientService: JackettClient,
-    private transmissionDaemonService: TransmissionDaemonService,
+    private tdClient: TransmissionDaemonClient,
     private env: Environment,
   ) { }
 
@@ -64,7 +64,7 @@ export class TorrentBrowserController {
     const torrentPath = '/tmp/' + Math.random().toString(36).substring(7)+'.torrent';
     const downloadResult = await this.jackettClientService.download(params.link).catch((err: any) => new HttpTorrentSearchError(err));
     await fs.promises.writeFile(torrentPath, downloadResult.data);
-    const uploadResult = await this.transmissionDaemonService.addTorrentFile(torrentPath, params.destination.path).catch(err => new HttpTransmissionError(err));
+    const uploadResult = await this.tdClient.addTorrentFile(torrentPath, params.destination.path).catch(err => new HttpTransmissionError(err));
     return response.json(uploadResult);
   }
 }
