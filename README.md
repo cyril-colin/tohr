@@ -150,7 +150,7 @@ rm -rf transmission-data/ jackett/
 npm run build # Check if build works
 vi package.json # Update manually version
 VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]') &&\
- git commit -am ${VERSION} && \
+ git add . && git commit -am ${VERSION} && \
  git tag -a ${VERSION} -m ${VERSION} 
 git push --tags && git push
 ```
