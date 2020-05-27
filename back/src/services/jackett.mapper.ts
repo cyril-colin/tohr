@@ -31,7 +31,6 @@ export class JackettMapper {
   static toFrontResult(jackettTorrent: JTorrent): BrowserTorrent {
 
     const link = querystring.parse(jackettTorrent.Link.split('?')[1]);
-    console.log(link);
     const t : BrowserTorrent = {
       title: jackettTorrent.Title,
       time: null,
@@ -42,8 +41,8 @@ export class JackettMapper {
       id: null,
       provider: jackettTorrent.Tracker,
       link: {
-        path: link.path,
-        file: link.file
+        path: link.path as string,
+        file: link.file as string
       },
       computedData: {
         title: this.computeTitle(jackettTorrent.Title),
