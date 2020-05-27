@@ -1,6 +1,6 @@
-import { JTorrent } from './jacket-client.service';
 import { BrowserTorrent, BrowserTag } from '../core/torrent.model';
 import querystring from 'querystring';
+import { JTorrent } from '../jacket-client/models/jtorrent.model';
 
 const knownTags : BrowserTag[] = [
   { name: '1080p', color: '#f23d3d'},

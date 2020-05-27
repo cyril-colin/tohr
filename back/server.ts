@@ -11,10 +11,10 @@ import { MonitoringController } from './src/controllers/monitoring-controller';
 import { SystemInformationService } from './src/services/system-information.service';
 import { LoggerService } from './src/services/logger.service';
 import { TransmissionDaemonService } from './src/services/transmission-daemon.service';
-import { JacketClientService } from './src/services/jacket-client.service';
 import { TorrentBrowserController } from './src/controllers/torrent-browser-controller';
 import { CurrentUserService } from './src/services/current-user.service';
 import { handleErrors } from './src/core/errors';
+import { JackettClient } from './src/jacket-client/jackett-client';
 
 program.option('-c, --config <config>', 'The configuration file', 'config.production.json');
 program.parse(process.argv);
@@ -41,7 +41,7 @@ const tdService = new TransmissionDaemonService(cache, config);
 const systemInformationService = new SystemInformationService();
 const torrentController = new TorrentController(tdService, config);
 const monitoringController = new MonitoringController(config, systemInformationService);
-const jacketClientService = new JacketClientService(config.jackett.url, config.jackett.apiKey);
+const jacketClientService = new JackettClient(config.jackett.url, config.jackett.apiKey);
 const torrentBrowserController = new TorrentBrowserController(jacketClientService, tdService, config);
 const currentUserService = new CurrentUserService();
 

@@ -1,42 +1,9 @@
 import Axios from 'axios';
 import querystring from 'querystring';
+import { JSearch } from './models/jsearch.model';
+import { JTorrent } from './models/jtorrent.model';
 
-export interface JSearch {
-  query: string;
-  categories?: any[];
-  tracker?: string;
-}
-
-export interface JTorrent {
-  FirstSeen: string;
-  Tracker: string;
-  TrackerId: string;
-  CategoryDesc: string;
-  BlackholeLink: string;
-  Title: string;
-  Guid: string;
-  Link: string;
-  Comments: string;
-  PublishDate: string;
-  Category: any[];
-  Size: number;
-  Grabs: any;
-  Description: string;
-  MinimumRatio: number;
-  MinimumSeedTime: number;
-  DownloadVolumeFactor: number;
-  UploadVolumeFactor: number;
-  Gain: number;
-  Seeders: number;
-}
-
-export enum JCategory {
-  MOVIES = 2000,
-  AUDIO = 3000,
-  SERIES = 5000,
-}
-
-export class JacketClientService {
+export class JackettClient {
   constructor(private url: string, private apiKey: string) {
 
   }

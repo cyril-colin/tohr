@@ -3,14 +3,14 @@ import { TransmissionDaemonService } from '../services/transmission-daemon.servi
 import { Environment } from '../environment';
 import { BrowserTorrent } from '../core/torrent.model';
 import { HttpBadRequest, HttpTorrentSearchError, HttpTransmissionError } from '../core/errors';
-import { JacketClientService } from '../services/jacket-client.service';
-import { JackettMapper } from '../services/jackett.mapper';
+import { JackettClient } from '../jacket-client/jackett-client';
+import { JackettMapper } from '../mappers/jackett.mapper';
 import fs from 'fs';
 
 
 export class TorrentBrowserController {
   constructor(
-    private jackettClientService: JacketClientService,
+    private jackettClientService: JackettClient,
     private transmissionDaemonService: TransmissionDaemonService,
     private env: Environment,
   ) { }
