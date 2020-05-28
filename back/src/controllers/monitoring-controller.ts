@@ -56,7 +56,8 @@ export class MonitoringController {
     });
 
     if (errors.length > 0) {
-      return next(new HttpInternalError('getting-process-info-failed', errors));
+      console.error(errors);
+      // return next(new HttpInternalError('getting-process-info-failed', errors));
     }
 
     return response.json(this.env.monitoring.destinations);
