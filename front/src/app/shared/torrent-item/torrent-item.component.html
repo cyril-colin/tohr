@@ -1,6 +1,6 @@
 <div class="card torrent-item">
   <div class="panel data">
-    <i class="material-icons destination">{{ torrent.destination.icon}}</i>
+    <i *ngIf="torrent.destination" class="material-icons destination">{{ torrent.destination.icon}}</i>
   </div>
 
   <div class="panel info">
