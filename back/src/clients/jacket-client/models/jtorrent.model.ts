@@ -19,4 +19,5 @@ export interface JTorrent {
   UploadVolumeFactor: number;
   Gain: number;
   Seeders: number;
+  Peers: number;
 }

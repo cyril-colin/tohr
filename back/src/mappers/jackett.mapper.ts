@@ -37,9 +37,9 @@ export class JackettMapper {
       title: jackettTorrent.Title,
       time: null,
       seeds: jackettTorrent.Seeders,
-      peers: null,
+      peers: jackettTorrent.Peers,
       size: JSON.stringify(jackettTorrent.Size),
-      desc: null,
+      desc: jackettTorrent.Guid,
       id: null,
       provider: jackettTorrent.Tracker,
       link: {

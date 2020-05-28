@@ -14,7 +14,7 @@
       </div>
 
       <div class="stats">
-        <span class="size">{{torrent.size}}</span>
+        <span class="size">{{torrent.size | filesize}}</span>
         <div class="more"><span>{{ 'torrentBrowserItem.more' | translate }}</span></div>
         <span [class.seeds-no]="torrent.seeds === 0" [class.seeds]="torrent.seeds > 0">{{ torrent.seeds }} seeds</span>
       </div>
