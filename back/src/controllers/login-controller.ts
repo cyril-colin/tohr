@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as jwt from 'jsonwebtoken';
 import { Environment } from '../environment.js';
 import { HttpUnauthorizedError } from '../core/errors';
+import { Token } from '../core/public-models/token.js';
 
 export class LoginController {
   constructor(
@@ -14,7 +15,7 @@ export class LoginController {
     if (!user) {
       return next(new HttpUnauthorizedError('invalid-credentials'));
     }
-    const accessToken = jwt.sign({ username: req.body.login }, this.env.jwtSecret);
-    return res.json({ accessToken });
+    const accessToken: Token = {accessToken: jwt.sign({ username: req.body.login }, this.env.jwtSecret)};
+    return res.json(accessToken);
   }
 }

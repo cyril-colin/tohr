@@ -1,47 +1,53 @@
 import * as express from 'express';
-import { TorrentBrowserService, BrowserSearch } from '../services/torrent-browser.service';
-import { TransmissionDaemonService } from '../services/transmission-daemon.service';
 import { Environment } from '../environment';
-import { BrowserTorrent } from '../core/torrent.model';
 import { HttpBadRequest, HttpTorrentSearchError, HttpTransmissionError } from '../core/errors';
+import { JackettMapper } from '../mappers/jackett.mapper';
+import fs from 'fs';
+import { JackettClient } from '../clients/jacket-client/jackett-client';
+import { TransmissionDaemonClient } from '../clients/transmission-daemon-client/transmission-daemon-client';
+import { TorrentBrowser } from '../core/public-models/torrent-browser';
 
 
 export class TorrentBrowserController {
   constructor(
-    private ts: TorrentBrowserService,
-    private transmissionDaemonService: TransmissionDaemonService,
+    private jackettClientService: JackettClient,
+    private tdClient: TransmissionDaemonClient,
     private env: Environment,
   ) { }
 
+  /**
+   * Ask Jackett to return a list of torrent matching
+   * given parameters.
+   */
   async search(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
-    const params: BrowserSearch = request.query as unknown as BrowserSearch;
+    const params: any = request.query;
     if (!params.search || typeof(params.search) !== 'string' || params.search.length > 50) {
       return next(new HttpBadRequest('invalid-search'));
     }
 
-    if (!params.category || typeof(params.category) !== 'string' && (params.category as string).length > 50) {
+    const existingCategory = this.env.monitoring.destinations.find(d => d.category === params.category);
+    if (params.category && !existingCategory) {
       return next(new HttpBadRequest('invalid-category'));
     }
 
     if (params.limit && isNaN(params.limit)) {
       return next(new HttpBadRequest('invalid-limit'));
     }
-
-    const torrents = await this.ts.search(params).catch(err => {
-      const error = new HttpTorrentSearchError(err);
-      const scraperErrorsType = ['CloudflareError', 'ParserError', 'CaptchaError' ];
-      if (scraperErrorsType.includes(err.constructor.name)) {
-       error.businessCode = 'cloudflare-error'
-      }
-
-      return next(error);
-    });
+    const torrents = await this.jackettClientService.search({query: params.search, categories: [params.category]})
+    .then(res => res.map(t => JackettMapper.toFrontResult(t)))
 
     return response.send(torrents);
   }
 
+  /**
+   * This method will ask jackett to return the torrent file into a
+   * tmp directory.
+   *
+   * Then, we add it to transmission daemon in order to start downloading
+   * data.
+   */
   async add(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
-    const params: BrowserTorrent = request.body;
+    const params: TorrentBrowser = request.body;
     if (!params) {
       return next(new HttpBadRequest('invalid-given-torrent'));
     }
@@ -51,13 +57,14 @@ export class TorrentBrowserController {
       return next(new HttpBadRequest('invalid-destination'));
     }
 
-    if (!params.link || 10 > params.link.length || params.link.length > 150 ) {
+    if (!params.link || !params.link.file || !params.link.path ) {
       return next(new HttpBadRequest('invalid-download-link'));
     }
 
     const torrentPath = '/tmp/' + Math.random().toString(36).substring(7)+'.torrent';
-    await this.ts.downloadTorrent(params, torrentPath).catch((err: any) => new HttpTorrentSearchError(err));
-    const uploadResult = await this.transmissionDaemonService.addTorrentFile(torrentPath, params.destination.path).catch(err => new HttpTransmissionError(err));
+    const downloadResult = await this.jackettClientService.download(params.link).catch((err: any) => new HttpTorrentSearchError(err));
+    await fs.promises.writeFile(torrentPath, downloadResult.data);
+    const uploadResult = await this.tdClient.addTorrentFile(torrentPath, params.destination.path).catch(err => new HttpTransmissionError(err));
     return response.json(uploadResult);
   }
 }

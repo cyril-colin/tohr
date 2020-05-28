@@ -12,7 +12,7 @@ advices, fork this project or post issues.
 
 
 ## Features
-- Search and download torrent from a configured provider
+- Search and download torrent from a configured provider in a linked [Jackett](https://github.com/Jackett/Jackett) instance
 - Add a torrent file manually
 - Download data in specific destination paths (usefull to send downloads into a [Plex](https://www.plex.tv/) category...)
 - Manage [Transmission](https://hub.docker.com/r/linuxserver/transmission/) torrents : list, details, deletion
@@ -32,7 +32,11 @@ Then choose your version, available on the [Tohr Docker Hub](https://hub.docker.
 ```bash
 mkdir tohr && cd tohr
 # Prepare directories that will contains downloads and configuration
-mkdir -p transmission-data/config transmission-data/data/films transmission-data/data/musics transmission-data/data/series transmission-data/data/other
+mkdir -p transmission-data/config \
+  transmission-data/data/films \
+  transmission-data/data/musics \
+  transmission-data/data/series \
+  transmission-data/data/other
 
 VERSION="1.0.3-SNAPSHOT-6"
 SOURCE="https://github.com/cyril-colin/tohr/tree/${VERSION}"
@@ -80,11 +84,18 @@ Usual data to edit are :
   - ``rpc-password`` : The user password for transmission. Should be the same as transmissionDaemonPassword in `config.production.json`
 > Note : this file will be edited at the transmission start up in order to secure the password. Please see the [Transmission documentation](https://hub.docker.com/r/linuxserver/transmission/).
 
+### Get and configure Jackett configuration
+```bash
+curl -o jackett/config/ServerConfig.json ${SOURCE}/back/config/jackett.sample.json
+vi transmission-data/config/settings.json
+```
 
 ### Finally, run Tohr !
 ```bash
 docker-compose up -d
 ```
+Now, go to http://localhost:9117 to access and configure Jackett in order to enable an indexer.
+
 > UI will be available at the exposed docker-compose.yml port. By default : http://localhost:4201
 
 
@@ -107,18 +118,28 @@ Install [Node](https://nodejs.org/en/download/) : all the project is based on Ja
 git clone git@github.com:cyril-colin/tohr.git
 cd tohr
 npm install
+
+
 # Transmission configuration
-mkdir -p transmission-data/config transmission-data/data/films transmission-data/data/musics transmission-data/data/series transmission-data/data/other
+mkdir -p transmission-data/config \
+  transmission-data/data/films \
+  transmission-data/data/musics \
+  transmission-data/data/series \
+  transmission-data/data/other
 cp back/config/transmission-settings.json transmission-data/config/settings.json
 
-# Tohr configuration
-cp back/config/config.sample.json back/config/config.dev.json
-nano back/config/config.dev.json # Set users and transmission login settings.
+# Configure jackett
+docker-compose up -d jackett # http://localhost:9117 to access and configure Jackett in order to enable an indexer.
+docker-compose down
 
 # Run
+cp back/config/config.sample.json back/config/config.dev.json # Edit with the jackett ApiKey
 npm start # start back and front
 docker-compose logs -f tohr-dev # to see the backend logs
-  
+
+
+npm run stop
+rm -rf transmission-data/ jackett/
 ```
 
 
@@ -126,9 +147,10 @@ docker-compose logs -f tohr-dev # to see the backend logs
 
 #### Build the production
 ```bash
+npm run build # Check if build works
 vi package.json # Update manually version
 VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]') &&\
- git commit -am ${VERSION} && \
+ git add . && git commit -am ${VERSION} && \
  git tag -a ${VERSION} -m ${VERSION} 
 git push --tags && git push
 ```
@@ -136,9 +158,9 @@ git push --tags && git push
 
 ## External links
 
-This application works thanks to the transmission-daemon RPC api and the lib torrent-search-api :
+This application works thanks to the transmission-daemon RPC api and jackett :
 - [Transmission api spécification](https://github.com/transmission/transmission/blob/master/extras/rpc-spec.txt)
-- [torrent-search-api](https://github.com/JimmyLaurent/torrent-search-api)
+- [Jackett](https://github.com/Jackett/Jackett)
 
 
 
