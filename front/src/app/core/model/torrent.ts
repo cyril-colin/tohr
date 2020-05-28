@@ -32,7 +32,7 @@ export interface BrowserTorrent {
   time: Date;
   seeds: number;
   peers: number;
-  size: string;
+  size: number;
   desc: string;
   id: string;
   provider: string;
