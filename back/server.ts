@@ -2,7 +2,6 @@ import express from 'express';
 import * as path from 'path';
 import program from 'commander';
 import jwtExpress from 'express-jwt';
-import NodeCache from 'node-cache';
 import { createLogger, transports, format } from 'winston';
 import { TorrentController } from './src/controllers/torrent-controller';
 import { LoginController } from './src/controllers/login-controller';
@@ -10,12 +9,11 @@ import { Environment } from './src/environment';
 import { MonitoringController } from './src/controllers/monitoring-controller';
 import { SystemInformationService } from './src/services/system-information.service';
 import { LoggerService } from './src/services/logger.service';
-import { TransmissionDaemonService } from './src/services/transmission-daemon.service';
-import { TorrentBrowserService } from './src/services/torrent-browser.service';
 import { TorrentBrowserController } from './src/controllers/torrent-browser-controller';
-import TS from 'torrent-search-api';
 import { CurrentUserService } from './src/services/current-user.service';
 import { handleErrors } from './src/core/errors';
+import { JackettClient } from './src/clients/jacket-client/jackett-client';
+import { TransmissionDaemonClient } from './src/clients/transmission-daemon-client/transmission-daemon-client';
 
 program.option('-c, --config <config>', 'The configuration file', 'config.production.json');
 program.parse(process.argv);
@@ -37,13 +35,16 @@ const logger = createLogger({
 });
 
 const loggerService = new LoggerService(logger);
-const cache = new NodeCache();
-const tdService = new TransmissionDaemonService(cache, config);
+const tdClient = new TransmissionDaemonClient({
+  url: config.transmissionDaemonUrl,
+  login: config.transmissionDaemonLogin,
+  password: config.transmissionDaemonPassword
+});
 const systemInformationService = new SystemInformationService();
-const torrentBrowserService = new TorrentBrowserService(TS, config);
-const torrentController = new TorrentController(tdService, config);
-const monitoringController = new MonitoringController(config, systemInformationService);
-const torrentBrowserController = new TorrentBrowserController(torrentBrowserService, tdService, config);
+const torrentController = new TorrentController(tdClient, config);
+const monitoringController = new MonitoringController(config, systemInformationService, loggerService);
+const jacketClientService = new JackettClient(config.jackett.url, config.jackett.apiKey);
+const torrentBrowserController = new TorrentBrowserController(jacketClientService, tdClient, config);
 const currentUserService = new CurrentUserService();
 
 const app = express();
@@ -93,7 +94,7 @@ app.use(handleErrors);
 app.listen(config.serverPort, config.bind, async () => {
   loggerService.info(`Tohr server now listening on ${config.bind}:${config.serverPort} with config ${program.config}`);
   const checkPrefix = 'startup-check | ';
-  tdService.get()
+  tdClient.get()
   .then(() => loggerService.info(checkPrefix + 'Torrent client is alive.'))
   .catch(() => {
     loggerService.warn(checkPrefix + 'Torrent client has error.');

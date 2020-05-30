@@ -1,14 +1,16 @@
 import * as express from 'express';
 import { SystemInformationService } from '../services/system-information.service';
-import { CurrentProcessInfo } from '../core/monitoring/current-process-info.model';
 import { Environment } from '../environment';
 import { HttpInternalError } from '../core/errors';
-import { DiskStatus } from '../core/monitoring/disk-status.model';
+import {CurrentProcessInfo} from '../core/public-models/current-process-info';
+import {DiskStatus} from '../core/public-models/disk-status';
+import { LoggerService } from '../services/logger.service';
 
 export class MonitoringController {
   constructor(
     private env: Environment,
     private systemInformationService: SystemInformationService,
+    private loggerService: LoggerService,
   ) { }
 
   async getProcessInformations(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
@@ -39,12 +41,12 @@ export class MonitoringController {
   async getTorrentDestinations(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
     const torrentDestinations = this.env.monitoring.destinations;
     const promises: Promise<string>[] = [];
-    const errors: any[] = [];
+
     torrentDestinations.forEach(td => {
       const p = this.systemInformationService.getDestinationRight(td).then(rights => {
         return td.rights = rights;
       }).catch(err => {
-        errors.push({path: td.rights, err});
+        this.loggerService.warn('Probleme with destination ' + td.path, err);
         return td.rights = err;
       });
       promises.push(p);
@@ -54,10 +56,6 @@ export class MonitoringController {
     await Promise.all(promises).catch(err => {
       return next(new HttpInternalError('getting-destinations-failed', err));
     });
-
-    if (errors.length > 0) {
-      return next(new HttpInternalError('getting-process-info-failed', errors));
-    }
 
     return response.json(this.env.monitoring.destinations);
   }

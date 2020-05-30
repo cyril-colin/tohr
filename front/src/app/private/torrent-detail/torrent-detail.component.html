@@ -14,7 +14,7 @@
       <div class="infos">
         <div class="title">{{ 'torrentDetail.main' | translate}}</div>
         <div>{{ 'torrentDetail.completeName' | translate }} : <b>{{ torrent.name }}</b> </div>
-        <div>{{ 'torrentDetail.destination' | translate }} : <b>{{ torrent.destination.path}}</b> </div>
+        <div>{{ 'torrentDetail.destination' | translate }} : <b>{{ torrent.destination? torrent.destination.path : '-'}}</b> </div>
         <div>{{ 'torrentDetail.addedDate' | translate}} {{ torrent.addedDate * 1000 | date:'yyyy/MM/dd HH:mm:ss'}}</div>
       </div>
   </div>

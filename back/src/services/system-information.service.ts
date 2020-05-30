@@ -1,9 +1,9 @@
 import * as cp from 'child_process';
 import * as fs from 'fs';
 import * as os from 'os';
-import { DiskStatus } from '../core/monitoring/disk-status.model';
-import { TorrentDestination } from '../core/monitoring/torrent-destination.model';
 import { Environment } from '../environment';
+import { DiskStatus } from '../core/public-models/disk-status';
+import { TorrentDestination } from '../core/public-models/torrent-destination';
 
 export class SystemInformationService {
   constructor() { }
@@ -53,13 +53,11 @@ export class SystemInformationService {
   }
 
   public async isDestinationExists(dest: TorrentDestination): Promise<boolean> {
-    await fs.promises.access(dest.path).catch(error => Promise.reject(false));
-    return Promise.resolve(true);
+    return fs.promises.access(dest.path).then(() => true);
   }
 
   public async isLogFileExists(config: Environment): Promise<boolean> {
-    await fs.promises.access(config.logFile).catch(error => Promise.reject(false));
-    return Promise.resolve(true);
+    return fs.promises.access(config.logFile).then(() => true);
   }
 
   private exec(command: string): Promise<string> {
