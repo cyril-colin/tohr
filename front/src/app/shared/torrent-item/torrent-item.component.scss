@@ -27,8 +27,13 @@
       justify-content: flex-end;
 
       em {
-        font-size: 30px;
+        font-size: 25px;
       }
+
+      .btn-action:not(:last-child) {
+        margin-right: 16px;
+      }
+
     }
   }
 
