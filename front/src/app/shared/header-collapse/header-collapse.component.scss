@@ -10,9 +10,16 @@
   border-bottom-right-radius: 100px;
   margin-bottom: 50px;
 
-  .bar {
+  .title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    word-break: break-all;
+    width: 90%;
     min-height: 30px;
-    font-size: 23px;
+    font-size: $fsMainTitle;
     padding-top: 10px;
   }
 

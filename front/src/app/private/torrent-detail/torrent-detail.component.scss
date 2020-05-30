@@ -4,14 +4,40 @@
   .card {
     margin-bottom: 10px;
     .title {
-      font-size: 25px;
-      margin-bottom:5px;
+      text-align: center;
+      font-size: $fsSectionTitle;
+      margin-bottom:20px;
+      opacity: 0.8;
+
     }
+  }
+
+  .data {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px;
+
+    span:nth-child(1) {
+      font-size: $fsLabel;
+      opacity: 0.7;
+      width: 153px;
+    }
+
+    span:nth-child(2) {
+      text-align: right;
+    }
+  }
+
+  .file-data {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
   .filename, .announce, .scrape {
     color: $textSecondary;
-    font-size: 12px;
+    font-size: $fsLabel;
   }
 
   .tracker:not(:last-child) {
@@ -25,14 +51,20 @@
   }
 
   .actions {
-    margin-top: 20px;
+    margin-top: 13px;
     width: 200px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    border-top: $textSecondary 1px solid;
+    padding-top: 5px;
+    justify-content: center;
     i {
       font-size: 30px;
         color: $drawPrimary;
+    }
+
+    i:not(:last-child) {
+      margin-right: 20px;
     }
 
   }
