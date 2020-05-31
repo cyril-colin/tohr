@@ -1,6 +1,10 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
 @import "~@angular/cdk/overlay-prebuilt.css";
 @import "./colors.scss";
+@import "./button.scss";
+@import "./loader.scss";
+@import "./form.scss";
+
 h2 {
   margin: 0;
 }
@@ -9,78 +13,6 @@ body {
   background-color: $bgPrimary;
   font-family: roboto;
   color: $textPrimary;
-}
-
-.input-text {
-  width: 100%;
-  background-color: $drawBgSecondary;
-  height: 38px;
-  font-size: 19px;
-  border: solid 2px $drawPrimary;
-  color: $drawPrimary;
-  padding-top: 6px;
-  padding-bottom: 6px;
-}
-
-.select {
-  width: 100%;
-  background-color: $drawBgSecondary;
-  height: 38px;
-  font-size: 19px;
-  border: solid 2px $drawPrimary;
-  color: $drawPrimary;
-  padding-top: 6px;
-  padding-bottom: 6px;
-}
-
-.btn-secondary {
-  width: 100%;
-  height: 100%;
-  border-radius: 3px;
-  background-color: $drawBgSecondary;
-  border: solid 2px $drawPrimary;
-  font-size: 1.2em;
-  color: $drawPrimary;
-  cursor: pointer;
-}
-
-.btn-secondary:hover {
-  background-color: $drawPrimary;
-  border: solid 2px $drawPrimary;
-  color: $textInverted;
-}
-
-.btn-primary {
-  width: 100%;
-  height: 100%;
-  border-radius: 3px;
-  background-color: $drawPrimary;
-  border: solid 2px $drawPrimary;
-  font-size: 1.2em;
-  color: $textInverted;
-  cursor: pointer;
-}
-
-.btn-primary:hover {
-  background-color: $drawBgSecondary;
-  color: $drawPrimary;
-}
-
-.btn-round {
-  border-radius: 50%;
-}
-
-.btn-action {
-  cursor: pointer;
-  color: $drawPrimary;
-}
-
-.btn-action:hover {
-  opacity: 0.5;
-}
-
-button:disabled {
-  opacity: 0.2;
 }
 
 .link {
@@ -116,28 +48,4 @@ button:disabled {
   }
 }
 
-// Loader from https://loading.io/css/
-.lds-dual-ring {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-}
-.lds-dual-ring:after {
-  content: " ";
-  display: block;
-  width: 70%;
-  height: 70%;
-  margin: 8px;
-  border-radius: 50%;
-  border: 6px solid $drawPrimary;
-  border-color: $drawPrimary transparent $drawPrimary transparent;
-  animation: lds-dual-ring 1.2s linear infinite;
-}
-@keyframes lds-dual-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+
