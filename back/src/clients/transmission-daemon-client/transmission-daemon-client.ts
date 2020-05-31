@@ -4,6 +4,7 @@ import { TDConfig } from './models/tdconfig.model';
 import { TDRequest } from './models/tdrequest.model';
 import {TD_STATUS} from './models/tdstatus.model';
 import { TDTorrent } from './models/tdtorrent';
+import { ɵConsole } from '@angular/core';
 
 
 /**
@@ -72,7 +73,7 @@ export class TransmissionDaemonClient {
    * given status number.
    */
   public getStatus(status: number): string {
-    return TD_STATUS.find(s => s.value === status).text;
+    return TD_STATUS.find(s => s.value === status)?.text;
   }
 
   /**
@@ -194,11 +195,12 @@ export class TransmissionDaemonClient {
       }).catch((error: any) => {
         if (error.response && error.response.status === 409) {
           if (attempt >= TransmissionDaemonClient.MAX_SESSION_ATTEMPT) {
-            throw error;
+            throw new Error('TOO-MANY-ATTEMPT-ERROR');
           }
 
           this.catchTransmissionSessionError(error.response);
-          return this.sendRequest(params, attempt++);
+          attempt++;
+          return this.sendRequest(params, attempt);
         } else {
           throw error;
         }
