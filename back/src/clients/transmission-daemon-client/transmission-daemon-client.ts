@@ -3,6 +3,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { TDConfig } from './models/tdconfig.model';
 import { TDRequest } from './models/tdrequest.model';
 import {TD_STATUS} from './models/tdstatus.model';
+import { TDTorrent } from './models/tdtorrent';
 
 
 /**
@@ -11,6 +12,7 @@ import {TD_STATUS} from './models/tdstatus.model';
  * @see https://github.com/transmission/transmission/blob/master/extras/rpc-spec.txt
  */
 export class TransmissionDaemonClient {
+  static DETAIL_FIELDS = ['id', 'name', 'totalSize', 'downloadDir', 'percentDone', 'rateDownload', 'rateUpload', 'error', 'errorString', 'status', 'trackers', 'addedDate', 'files'];
   /**
    * The key in our cache to store the transmission-daemon cookie.
    */
@@ -51,7 +53,8 @@ export class TransmissionDaemonClient {
     * @param fields The list of fields that have to be returned by transmission daemon.
     */
   public get(ids?: number[], fields: string[] =
-    ['id', 'name', 'totalSize', 'downloadDir', 'percentDone', 'rateDownload', 'rateUpload', 'error', 'addedDate', 'errorString', 'status']): Promise<any> {
+    ['id', 'name', 'totalSize', 'downloadDir', 'percentDone', 'rateDownload', 'rateUpload', 'error', 'addedDate', 'errorString', 'status'])
+    : Promise<TDTorrent[]> {
     const requestBody: TDRequest = {
       method: 'torrent-get',
       arguments: { fields }
@@ -61,7 +64,7 @@ export class TransmissionDaemonClient {
       requestBody.arguments.ids = ids;
     }
 
-    return this.sendRequest(requestBody);
+    return this.sendRequest(requestBody).then(data => data.arguments.torrents);
   }
 
   /**

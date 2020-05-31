@@ -3,24 +3,21 @@ import * as fs from 'fs';
 import { Environment } from '../environment';
 import { HttpBadRequest, HttpTransmissionError } from '../core/errors';
 import { TransmissionDaemonClient } from '../clients/transmission-daemon-client/transmission-daemon-client';
-import { TorrentDestination } from '../core/public-models/torrent-destination';
-import { Torrent } from '../core/public-models/torrent';
+import { TransmissionDaemonMapper } from '../mappers/transmission-daemon.mapper';
 
 export class TorrentController {
   constructor(
     private tdClient: TransmissionDaemonClient,
+    private tdMapper: TransmissionDaemonMapper,
     private env: Environment,
   ) { }
 
   async getAll(request: any, response: express.Response, next: express.NextFunction): Promise<any> {
-    const data = await this.tdClient.get().catch(err => next(new HttpTransmissionError(err)));
-    const destinationsList: TorrentDestination[] = this.env.monitoring.destinations;
-    data.arguments.torrents.forEach((t: Torrent) => {
-      t.destination = destinationsList.find(d => d.path === t.downloadDir);
-      t.statusStr = this.tdClient.getStatus(t.status).trim().toLocaleUpperCase();
-    });
+    const torrents = await this.tdClient.get()
+      .then(tor => tor.map(t => this.tdMapper.toFrontTorrent(t)))
+      .catch(err => next(new HttpTransmissionError(err)));
 
-    return response.json(data);
+    return response.json(torrents);
   }
 
   async get(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
@@ -28,15 +25,11 @@ export class TorrentController {
       return next(new HttpBadRequest('invalid-id'));
     }
 
-    const fields = ['id', 'name', 'totalSize', 'downloadDir', 'percentDone', 'rateDownload', 'rateUpload', 'error', 'errorString', 'status', 'trackers', 'addedDate', 'files'];
-    const data = await this.tdClient.get([+request.params.id], fields).catch(err => next(new HttpTransmissionError(err)));
-    const destinationsList: TorrentDestination[] = this.env.monitoring.destinations;
-    data.arguments.torrents.forEach((t: Torrent) => {
-      t.destination = destinationsList.find(d => d.path === t.downloadDir);
-      t.statusStr = this.tdClient.getStatus(t.status).trim().toLocaleUpperCase();
-    });
+    const data = await this.tdClient.get([+request.params.id], TransmissionDaemonClient.DETAIL_FIELDS)
+      .then(tor => tor.map(t => this.tdMapper.toFrontTorrent(t)))
+      .catch(err => next(new HttpTransmissionError(err)));
 
-    return response.json(data);;
+    return response.json(data);
   }
 
   async add(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
@@ -118,11 +111,11 @@ export class TorrentController {
     }
 
     const filename = decodeURI(query.filename).replace(/\"/g, '');
-    const data = await this.tdClient.get([+request.params.id], ['name', 'files', 'downloadDir'])
+    const torrents = await this.tdClient.get([+request.params.id], ['name', 'files', 'downloadDir'])
     .catch(err => next(new HttpTransmissionError(err)));
 
-    const file = data.arguments.torrents[0].files.find((f: any) => f.name.trim() === filename.trim());
-    const path = data.arguments.torrents[0].downloadDir + '/'+file.name;
+    const file = torrents[0].files.find((f: any) => f.name.trim() === filename.trim());
+    const path = torrents[0].downloadDir + '/'+file.name;
     const stat = fs.statSync(path);
     const rs = fs.createReadStream(path);
     response.writeHead(200, {

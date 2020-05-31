@@ -14,6 +14,7 @@ import { CurrentUserService } from './src/services/current-user.service';
 import { handleErrors } from './src/core/errors';
 import { JackettClient } from './src/clients/jacket-client/jackett-client';
 import { TransmissionDaemonClient } from './src/clients/transmission-daemon-client/transmission-daemon-client';
+import { TransmissionDaemonMapper } from './src/mappers/transmission-daemon.mapper';
 
 program.option('-c, --config <config>', 'The configuration file', 'config.production.json');
 program.parse(process.argv);
@@ -41,7 +42,8 @@ const tdClient = new TransmissionDaemonClient({
   password: config.transmissionDaemonPassword
 });
 const systemInformationService = new SystemInformationService();
-const torrentController = new TorrentController(tdClient, config);
+const tdMapper = new TransmissionDaemonMapper(config.monitoring.destinations, tdClient);
+const torrentController = new TorrentController(tdClient, tdMapper, config);
 const monitoringController = new MonitoringController(config, systemInformationService, loggerService);
 const jacketClientService = new JackettClient(config.jackett.url, config.jackett.apiKey);
 const torrentBrowserController = new TorrentBrowserController(jacketClientService, tdClient, config);
