@@ -27,7 +27,62 @@ describe('TransmissionDaemonClient', () => {
     expect(result).toEqual([]);
   });
 
+  test('get() with ids should return an empty array.', async() => {
+    mockedAxios.post.mockResolvedValue({data: getResponseEmpty});
+    const result = await client.get([1, 2]);
+    expect(mockedAxios.post).toHaveBeenCalled();
+    expect(result).toEqual([]);
+  });
 
+  test('get() with ids and fields should return an empty array.', async() => {
+    mockedAxios.post.mockResolvedValue({data: getResponseEmpty});
+    const result = await client.get([1, 2], ['id', 'downloadDir']);
+    expect(mockedAxios.post).toHaveBeenCalled();
+    expect(result).toEqual([]);
+  });
+
+  test('add() should return a valid response', async() => {
+    mockedAxios.post.mockResolvedValue({data: null});
+    const result = await client.add('/download/dir', 'abase64string');
+    expect(mockedAxios.post).toHaveBeenCalled();
+    expect(result).toEqual(null);
+  });
+
+
+  test('addTorrentFile() should return a valid response', async() => {
+    mockedAxios.post.mockResolvedValue({data: null});
+    const result = await client.addTorrentFile('file name', 'torrent-dir');
+    expect(mockedAxios.post).toHaveBeenCalled();
+    expect(result).toEqual(null);
+  });
+
+  test('remove() should return a valid response', async() => {
+    mockedAxios.post.mockResolvedValue({data: null});
+    const result = await client.remove('anId', false);
+    expect(mockedAxios.post).toHaveBeenCalled();
+    expect(result).toEqual(null);
+  });
+
+  test('move() should return a valid response', async() => {
+    mockedAxios.post.mockResolvedValue({data: null});
+    const result = await client.move(1, '/new/path');
+    expect(mockedAxios.post).toHaveBeenCalled();
+    expect(result).toEqual(null);
+  });
+
+  test('start() should return a valid response', async() => {
+    mockedAxios.post.mockResolvedValue({data: null});
+    const result = await client.start(1);
+    expect(mockedAxios.post).toHaveBeenCalled();
+    expect(result).toEqual(null);
+  });
+
+  test('stop() should return a valid response', async() => {
+    mockedAxios.post.mockResolvedValue({data: null});
+    const result = await client.stop(1);
+    expect(mockedAxios.post).toHaveBeenCalled();
+    expect(result).toEqual(null);
+  });
 
   test('get() should retry once because of http 409 error from TDS', async() => {
     const headers: any = {};
@@ -69,6 +124,11 @@ describe('TransmissionDaemonClient', () => {
   test('getStatus() should return null.', async() => {
     const status = client.getStatus(-1);
     expect(status).toBeFalsy();
+  });
+
+  test('getStatus() should return null.', async() => {
+    const status = client.getStatus(1);
+    expect(status).toEqual('TR_STATUS_CHECK_WAIT');
   });
 });
 

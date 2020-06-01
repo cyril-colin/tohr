@@ -8,19 +8,20 @@
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": false,
-    "outDir": "./dist-back",
-    "baseUrl": "./back",
+    "outDir": "../dist-back",
+    "baseUrl": ".",
     "paths": {
-      "*": [
-        "node_modules/*",
-        "src/types/*"
-      ]
-    }
+      "@src/*": [
+        "src/*"
+      ],
+    },
+    "skipLibCheck": true
   },
   "include": [
-    "back/server.ts",
-    "back/src/**/*",
-    "back/package.json",
-    "back/config/config.sample.json",
+    "src/**/*"
+  ],
+  "exclude": [
+    "../node_modules",
+    "**/*.spec.ts"
   ]
 }

@@ -14,16 +14,15 @@ export interface TDTrackerStat {
   lastAnnounceTime: number
   lastAnnounceTimedOut: boolean;
   lastScrapeResult: string;
-   lastScrapeStartTime: number;
-   lastScrapeSucceeded: boolean;
-   lastScrapeTime: number;
-   lastScrapeTimedOut: number;
-   leecherCount: number;
-   nextAnnounceTime: number;
-   nextScrapeTime: number;
-   scrape: string;
-   scrapeState: number;
-   seederCount: number;
-   tier: number;
-}}
+  lastScrapeStartTime: number;
+  lastScrapeSucceeded: boolean;
+  lastScrapeTime: number;
+  lastScrapeTimedOut: number;
+  leecherCount: number;
+  nextAnnounceTime: number;
+  nextScrapeTime: number;
+  scrape: string;
+  scrapeState: number;
+  seederCount: number;
+  tier: number;
 }

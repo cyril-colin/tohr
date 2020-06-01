@@ -1,9 +1,10 @@
 import * as express from 'express';
 import * as fs from 'fs';
-import { Environment } from '../environment';
-import { HttpBadRequest, HttpTransmissionError } from '../core/errors';
-import { TransmissionDaemonClient } from '../clients/transmission-daemon-client/transmission-daemon-client';
-import { TransmissionDaemonMapper } from '../mappers/transmission-daemon.mapper';
+import { Environment } from '@src/environment';
+import { HttpBadRequest, HttpTransmissionError } from '@src/core/errors';
+import { TransmissionDaemonClient } from '@src/clients/transmission-daemon-client/transmission-daemon-client';
+import { TransmissionDaemonMapper } from '@src/mappers/transmission-daemon.mapper';
+import { TDTorrent } from '@src/clients/transmission-daemon-client/models/tdtorrent';
 
 export class TorrentController {
   constructor(
@@ -111,7 +112,7 @@ export class TorrentController {
     }
 
     const filename = decodeURI(query.filename).replace(/\"/g, '');
-    const torrents = await this.tdClient.get([+request.params.id], ['name', 'files', 'downloadDir'])
+    const torrents: TDTorrent | any = await this.tdClient.get([+request.params.id], ['name', 'files', 'downloadDir']).then((t: TDTorrent[]) => t[0])
     .catch(err => next(new HttpTransmissionError(err)));
 
     const file = torrents[0].files.find((f: any) => f.name.trim() === filename.trim());
