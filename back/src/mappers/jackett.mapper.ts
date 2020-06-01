@@ -68,7 +68,7 @@ export class JackettMapper {
       }
     });
 
-    return result.replace(/\./g, ' ');
+    return result.replace(/\./g, ' ').trim();
   }
 
   private static computeTags(title: string): BrowserTag[] {
