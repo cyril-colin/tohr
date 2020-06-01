@@ -10,7 +10,7 @@ RUN cp back/prod-package.json dist-back/package.json
 RUN (cd dist-back && npm install --only=production)
 
 # Run backend tests
-RUN cd /tohr/back && ../node_modules/.bin/jest --coverage && cd ..
+RUN ./node_modules/.bin/jest --coverage --config=back/jest.config.js
 
 # Build the frontend
 RUN /tohr/node_modules/@angular/cli/bin/ng build --prod

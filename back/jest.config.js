@@ -18,7 +18,7 @@ module.exports = {
   // collectCoverage: false,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  // collectCoverageFrom: undefined,
+  collectCoverageFrom: ["src/**/*.ts"],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: "coverage",
@@ -56,9 +56,7 @@ module.exports = {
 
   // A set of global variables that need to be available in all test environments
   globals: {
-    'ts-jest': {
-      tsConfig: 'tsconfig.json'
-    }
+
   },
 
   // The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
