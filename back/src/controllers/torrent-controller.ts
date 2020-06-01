@@ -13,7 +13,7 @@ export class TorrentController {
     private env: Environment,
   ) { }
 
-  async getAll(request: any, response: express.Response, next: express.NextFunction): Promise<any> {
+  async getAll(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
     const torrents = await this.tdClient.get()
       .then(tor => tor.map(t => this.tdMapper.toFrontTorrent(t)))
       .catch(err => next(new HttpTransmissionError(err)));
