@@ -242,6 +242,70 @@ describe('JackettClient', () => {
     } as any, responseMock, (err: any) => err);
     expect(result.businessCode).toEqual('unkown-transmission-error');
   });
+
+
+  test('stop() with invalid id', async () => {
+    controller = new TorrentController(null, null, null);
+    const result = await controller.stop({params: {id: 'qsdqsdqs'}} as any, responseMock, (err: any) => err);
+    expect(result.businessCode).toEqual('invalid-id');
+
+    const result2 = await controller.stop({params: {id: null}} as any, responseMock, (err: any) => err);
+    expect(result2.businessCode).toEqual('invalid-id');
+  });
+
+  test('stop()', async () => {
+    const MockTD = jest.fn().mockImplementation(() => ({
+      stop: (a: number) => Promise.resolve('success'),
+    }));
+    tdServiceMock = new MockTD();
+
+    controller = new TorrentController(tdServiceMock, null, null);
+    const result = await controller.stop({params: {id: '1'}} as any, responseMock, (err: any) => err);
+    expect(result).toEqual('success');
+  });
+
+  test('stop() error TDS', async () => {
+    const MockTD = jest.fn().mockImplementation(() => ({
+      stop: (a: number) => Promise.reject('error'),
+    }));
+    tdServiceMock = new MockTD();
+
+    controller = new TorrentController(tdServiceMock, null, null);
+    const result = await controller.stop({params: {id: '1'}} as any, responseMock, (err: any) => err);
+    expect(result.businessCode).toEqual('unkown-transmission-error');
+  });
+
+
+  test('start() with invalid id', async () => {
+    controller = new TorrentController(null, null, null);
+    const result = await controller.start({params: {id: 'qsdqsdqs'}} as any, responseMock, (err: any) => err);
+    expect(result.businessCode).toEqual('invalid-id');
+
+    const result2 = await controller.start({params: {id: null}} as any, responseMock, (err: any) => err);
+    expect(result2.businessCode).toEqual('invalid-id');
+  });
+
+  test('start()', async () => {
+    const MockTD = jest.fn().mockImplementation(() => ({
+      start: (a: number) => Promise.resolve('success'),
+    }));
+    tdServiceMock = new MockTD();
+
+    controller = new TorrentController(tdServiceMock, null, null);
+    const result = await controller.start({params: {id: '1'}} as any, responseMock, (err: any) => err);
+    expect(result).toEqual('success');
+  });
+
+  test('start() error TDS', async () => {
+    const MockTD = jest.fn().mockImplementation(() => ({
+      start: (a: number) => Promise.reject('error'),
+    }));
+    tdServiceMock = new MockTD();
+
+    controller = new TorrentController(tdServiceMock, null, null);
+    const result = await controller.start({params: {id: '1'}} as any, responseMock, (err: any) => err);
+    expect(result.businessCode).toEqual('unkown-transmission-error');
+  });
 });
 
 

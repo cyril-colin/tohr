@@ -81,7 +81,7 @@ export class TorrentController {
   }
 
   async stop(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
-    if (isNaN(request.params.id as any)) {
+    if (!request.params.id || isNaN(request.params.id as any)) {
       return next(new HttpBadRequest('invalid-id'));
     }
 
@@ -92,7 +92,7 @@ export class TorrentController {
   }
 
   async start(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
-    if (isNaN(request.params.id as any)) {
+    if (!request.params.id || isNaN(request.params.id as any)) {
       return next(new HttpBadRequest('invalid-id'));
     }
     const data = await this.tdClient.start(request.params.id as any)
