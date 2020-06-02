@@ -102,7 +102,7 @@ export class TorrentController {
   }
 
   async download(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any>  {
-    if (isNaN(request.params.id as any)) {
+    if (!request.params.id || isNaN(request.params.id as any)) {
       return next(new HttpBadRequest('invalid-id'));
     }
 

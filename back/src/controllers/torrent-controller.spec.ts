@@ -306,6 +306,33 @@ describe('JackettClient', () => {
     const result = await controller.start({params: {id: '1'}} as any, responseMock, (err: any) => err);
     expect(result.businessCode).toEqual('unkown-transmission-error');
   });
+
+
+  test('download() with invalid id', async () => {
+    controller = new TorrentController(null, null, null);
+    async function check(value: string) {
+      const result = await controller.download({params: {id: value}} as any, responseMock, (err: any) => err);
+      expect(result.businessCode).toEqual('invalid-id');
+    }
+
+    check('invalidid');
+    check(null);
+  });
+
+  test('download() with invalid filename', async () => {
+    controller = new TorrentController(null, null, null);
+    async function check(value: string) {
+      const result = await controller.download({
+        params: {id: '1'},
+        query: {filename: value}
+      } as any, responseMock, (err: any) => err);
+      expect(result.businessCode).toEqual('invalid-filename');
+    }
+
+    check(null);
+    check('../test.move');
+    check('');
+  });
 });
 
 
