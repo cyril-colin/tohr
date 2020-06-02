@@ -22,7 +22,7 @@ export class ProxyTorrentService {
   }
 
   getTorrent(id: number): Observable<Torrent> {
-    return this.http.get<Torrent[]>(this.endpoint + '/torrents/' + id).pipe(map(res => res[0]));
+    return this.http.get<Torrent>(this.endpoint + '/torrents/' + id);
   }
 
 

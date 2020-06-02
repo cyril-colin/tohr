@@ -27,7 +27,7 @@ export class TorrentController {
     }
 
     const data = await this.tdClient.get([+request.params.id], TransmissionDaemonClient.DETAIL_FIELDS)
-      .then(tor => tor.map(t => this.tdMapper.toFrontTorrent(t)))
+      .then(tor => tor.map(t => this.tdMapper.toFrontTorrent(t))[0])
       .catch(err => next(new HttpTransmissionError(err)));
 
     return response.json(data);
