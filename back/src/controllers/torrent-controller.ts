@@ -1,16 +1,16 @@
 import * as express from 'express';
 import * as fs from 'fs';
-import { Environment } from '@src/environment';
 import { HttpBadRequest, HttpTransmissionError } from '@src/core/errors';
 import { TransmissionDaemonClient } from '@src/clients/transmission-daemon-client/transmission-daemon-client';
 import { TransmissionDaemonMapper } from '@src/mappers/transmission-daemon.mapper';
 import { TDTorrent } from '@src/clients/transmission-daemon-client/models/tdtorrent';
+import { TorrentDestination } from '@src/core/public-models/torrent-destination';
 
 export class TorrentController {
   constructor(
     private tdClient: TransmissionDaemonClient,
     private tdMapper: TransmissionDaemonMapper,
-    private env: Environment,
+    private dest: TorrentDestination[],
   ) { }
 
   async getAll(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
@@ -39,7 +39,7 @@ export class TorrentController {
     }
 
     if (!request.body.metainfo) {
-      next(new HttpBadRequest('invalid-metainfo'));
+      return next(new HttpBadRequest('invalid-metainfo'));
     }
 
     const data = await this.tdClient.add(request.body.downloadDir, request.body.metainfo)
@@ -65,11 +65,11 @@ export class TorrentController {
 
 
   async move(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
-    if (isNaN(request.params.id as any)) {
+    if (!request.params.id || isNaN(request.params.id as any)) {
       return next(new HttpBadRequest('invalid-id'));
     }
 
-    const selectedDestination = this.env.monitoring.destinations.find(d => d.name === request.body.destinationName);
+    const selectedDestination = this.dest.find(d => d.name === request.body.destinationName);
     if (!selectedDestination) {
       return next(new HttpBadRequest('invalid-destination'));
     }

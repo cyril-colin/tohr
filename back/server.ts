@@ -43,7 +43,7 @@ const tdClient = new TransmissionDaemonClient({
 });
 const systemInformationService = new SystemInformationService();
 const tdMapper = new TransmissionDaemonMapper(config.monitoring.destinations, tdClient);
-const torrentController = new TorrentController(tdClient, tdMapper, config);
+const torrentController = new TorrentController(tdClient, tdMapper, config.monitoring.destinations);
 const monitoringController = new MonitoringController(config, systemInformationService, loggerService);
 const jacketClientService = new JackettClient(config.jackett.url, config.jackett.apiKey);
 const torrentBrowserController = new TorrentBrowserController(jacketClientService, tdClient, config);
