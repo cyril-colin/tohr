@@ -112,8 +112,8 @@ export class TorrentController {
     }
 
     const filename = decodeURI(query.filename).replace(/\"/g, '');
-    const torrents: TDTorrent | any = await this.tdClient.get([+request.params.id], ['name', 'files', 'downloadDir']).then((t: TDTorrent[]) => t[0])
-    .catch(err => next(new HttpTransmissionError(err)));
+    const torrents: TDTorrent | any = await this.tdClient.get([+request.params.id], ['name', 'files', 'downloadDir'])
+    .then(tor => tor).catch(err => next(new HttpTransmissionError(err)));
 
     const file = torrents[0].files.find((f: any) => f.name.trim() === filename.trim());
     const path = torrents[0].downloadDir + '/'+file.name;

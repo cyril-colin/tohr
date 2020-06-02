@@ -1,8 +1,13 @@
 
 import { TorrentController } from './torrent-controller';
+import * as fs from 'fs';
+jest.mock('fs');
+const mockedFs = fs as jest.Mocked<typeof fs>;
+
 
 const responseMock: any = {
   json: (data: any) => Promise.resolve(data),
+  writeHead: (status: number, data: any): any => {}
 }
 
 // get: (a: any, b:any[]): any[] => []
@@ -332,6 +337,36 @@ describe('JackettClient', () => {
     check(null);
     check('../test.move');
     check('');
+  });
+
+  test('download()', async () => {
+    const MockTD = jest.fn().mockImplementation(() => ({
+      get: (a: number) => Promise.resolve([{
+          files: [{name: 'my-file.mkv',}],
+          downloadDir: '/test/films/',
+        }]),
+    }));
+    tdServiceMock = new MockTD();
+    controller = new TorrentController(tdServiceMock, null, null);
+
+    mockedFs.statSync.mockReturnValue({size: '1000'} as never);
+    mockedFs.createReadStream.mockReturnValue({size: '1000', pipe: (v: any): any => null} as never);
+    const result = await controller.download({
+      params: {id: '1'},
+      query: {filename: 'my-file.mkv'}
+    } as any, responseMock, (err: any) => err);
+    expect(result).toEqual(null);
+  });
+
+  test('download() error TDS', async () => {
+    const MockTD = jest.fn().mockImplementation(() => ({
+      get: (a: number) => Promise.reject('error'),
+    }));
+    tdServiceMock = new MockTD();
+    controller = new TorrentController(tdServiceMock, null, null);
+    const next = (err: any) => {throw err};
+    await controller.download({params: {id: '1'}, query: {filename: 'my-file.mkv'}} as any, responseMock, next)
+    .catch(err => expect(err.businessCode).toEqual('unkown-transmission-error'));
   });
 });
 
