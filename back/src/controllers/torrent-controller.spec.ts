@@ -5,12 +5,12 @@ jest.mock('fs');
 const mockedFs = fs as jest.Mocked<typeof fs>;
 
 
-const responseMock: any = {
+const EXPRESS_RES_MOCK: any = {
   json: (data: any) => Promise.resolve(data),
   writeHead: (status: number, data: any): any => {}
 }
 
-const MockTD = jest.fn().mockImplementation(() => ({
+const TransmissionDaemonClientMock = jest.fn().mockImplementation(() => ({
   get: (a: any, b: any[]): Promise<any[]> => Promise.resolve([{}]),
   add: (a: string, b: string) => Promise.resolve('success'),
   remove: (a: number, b: boolean) => Promise.resolve('success'),
@@ -20,19 +20,19 @@ const MockTD = jest.fn().mockImplementation(() => ({
 }));
 
 
-const MockMapper = jest.fn().mockImplementation(() => ({
+const TransmissionDaemonMapperMock = jest.fn().mockImplementation(() => ({
   toFrontTorrent: (a: any): any => ({}),
 }));
 
 
-describe('JackettClient', () => {
+describe('TorrentController', () => {
   let controller: TorrentController;
   let tdServiceMock: any;
   let mockMapper: any;
 
   beforeEach(() => {
-    tdServiceMock = new MockTD();
-    mockMapper = new MockMapper();
+    tdServiceMock = new TransmissionDaemonClientMock();
+    mockMapper = new TransmissionDaemonClientMock();
     controller = new TorrentController(tdServiceMock, mockMapper, [{
       name: 'Films',
       path: '/data/films',
@@ -47,51 +47,55 @@ describe('JackettClient', () => {
 
 
   test('getAll()', async () => {
-    const result = await controller.getAll(null, responseMock, null);
+    tdServiceMock.get = (a: any, b: any[]): Promise<any[]> => Promise.resolve([{}]);
+    mockMapper.toFrontTorrent = (a: any): any => ({});
+    const result = await controller.getAll(null, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result.length).toEqual(1);
   });
 
   test('getAll() error TDS', async () => {
     tdServiceMock.get = (a: any, b: any[]): Promise<any[]> => Promise.reject();
-    const result = await controller.getAll(null, responseMock, (err: any) => err);
+    const result = await controller.getAll(null, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result.businessCode).toEqual('unkown-transmission-error');
   });
 
   test('get()', async () => {
-    const result = await controller.get({params: {id: '1'}} as any, responseMock, (err: any) => err);
+    tdServiceMock.get = (a: any, b: any[]): Promise<any[]> => Promise.resolve([{}]);
+    mockMapper.toFrontTorrent = (a: any): any => ({});
+    const result = await controller.get({params: {id: '1'}} as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result).toEqual({});
   });
 
   test('get() without id', async () => {
-    const result = await controller.get({params: {id: 'no-anumber'}} as any, responseMock, (err: any) => err);
+    const result = await controller.get({params: {id: 'no-anumber'}} as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result.businessCode).toEqual('invalid-id');
   });
 
   test('get() error TDS', async () => {
     tdServiceMock.get = (a: any, b: any[]): Promise<any[]> => Promise.reject();
-    const result = await controller.get({params: {id: '1'}} as any, responseMock, (err: any) => err);
+    const result = await controller.get({params: {id: '1'}} as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result.businessCode).toEqual('unkown-transmission-error');
   });
 
 
   test('add() with invalid download directory', async () => {
-    const result = await controller.add({body: {downloadDir: null}} as any, responseMock, (err: any) => err);
+    const result = await controller.add({body: {downloadDir: null}} as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result.businessCode).toEqual('invalid-download-dir');
   });
 
   test('add() with invalid metainfo', async () => {
-    const result = await controller.add({body: {downloadDir: 'a/path', metainfo: false}} as any, responseMock, (err: any) => err);
+    const result = await controller.add({body: {downloadDir: 'a/path', metainfo: false}} as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result.businessCode).toEqual('invalid-metainfo');
   });
 
   test('add()', async () => {
-    const result = await controller.add({body: {downloadDir: 'a/path', metainfo: 'blabla'}} as any, responseMock, (err: any) => err);
+    const result = await controller.add({body: {downloadDir: 'a/path', metainfo: 'blabla'}} as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result).toEqual('success');
   });
 
   test('add() with TDS error', async () => {
     tdServiceMock.add = (a: string, b: string) => Promise.reject('error')
-    const result = await controller.add({body: {downloadDir: 'a/path', metainfo: 'blabla'}} as any, responseMock, (err: any) => err);
+    const result = await controller.add({body: {downloadDir: 'a/path', metainfo: 'blabla'}} as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result.businessCode).toEqual('unkown-transmission-error');
   });
 
@@ -99,7 +103,7 @@ describe('JackettClient', () => {
     const result = await controller.remove({
       params: {id: null},
       query: {deleteLocalData : null}
-    } as any, responseMock, (err: any) => err);
+    } as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result.businessCode).toEqual('invalid-id');
   });
 
@@ -107,7 +111,7 @@ describe('JackettClient', () => {
     const result = await controller.remove({
       params: {id: 'anId'},
       query: {deleteLocalData : null}
-    } as any, responseMock, (err: any) => err);
+    } as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result.businessCode).toEqual('invalid-destination');
   });
 
@@ -115,7 +119,7 @@ describe('JackettClient', () => {
     const result = await controller.remove({
       params: {id: 'anId'},
       query: {deleteLocalData : 'true'}
-    } as any, responseMock, (err: any) => err);
+    } as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result).toEqual('success');
   });
 
@@ -123,7 +127,7 @@ describe('JackettClient', () => {
     const result = await controller.remove({
       params: {id: 'anId'},
       query: {deleteLocalData : 'false'}
-    } as any, responseMock, (err: any) => err);
+    } as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result).toEqual('success');
   });
 
@@ -132,7 +136,7 @@ describe('JackettClient', () => {
     const result = await controller.remove({
       params: {id: 'anId'},
       query: {deleteLocalData : 'false'}
-    } as any, responseMock, (err: any) => err);
+    } as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result.businessCode).toEqual('unkown-transmission-error');
   });
 
@@ -142,7 +146,7 @@ describe('JackettClient', () => {
       const result = await controller.move({
         params: {id: value},
         body: {destinationName: null}
-      } as any, responseMock, (err: any) => err);
+      } as any, EXPRESS_RES_MOCK, (err: any) => err);
       expect(result.businessCode).toEqual('invalid-id');
     }
 
@@ -154,7 +158,7 @@ describe('JackettClient', () => {
     const result = await controller.move({
       params: {id: '1'},
       body: {destinationName: null}
-    } as any, responseMock, (err: any) => err);
+    } as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result.businessCode).toEqual('invalid-destination');
   });
 
@@ -162,7 +166,7 @@ describe('JackettClient', () => {
     const result = await controller.move({
       params: {id: '1'},
       body: {destinationName: 'Films'}
-    } as any, responseMock, (err: any) => err);
+    } as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result).toEqual('success');
   });
 
@@ -171,14 +175,14 @@ describe('JackettClient', () => {
     const result = await controller.move({
       params: {id: '1'},
       body: {destinationName: 'Films'}
-    } as any, responseMock, (err: any) => err);
+    } as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result.businessCode).toEqual('unkown-transmission-error');
   });
 
 
   test('stop() with invalid id', async () => {
     async function check(value: any) {
-      const result = await controller.stop({params: {id: value}} as any, responseMock, (err: any) => err);
+      const result = await controller.stop({params: {id: value}} as any, EXPRESS_RES_MOCK, (err: any) => err);
       expect(result.businessCode).toEqual('invalid-id');
     }
     check('qsdqsd');
@@ -187,20 +191,20 @@ describe('JackettClient', () => {
 
   test('stop()', async () => {
     controller = new TorrentController(tdServiceMock, null, null);
-    const result = await controller.stop({params: {id: '1'}} as any, responseMock, (err: any) => err);
+    const result = await controller.stop({params: {id: '1'}} as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result).toEqual('success');
   });
 
   test('stop() error TDS', async () => {
     tdServiceMock.stop = (a: number) => Promise.reject('error');
-    const result = await controller.stop({params: {id: '1'}} as any, responseMock, (err: any) => err);
+    const result = await controller.stop({params: {id: '1'}} as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result.businessCode).toEqual('unkown-transmission-error');
   });
 
 
   test('start() with invalid id', async () => {
     async function check(value: any) {
-      const result = await controller.start({params: {id: value}} as any, responseMock, (err: any) => err);
+      const result = await controller.start({params: {id: value}} as any, EXPRESS_RES_MOCK, (err: any) => err);
       expect(result.businessCode).toEqual('invalid-id');
     }
     check('qsdqsd');
@@ -209,20 +213,20 @@ describe('JackettClient', () => {
 
   test('start()', async () => {
     controller = new TorrentController(tdServiceMock, null, null);
-    const result = await controller.start({params: {id: '1'}} as any, responseMock, (err: any) => err);
+    const result = await controller.start({params: {id: '1'}} as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result).toEqual('success');
   });
 
   test('start() error TDS', async () => {
     tdServiceMock.start = (a: number) => Promise.reject('error');
-    const result = await controller.start({params: {id: '1'}} as any, responseMock, (err: any) => err);
+    const result = await controller.start({params: {id: '1'}} as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result.businessCode).toEqual('unkown-transmission-error');
   });
 
 
   test('download() with invalid id', async () => {
     async function check(value: string) {
-      const result = await controller.download({params: {id: value}} as any, responseMock, (err: any) => err);
+      const result = await controller.download({params: {id: value}} as any, EXPRESS_RES_MOCK, (err: any) => err);
       expect(result.businessCode).toEqual('invalid-id');
     }
 
@@ -235,7 +239,7 @@ describe('JackettClient', () => {
       const result = await controller.download({
         params: {id: '1'},
         query: {filename: value}
-      } as any, responseMock, (err: any) => err);
+      } as any, EXPRESS_RES_MOCK, (err: any) => err);
       expect(result.businessCode).toEqual('invalid-filename');
     }
 
@@ -255,14 +259,14 @@ describe('JackettClient', () => {
     const result = await controller.download({
       params: {id: '1'},
       query: {filename: 'my-file.mkv'}
-    } as any, responseMock, (err: any) => err);
+    } as any, EXPRESS_RES_MOCK, (err: any) => err);
     expect(result).toEqual(null);
   });
 
   test('download() error TDS', async () => {
     tdServiceMock.get = (a: number) => Promise.reject('error');
     const next = (err: any) => {throw err};
-    await controller.download({params: {id: '1'}, query: {filename: 'my-file.mkv'}} as any, responseMock, next)
+    await controller.download({params: {id: '1'}, query: {filename: 'my-file.mkv'}} as any, EXPRESS_RES_MOCK, next)
     .catch(err => expect(err.businessCode).toEqual('unkown-transmission-error'));
   });
 });
