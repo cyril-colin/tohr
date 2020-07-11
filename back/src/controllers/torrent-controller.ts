@@ -1,26 +1,24 @@
 import * as express from 'express';
 import * as fs from 'fs';
-import { Environment } from '../environment';
-import { HttpBadRequest, HttpTransmissionError } from '../core/errors';
-import { TransmissionDaemonClient } from '../clients/transmission-daemon-client/transmission-daemon-client';
-import { TorrentDestination } from '../core/public-models/torrent-destination';
-import { Torrent } from '../core/public-models/torrent';
+import { HttpBadRequest, HttpTransmissionError } from '@src/core/errors';
+import { TransmissionDaemonClient } from '@src/clients/transmission-daemon-client/transmission-daemon-client';
+import { TransmissionDaemonMapper } from '@src/mappers/transmission-daemon.mapper';
+import { TDTorrent } from '@src/clients/transmission-daemon-client/models/tdtorrent';
+import { TorrentDestination } from '@src/core/public-models/torrent-destination';
 
 export class TorrentController {
   constructor(
     private tdClient: TransmissionDaemonClient,
-    private env: Environment,
+    private tdMapper: TransmissionDaemonMapper,
+    private dest: TorrentDestination[],
   ) { }
 
-  async getAll(request: any, response: express.Response, next: express.NextFunction): Promise<any> {
-    const data = await this.tdClient.get().catch(err => next(new HttpTransmissionError(err)));
-    const destinationsList: TorrentDestination[] = this.env.monitoring.destinations;
-    data.arguments.torrents.forEach((t: Torrent) => {
-      t.destination = destinationsList.find(d => d.path === t.downloadDir);
-      t.statusStr = this.tdClient.getStatus(t.status).trim().toLocaleUpperCase();
-    });
+  async getAll(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
+    const torrents = await this.tdClient.get()
+      .then(tor => tor.map(t => this.tdMapper.toFrontTorrent(t)))
+      .catch(err => next(new HttpTransmissionError(err)));
 
-    return response.json(data);
+    return response.json(torrents);
   }
 
   async get(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
@@ -28,15 +26,11 @@ export class TorrentController {
       return next(new HttpBadRequest('invalid-id'));
     }
 
-    const fields = ['id', 'name', 'totalSize', 'downloadDir', 'percentDone', 'rateDownload', 'rateUpload', 'error', 'errorString', 'status', 'trackers', 'addedDate', 'files'];
-    const data = await this.tdClient.get([+request.params.id], fields).catch(err => next(new HttpTransmissionError(err)));
-    const destinationsList: TorrentDestination[] = this.env.monitoring.destinations;
-    data.arguments.torrents.forEach((t: Torrent) => {
-      t.destination = destinationsList.find(d => d.path === t.downloadDir);
-      t.statusStr = this.tdClient.getStatus(t.status).trim().toLocaleUpperCase();
-    });
+    const data = await this.tdClient.get([+request.params.id], TransmissionDaemonClient.DETAIL_FIELDS)
+      .then(tor => tor.map(t => this.tdMapper.toFrontTorrent(t))[0])
+      .catch(err => next(new HttpTransmissionError(err)));
 
-    return response.json(data);;
+    return response.json(data);
   }
 
   async add(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
@@ -45,7 +39,7 @@ export class TorrentController {
     }
 
     if (!request.body.metainfo) {
-      next(new HttpBadRequest('invalid-metainfo'));
+      return next(new HttpBadRequest('invalid-metainfo'));
     }
 
     const data = await this.tdClient.add(request.body.downloadDir, request.body.metainfo)
@@ -71,11 +65,11 @@ export class TorrentController {
 
 
   async move(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
-    if (isNaN(request.params.id as any)) {
+    if (!request.params.id || isNaN(request.params.id as any)) {
       return next(new HttpBadRequest('invalid-id'));
     }
 
-    const selectedDestination = this.env.monitoring.destinations.find(d => d.name === request.body.destinationName);
+    const selectedDestination = this.dest.find(d => d.name === request.body.destinationName);
     if (!selectedDestination) {
       return next(new HttpBadRequest('invalid-destination'));
     }
@@ -87,7 +81,7 @@ export class TorrentController {
   }
 
   async stop(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
-    if (isNaN(request.params.id as any)) {
+    if (!request.params.id || isNaN(request.params.id as any)) {
       return next(new HttpBadRequest('invalid-id'));
     }
 
@@ -98,7 +92,7 @@ export class TorrentController {
   }
 
   async start(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any> {
-    if (isNaN(request.params.id as any)) {
+    if (!request.params.id || isNaN(request.params.id as any)) {
       return next(new HttpBadRequest('invalid-id'));
     }
     const data = await this.tdClient.start(request.params.id as any)
@@ -108,7 +102,7 @@ export class TorrentController {
   }
 
   async download(request: express.Request, response: express.Response, next: express.NextFunction): Promise<any>  {
-    if (isNaN(request.params.id as any)) {
+    if (!request.params.id || isNaN(request.params.id as any)) {
       return next(new HttpBadRequest('invalid-id'));
     }
 
@@ -118,11 +112,11 @@ export class TorrentController {
     }
 
     const filename = decodeURI(query.filename).replace(/\"/g, '');
-    const data = await this.tdClient.get([+request.params.id], ['name', 'files', 'downloadDir'])
-    .catch(err => next(new HttpTransmissionError(err)));
+    const torrents: TDTorrent | any = await this.tdClient.get([+request.params.id], ['name', 'files', 'downloadDir'])
+    .then(tor => tor).catch(err => next(new HttpTransmissionError(err)));
 
-    const file = data.arguments.torrents[0].files.find((f: any) => f.name.trim() === filename.trim());
-    const path = data.arguments.torrents[0].downloadDir + '/'+file.name;
+    const file = torrents[0].files.find((f: any) => f.name.trim() === filename.trim());
+    const path = torrents[0].downloadDir + '/'+file.name;
     const stat = fs.statSync(path);
     const rs = fs.createReadStream(path);
     response.writeHead(200, {

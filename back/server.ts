@@ -14,6 +14,7 @@ import { CurrentUserService } from './src/services/current-user.service';
 import { handleErrors } from './src/core/errors';
 import { JackettClient } from './src/clients/jacket-client/jackett-client';
 import { TransmissionDaemonClient } from './src/clients/transmission-daemon-client/transmission-daemon-client';
+import { TransmissionDaemonMapper } from './src/mappers/transmission-daemon.mapper';
 
 program.option('-c, --config <config>', 'The configuration file', 'config.production.json');
 program.parse(process.argv);
@@ -41,10 +42,11 @@ const tdClient = new TransmissionDaemonClient({
   password: config.transmissionDaemonPassword
 });
 const systemInformationService = new SystemInformationService();
-const torrentController = new TorrentController(tdClient, config);
+const tdMapper = new TransmissionDaemonMapper(config.monitoring.destinations, tdClient);
+const torrentController = new TorrentController(tdClient, tdMapper, config.monitoring.destinations);
 const monitoringController = new MonitoringController(config, systemInformationService, loggerService);
 const jacketClientService = new JackettClient(config.jackett.url, config.jackett.apiKey);
-const torrentBrowserController = new TorrentBrowserController(jacketClientService, tdClient, config);
+const torrentBrowserController = new TorrentBrowserController(jacketClientService, tdClient, config.monitoring.destinations);
 const currentUserService = new CurrentUserService();
 
 const app = express();
@@ -56,7 +58,7 @@ app.use((req: any, res: any, next: any) => {
     loggerService.info(`${currentUserService.getUsername(req)} | ${req.method} ${req.url}`);
   next();
 });
-app.use(API_PREFIX, jwtExpress({ secret: config.jwtSecret }).unless({ path: [API_PREFIX + '/login'] }));
+app.use(API_PREFIX, jwtExpress({ secret: config.jwtSecret, algorithms: ['RS256'] }).unless({ path: [API_PREFIX + '/login'] }));
 
 app.post(API_PREFIX + '/login', (req: any, res: any, next) => (new LoginController(config)).login(req, res, next).catch(next));
 app.get(API_PREFIX + '/torrents', (req: any, res: any, next) => torrentController.getAll(req, res, next).catch(next));

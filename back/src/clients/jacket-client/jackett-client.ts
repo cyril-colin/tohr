@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import axios from 'axios';
 import querystring from 'querystring';
 import { JSearch } from './models/jsearch.model';
 import { JTorrent } from './models/jtorrent.model';
@@ -15,7 +15,7 @@ export class JackettClient {
       Category: query.categories,
     }
     const queryString = querystring.stringify(jacketRequest);
-    return Axios.get(`${this.url}/api/v2.0/indexers/all/results?${queryString}`).then(res => res.data.Results);
+    return axios.get(`${this.url}/api/v2.0/indexers/all/results?${queryString}`).then(res => res.data.Results);
   }
 
   download(link: {path: string; file: string;}): Promise<any> {
@@ -25,6 +25,6 @@ export class JackettClient {
       file: link.file,
     }
     const queryString = querystring.stringify(jacketRequest);
-    return Axios.get(`${this.url}/dl/yggtorrent/?${queryString}`, {responseType: 'arraybuffer'})
+    return axios.get(`${this.url}/dl/yggtorrent/?${queryString}`, {responseType: 'arraybuffer'})
   }
 }

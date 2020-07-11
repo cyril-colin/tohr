@@ -6,13 +6,14 @@ import fs from 'fs';
 import { JackettClient } from '../clients/jacket-client/jackett-client';
 import { TransmissionDaemonClient } from '../clients/transmission-daemon-client/transmission-daemon-client';
 import { TorrentBrowser } from '../core/public-models/torrent-browser';
+import { TorrentDestination } from '@src/core/public-models/torrent-destination';
 
 
 export class TorrentBrowserController {
   constructor(
     private jackettClientService: JackettClient,
     private tdClient: TransmissionDaemonClient,
-    private env: Environment,
+    private dest: TorrentDestination[],
   ) { }
 
   /**
@@ -25,18 +26,15 @@ export class TorrentBrowserController {
       return next(new HttpBadRequest('invalid-search'));
     }
 
-    const existingCategory = this.env.monitoring.destinations.find(d => d.category === params.category);
+    const existingCategory = this.dest.find(d => d.category === params.category);
     if (params.category && !existingCategory) {
       return next(new HttpBadRequest('invalid-category'));
     }
 
-    if (params.limit && isNaN(params.limit)) {
-      return next(new HttpBadRequest('invalid-limit'));
-    }
     const torrents = await this.jackettClientService.search({query: params.search, categories: [params.category]})
     .then(res => res.map(t => JackettMapper.toFrontResult(t)))
 
-    return response.send(torrents);
+    return response.json(torrents);
   }
 
   /**
@@ -52,7 +50,7 @@ export class TorrentBrowserController {
       return next(new HttpBadRequest('invalid-given-torrent'));
     }
 
-    const isKnownDestination = this.env.monitoring.destinations.find(d => d.path === params.destination.path);
+    const isKnownDestination = this.dest.find(d => d.path === params.destination.path);
     if (!params.destination || !isKnownDestination) {
       return next(new HttpBadRequest('invalid-destination'));
     }

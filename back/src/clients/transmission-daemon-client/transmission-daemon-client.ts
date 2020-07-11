@@ -3,6 +3,8 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { TDConfig } from './models/tdconfig.model';
 import { TDRequest } from './models/tdrequest.model';
 import {TD_STATUS} from './models/tdstatus.model';
+import { TDTorrent } from './models/tdtorrent';
+import { ɵConsole } from '@angular/core';
 
 
 /**
@@ -11,6 +13,7 @@ import {TD_STATUS} from './models/tdstatus.model';
  * @see https://github.com/transmission/transmission/blob/master/extras/rpc-spec.txt
  */
 export class TransmissionDaemonClient {
+  static DETAIL_FIELDS = ['id', 'name', 'totalSize', 'downloadDir', 'percentDone', 'rateDownload', 'rateUpload', 'error', 'errorString', 'status', 'trackers', 'addedDate', 'files'];
   /**
    * The key in our cache to store the transmission-daemon cookie.
    */
@@ -51,7 +54,8 @@ export class TransmissionDaemonClient {
     * @param fields The list of fields that have to be returned by transmission daemon.
     */
   public get(ids?: number[], fields: string[] =
-    ['id', 'name', 'totalSize', 'downloadDir', 'percentDone', 'rateDownload', 'rateUpload', 'error', 'addedDate', 'errorString', 'status']): Promise<any> {
+    ['id', 'name', 'totalSize', 'downloadDir', 'percentDone', 'rateDownload', 'rateUpload', 'error', 'addedDate', 'errorString', 'status'])
+    : Promise<TDTorrent[]> {
     const requestBody: TDRequest = {
       method: 'torrent-get',
       arguments: { fields }
@@ -61,7 +65,7 @@ export class TransmissionDaemonClient {
       requestBody.arguments.ids = ids;
     }
 
-    return this.sendRequest(requestBody);
+    return this.sendRequest(requestBody).then(data => data.arguments.torrents);
   }
 
   /**
@@ -69,7 +73,7 @@ export class TransmissionDaemonClient {
    * given status number.
    */
   public getStatus(status: number): string {
-    return TD_STATUS.find(s => s.value === status).text;
+    return TD_STATUS.find(s => s.value === status)?.text;
   }
 
   /**
@@ -191,11 +195,12 @@ export class TransmissionDaemonClient {
       }).catch((error: any) => {
         if (error.response && error.response.status === 409) {
           if (attempt >= TransmissionDaemonClient.MAX_SESSION_ATTEMPT) {
-            throw error;
+            throw new Error('TOO-MANY-ATTEMPT-ERROR');
           }
 
           this.catchTransmissionSessionError(error.response);
-          return this.sendRequest(params, attempt++);
+          attempt++;
+          return this.sendRequest(params, attempt);
         } else {
           throw error;
         }

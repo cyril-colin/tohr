@@ -16,14 +16,13 @@ export class ProxyTorrentService {
 
 
   getAllTorrent(): Observable<Torrent[]> {
-    return  this.http.get<RpcResponse<RpcTorrentList>>(this.endpoint + '/torrents').pipe(
-      map(res => res.arguments.torrents),
+    return  this.http.get<Torrent[]>(this.endpoint + '/torrents').pipe(
       map(torrents => torrents.sort((a, b) => (b.addedDate - a.addedDate))),
     );
   }
 
   getTorrent(id: number): Observable<Torrent> {
-    return this.http.get<RpcResponse<RpcTorrentList>>(this.endpoint + '/torrents/' + id).pipe(map(res => res.arguments.torrents[0]));
+    return this.http.get<Torrent>(this.endpoint + '/torrents/' + id);
   }
 
 
