@@ -17,7 +17,7 @@ services:
       tohr-network:
         aliases:
           - tohr-dev-alias
-    command: bash -c "ts-node-dev --project \"/tohr/back/tsconfig-back.json\"  \"/tohr/back/server.ts\" --config \"config.dev.json\""
+    command: bash -c "cd /tohr/back && ts-node-dev -r tsconfig-paths/register  server.ts --config config.dev.json"
 
 
   tohr-transmission:
